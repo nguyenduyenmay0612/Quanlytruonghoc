@@ -1,0 +1,55 @@
+% layout 'backend_gv/index';
+<div>
+  <br>
+  <h3>
+   Quản lý hoạt động
+  </h3>
+  
+  <table class="w3-table w3-striped w3-bordered">
+      <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tên hoạt động</th>
+            <th>Ảnh</th>
+            <th>Mô tả</th>
+            <th>Cập nhật</th>
+          </tr>
+      </thead>
+      <tbody >
+        % foreach my $item (@{$activity}) {
+      <tr>  
+        <td><%= $item->{id_activity} %></td>
+        <td><%= $item->{activity_name} %></td>
+        <td><img src="assets\image\<%= $item->{image} %>" alt="hhhh" width="100" height="100"></td>
+        <td><textarea  rows="4" cols="30"><%= $item->{activity_des} %></textarea></td>
+        <td><a href='edit_activity/<%= $item->{id_activity} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_activity/<%= $item->{id_activity} %>'>Xóa</a></td>
+      </tr>
+    %}
+    </tbody>      
+  </table> <hr>
+    <form action='/add_activity' method = "get">
+        <button type="submit" class="btn btn-primary me-2">Thêm hoạt động </button>
+    </form>
+    % if ($error) {
+    <div class="error" style="color: red">
+        <small> <%= $error %> </small>
+    </div>
+    %}
+
+    % if ($message) {
+    <div class="error" style="color: green">
+        <small> <%= $message %> </small>
+    </div>
+    %}
+</div>
+<script>
+function myFunction() {
+  confirm("Bạn có chắc chắn muốn xóa không?");
+}
+
+$(document).ready(function(){
+	$('#Mybtn').click(function(){
+  		$('#MyForm').toggle(500);
+  });
+});
+</script>

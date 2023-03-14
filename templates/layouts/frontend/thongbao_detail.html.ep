@@ -1,0 +1,10 @@
+% layout 'frontend/index';
+% title 'Welcome';
+<h2>THÔNG BÁO</h2>
+<div class = "title-thongbao">
+ <b> <%= $noti1->noti_name %><b>
+</div>
+<hr> 
+<div class = "content-thongbao">
+<span><%= $noti1->content %></span> <br> <br>
+</div>

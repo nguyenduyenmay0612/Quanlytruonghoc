@@ -1,0 +1,71 @@
+% layout 'backend_gv/index';
+<div><br>
+    <h3>
+        Quản lý bài đăng
+    </h3>
+  
+    <table class="w3-table w3-striped w3-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tiêu đề</th>
+                <th>Tóm tắt</th>
+                <th>Ảnh</th>
+                <th>Nội dung</th>
+                <th>Cập nhật</th>
+            </tr>
+        </thead>
+        <tbody >
+        <script>
+        function decodeHtml(str) {
+            let txt = document.createElement("textarea");
+            txt.innerHTML = str;
+            return txt.value;
+        }
+        </script>
+        % foreach my $item (@{$post}) {
+        <tr>  
+            <td><%= $item->{id_post} %></td>
+            <td><%= $item->{title_post} %></td>
+            <td><%= $item->{summary} %></td>
+            <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="100" height="100"></td>
+            <!-- <td><textarea  rows="7" cols="30"><%= $item->{content} %></textarea></td> -->
+            <td >
+                <div id="<%= $item->{id_post} %>"><div>
+            </td>
+            <script type="text/javascript">
+            $(document).ready(function(){
+                document.getElementById(<%= $item->{id_post} %>).innerHTML= decodeHtml(`<%= $item->{content} %>`);
+            });
+            </script>
+            <td><a href='/teacher/edit_post/<%= $item->{id_post} %>'>Sửa</a>|<a onclick="myFunction()" href='/teacher/delete_post/<%= $item->{id_post} %>'>Xóa</a></td>
+        </tr>
+      %}
+        </tbody>      
+    </table> <hr>
+    <form action='/add_post' method = "get">
+        <button type="submit" class="btn btn-primary me-2">Thêm bài viết</button>
+    </form>
+    % if ($error) {
+    <div class="error" style="color: red">
+        <small> <%= $error %> </small>
+    </div>
+    %}
+
+    % if ($message) {
+    <div class="error" style="color: green">
+        <small> <%= $message %> </small>
+    </div>
+    %}
+</div>
+<script>
+function myFunction() {
+  confirm("Bạn có chắc chắn muốn xóa không?");
+}
+
+$(document).ready(function(){
+	$('#Mybtn').click(function(){
+  		$('#MyForm').toggle(500);
+  });
+});
+</script>

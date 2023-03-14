@@ -1,0 +1,40 @@
+% layout 'backend_sv/index';
+
+<div class="row content">
+    <div class="col-sm-2 sidenav">  
+      <div>
+          <br> 
+          <!--<b><a  href="/tkb_ngay">Thời khóa biểu ngày</a></b> <br> <hr>-->
+          <!--<b><a class="active" href="/tkb_tuan">Thời khóa biểu tuần</a></b> <br> <hr>-->
+               
+      </div> <br>
+    </div>
+    <div class="col-sm-10 text-left"> 
+      <h3>
+      Thời khóa biểu tuần 
+      </h3>
+      <table class="w3-table w3-striped w3-bordered">
+        <thead>
+          <tr>
+            <th>Tên HP</th>
+            <th>Giáo viên</th>
+            <th>Thứ</th>
+            <th>Tiết</th>
+            <th>Phòng</th>
+          </tr>
+        </thead>
+        <tbody >
+              % foreach my $item (@{$schedule}) {
+            <tr>  
+              <td><%= $item->{name_subject} %></td>
+              <td><%= $item->{teacher} %></td>
+              <td><%= $item->{date} %></td>
+              <td><%= $item->{lession} %></td>
+              <td><%= $item->{room} %></td>
+            </tr>
+            %}
+        </tbody>     
+        </table>
+
+  </div>
+</div>

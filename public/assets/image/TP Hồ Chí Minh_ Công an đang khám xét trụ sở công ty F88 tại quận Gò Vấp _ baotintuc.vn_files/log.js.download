@@ -1,0 +1,4 @@
+﻿function Log_sendXMLHttpRequest(query) {
+    var url = 'https://thongke.baotintuc.vn/Handler.ashx?typeId=1&Id=' + query;
+    var img = new Image(); img.src = url;
+}

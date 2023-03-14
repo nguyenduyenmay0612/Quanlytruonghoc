@@ -1,0 +1,27 @@
+% layout 'backend_gv/index';
+
+<div style =" overflow: auto ; max-height: 700px"> 
+      <h3>
+      Danh bạ sinh viên lớp bạn
+      </h3>
+      <table class="w3-table w3-striped w3-bordered" >
+      <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tên sinh viên</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+          </tr>
+      </thead>
+      <tbody >
+        % foreach my $item (@{$student}) {
+      <tr>  
+        <td><%= $item->{id_student} %></td>
+        <td><%= $item->{full_name} %></td>
+        <td><%= $item->{email} %></td>
+        <td><%= $item->{phone} %></td>
+      </tr>
+    %}
+    </tbody>      
+        </table>
+</div>

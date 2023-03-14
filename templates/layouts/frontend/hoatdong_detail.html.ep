@@ -1,0 +1,13 @@
+% layout 'frontend/index';
+% title 'Welcome';
+<h2>HOẠT ĐỘNG TRONG TRƯỜNG</h2>
+<div class = "title-thongbao">
+ <b> <%= $activity1->activity_name %><b>
+</div>
+<hr> 
+<div class = "title-thongbao">
+ <img src="..\assets\image\<%= $activity1->image %>" class = "image-sukien"> <br> <br>
+</div>
+<div class = "content-thongbao">
+<span><%= $activity1->activity_des %></span> <br> <br>
+</div>

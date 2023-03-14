@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="vn" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>School</title>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-type" content="text/html" charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="../assets/css/style2.css">
+  <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+</head>
+<body>
+ 
+<div class="container-fluid text-center"  > 
+      <!-- Sidebar -->
+    <div class="w3-sidebar w3-light-grey w3-bar-block">
+      <h3 class="w3-bar-item">Tùy chọn</h3>
+      <ul class="nav navbar-nav">
+        <li><a href="/teacher/profile_gv" class="w3-bar-item w3-button">Thông tin cá nhân</a></li> <br> <hr>
+        <li><a href="/teacher/schedule_gv" class="w3-bar-item w3-button">Lịch giảng dạy</a></li> <br><hr>  
+        <li>
+            <a type="button" data-toggle="dropdown" class="w3-bar-item w3-button">Quản lý sinh viên<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            <li><a href="/teacher/list_sv">Hiển thị thông tin</a></li>
+            <li><a href="/teacher/add_sv">Thêm mới sinh viên</a></li>           
+            </ul>
+        </li><br> <hr>
+        <li>
+            <a type="button" data-toggle="dropdown" class="w3-bar-item w3-button">Danh bạ điện thoại<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            <li><a href="/teacher/phone_student1">Sinh viên lớp</a></li>
+            <li><a href="/teacher/phone_teacher1">Giáo viên giảng dạy lớp</a></li>           
+            </ul>
+        </li><br> <hr>  
+        <li>
+            <a type="button" data-toggle="dropdown" class="w3-bar-item w3-button">Quản lý bài viết<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/teacher/banner">Banner</a></li>
+              <li><a href="/teacher/post">Tin tức và sự kiện</a></li>   
+              <li><a href="/teacher/activity">Hoạt động</a></li>
+              <li><a href="/teacher/noti">Thông báo</a></li>
+              <li><a href="/teacher/image">Hình ảnh</a></li>        
+            </ul>
+        </li><br> <hr>  
+        <li><a href="/logout" class="w3-bar-item w3-button">Đăng xuất</a></li> <br><hr>  
+        
+      </ul>
+    </div>
+
+    <!-- Page Content -->
+    <div style="margin-left:20%">
+        <div class="w3-container w3-gray">
+          <h2>Trang quản lý dành cho giảng viên</h2>
+        </div>
+        <div class="w3-container">
+         <%= content %>
+        </div>
+    </div>  
+</div>
+
+<footer class="container-fluid text-center" style="margin-top:400px;margin-left:20%">
+  <p>Bản quyền thuộc quyền sở hữu của Duyên Mây</p>
+</footer>
+  
+</div>
+</body>
+</html>
+

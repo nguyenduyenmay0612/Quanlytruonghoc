@@ -1,0 +1,18 @@
+% layout 'frontend/index';
+% title 'Welcome';
+% my $content = $post->content;
+<h2>TIN TỨC | SỰ KIỆN | HOẠT ĐỘNG</h2>
+<div class = "title-sukien">
+ <b> <%= $post->title_post %><b>
+</div>
+<hr> 
+<div class = "content-sukien">
+<p></p>
+<img src="..\assets\image\<%= $post->image %>" class = "image-sukien"> <br> <br>
+<span id="content"> <%= {$post->content} %> </span><br> <br> 
+</div>
+<!--<script>
+var content = `<%== "$content" %>`;
+console.log(content);
+CKEDITOR.instances['content'].setData(content);
+</script>

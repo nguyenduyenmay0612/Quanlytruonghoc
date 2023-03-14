@@ -1,0 +1,172 @@
+﻿var domainUtils = "https://utils3.cnnd.vn";
+/*
+    https://utils3.cnnd.vn/Handlers/RateGoldUsdHandler.ashx?c=gold&type=SJC_Ha_Noi&date=10/8/2020
+    https://utils3.cnnd.vn/Handlers/RateGoldUsdHandler.ashx?c=GetRateUsd_v2&bank=["VPBANK","BIDV","vietin","NHNN"]&currency=USD&date=010/08/2020
+*/
+function GetRateGoldUsd() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = dd + '/' + mm + '/' + yyyy;
+    $.ajax({
+        url: domainUtils + '/Handlers/RateGoldUsdHandler.ashx?c=gold&type="SJC_Ha_Noi"&date=' + today,
+        type: 'GET',
+        dataType: 'text',
+        success: function (data) {
+          
+            if (data == null || data == "") {
+                return;
+            }
+            else {
+                if ($.trim(data) == "") {
+                    return;
+                } else {
+                    var json = JSON.parse(data);
+                    try {
+                        var gold = json.data;
+                        $('#vang').html(gold[0].price_gold + "/lượng");
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }
+            }
+        },
+        error: function (e) {
+        }
+    });
+    $.ajax({
+        url: domainUtils + '/Handlers/RateGoldUsdHandler.ashx?c=GetRateUsd_v2&bank=["VPBANK","BIDV","vietin","NHNN"]&currency=USD&date=' + today,
+        type: 'GET',
+        dataType: 'text',
+        success: function (data) {
+
+            if (data == null || data == "") {
+                return;
+            }
+            else {
+                if ($.trim(data) == "") {
+                    return;
+                } else {
+                    var json = JSON.parse(data);
+                    
+                    try {
+                        var usd = json.data;
+                        if (usd.length) {
+                            if (usd[1].price != undefined)
+                                $('#dola').html(usd[1].price + " VNĐ");
+                            else
+                                $('#dola').html(usd[1].buy_cash + " VNĐ");
+                        }
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }
+            }
+        },
+        error: function (e) {
+        }
+    });
+}
+function WeatherData(instanceName) {
+
+    var outputWeatherImage = '';
+    var outputWeather = '';
+    var image = '';
+    $.ajax({
+        type: 'GET',
+        url: domainUtils + '/ajax/weatherinfo/' + instanceName + '.htm',
+        contentType: 'application/json; charset=utf-8',
+        success: function (res) {
+            res = JSON.parse(res);
+            if (res.Success) {
+                var data = res.Data.data;
+                if (data != null) {
+                    try {
+
+                        var img = convertIconWeather(data.datainfo.status);
+                        outputWeather = data.datainfo.temperature + '<sup>o</sup>' + data.datainfo.degree;
+                        outputWeatherImage = '<img width="27" src="' + img + '" alt="' + data.datainfo.status + '" />';
+
+                        document.getElementById('divWeatherImage').innerHTML = outputWeatherImage;
+                        document.getElementById('divWeather').innerHTML = outputWeather;
+                        document.getElementById('divWeatherDesciption').innerText = data.datainfo.status;
+                    } catch (err) {
+
+                    }
+                }
+            }
+        }
+    });
+}
+
+function put(elm) {
+    WeatherData(elm.value);
+}
+
+function convertIconWeather(status) {
+    var type = "";
+    status = status.toLowerCase();
+    switch (status) {
+        case "ít mây":
+        case "một chút mây":
+        case "có mây":
+            type = "/App_Themes/ThoiTiet/maythaydoi.png";
+            break;
+        case "mưa nhỏ":
+        case "mưa":
+            type = "/App_Themes/ThoiTiet/muaphun.jpg";
+            break;
+        case "nắng đẹp":
+        case "mây và nắng":
+        case "nắng nhẹ":
+        case "nắng sau đó có ít mây":
+            type = "/App_Themes/ThoiTiet/itmay.jpg";
+            break;
+        case "nắng":
+            type = "/App_Themes/ThoiTiet/nang.jpg";
+            break;
+        case "chủ yếu nắng":
+        case "nhiều nắng":
+            type = "/App_Themes/ThoiTiet/nang.jpg";
+            break;
+        case "mưa rào rải rác":
+        case "cơn mưa rào":
+        case "mưa rào":
+        case "mưa rào nhỏ":
+        case "mưa lớn":
+            type = "/App_Themes/ThoiTiet/mua.png";
+            break;
+        case "mưa giông rải rác":
+        case "mưa giông":
+        case "mưa giông lớn":
+        case "mưa dông":
+        case "mưa dông lớn":
+        case "mưa rào có sấm":
+            type = "/App_Themes/ThoiTiet/mua.png";
+            break;
+        case "sấm sét":
+            type = "/App_Themes/ThoiTiet/mua.png";
+            break;
+        case "nhiều mây":
+            type = "/App_Themes/ThoiTiet/nhieumay.gif";
+            break;
+        case "trong xanh":
+        case "trời quang":
+        case "quang mây":
+            type = "/Images/thoiTiet/it-may.png";
+            break;
+        case "ảm đạm":
+        case "nắng có sương mờ":
+        case "có sương mù":
+        case "mây mù":
+        case "sương mù nhẹ":
+        case "sương mù dày đặc":
+            type = "/Images/thoiTiet/it-may.png";
+            break;
+        default:
+            type = "/Images/thoiTiet/it-may.png";
+            break;
+    }
+    return type;
+}
