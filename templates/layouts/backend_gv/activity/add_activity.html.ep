@@ -7,7 +7,7 @@
             <div >
                 <div class="card">
                   <div class="card-body">                                  
-                    <form method="post" action='/add_activity' class="form-add-student">                       
+                    <form method="post" action='/teacher/add_activity' class="form-add-student">                       
                       <div class="form-group">
                         <label>Tên bài đăng</label>
                         <input type="text" class="form-control" id="activity_name" name="activity_name" placeholder="Tên hoạt động" required>
@@ -17,9 +17,17 @@
                         <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh" required>
                       </div>
                       <div class="form-group">
-                        <label>Mô tả</label>
-                        <input type="text" class="form-control" id="activity_des" name="activity_des" placeholder="Mô tả"  required>
+                            <div>
+                            <textarea cols="80" rows="10" id="activity_des" name="activity_des"> 
+                                &lt;h1&gt;Tiêu đề &lt;/h1&gt;
+                                &lt;h1&gt;Mô tả hoạt động&lt;/h1&gt;                                
+                            </textarea>                    
+                            <input type="submit" value="Submit"/>
+                            </div>
                       </div>
+                      <script type="text/javascript">
+                          CKEDITOR.replace('activity_des');                        
+                      </script>
                       
                       <button type="submit" class="btn btn-primary me-2">Thêm</button>
                       <button class="btn btn-dark">Cancel</button>

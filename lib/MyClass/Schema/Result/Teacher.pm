@@ -96,6 +96,12 @@ __PACKAGE__->table("teacher");
   is_nullable: 1
   size: 45
 
+=head2 id_class
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -119,6 +125,8 @@ __PACKAGE__->add_columns(
   { data_type => "date", datetime_undef_if_invalid => 1, is_nullable => 1 },
   "avatar",
   { data_type => "varchar", is_nullable => 1, size => 45 },
+  "id_class",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -133,9 +141,61 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id_teacher");
 
+=head1 RELATIONS
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-06 13:18:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FO6cF3rgePwH+GvZYicM7Q
+=head2 id_class
+
+Type: belongs_to
+
+Related object: L<MyClass::Schema::Result::Class>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "id_class",
+  "MyClass::Schema::Result::Class",
+  { id_class => "id_class" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "RESTRICT",
+    on_update     => "RESTRICT",
+  },
+);
+
+=head2 schedule_tches
+
+Type: has_many
+
+Related object: L<MyClass::Schema::Result::ScheduleTch>
+
+=cut
+
+__PACKAGE__->has_many(
+  "schedule_tches",
+  "MyClass::Schema::Result::ScheduleTch",
+  { "foreign.teacher_id" => "self.id_teacher" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 subjects
+
+Type: has_many
+
+Related object: L<MyClass::Schema::Result::Subject>
+
+=cut
+
+__PACKAGE__->has_many(
+  "subjects",
+  "MyClass::Schema::Result::Subject",
+  { "foreign.id_teacher" => "self.id_teacher" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-24 10:49:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:edBPXfBN2RfBtoJ1OV6Kbg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

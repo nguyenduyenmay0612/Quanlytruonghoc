@@ -37,6 +37,12 @@ __PACKAGE__->table("schedule_tch");
 
 =head1 ACCESSORS
 
+=head2 id
+
+  data_type: 'integer'
+  is_auto_increment: 1
+  is_nullable: 0
+
 =head2 name_subject
 
   data_type: 'varchar'
@@ -61,9 +67,17 @@ __PACKAGE__->table("schedule_tch");
   is_nullable: 1
   size: 45
 
+=head2 teacher_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
+  "id",
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "name_subject",
   { data_type => "varchar", is_nullable => 0, size => 45 },
   "date",
@@ -72,11 +86,47 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 1, size => 45 },
   "room",
   { data_type => "varchar", is_nullable => 1, size => 45 },
+  "teacher_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
+);
+
+=head1 PRIMARY KEY
+
+=over 4
+
+=item * L</id>
+
+=back
+
+=cut
+
+__PACKAGE__->set_primary_key("id");
+
+=head1 RELATIONS
+
+=head2 teacher
+
+Type: belongs_to
+
+Related object: L<MyClass::Schema::Result::Teacher>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "teacher",
+  "MyClass::Schema::Result::Teacher",
+  { id_teacher => "teacher_id" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "RESTRICT",
+    on_update     => "RESTRICT",
+  },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-03 14:13:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rkBpmuiYBoISonSDk/2h8w
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-23 17:13:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1jGgH/4deR+8gAHG0wcRFQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

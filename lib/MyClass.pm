@@ -66,7 +66,7 @@ sub startup ($self) {
     
     #lylich
     $student->get('/profile_student')->to('StudentController#profile_student'); 
-    $teacher->get('/profile_gv')->to('TeacherController#profile_gv'); 
+    $teacher->get('/profile_teacher')->to('TeacherController#profile_teacher'); 
     
     #ketquahoctap
     $student->get('/diemhocphan')->to('StudentController#diemhocphan');
@@ -74,7 +74,7 @@ sub startup ($self) {
     $student->get('/chungchi')->to('StudentController#chungchi');  
 
     #lichday
-    $teacher->get('/schedule_gv')->to('TeacherController#schedule_gv');
+    $teacher->get('/schedule')->to('TeacherController#schedule');
 
     #quan ly sinh viên
     $teacher->get('/list_sv')->to('TeacherController#list_sv');

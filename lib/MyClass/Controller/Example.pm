@@ -39,7 +39,6 @@ sub thongbao_detail($self){
     my $noti1 = $self->app->{_dbh}->resultset('Noti')->find($id_noti);   
     if ($noti1) {
         $self->render(template => 'layouts/frontend/thongbao_detail', banner=>\@banner, activity=>\@activity, noti1=>$noti1, noti=>\@noti, image=>\@image);
-        # $self->render(template => 'layouts/frontend/thongbao_detail');
     }
 }
 
@@ -64,7 +63,7 @@ sub gioithieu($self){
     my @noti = $self->_get_noti();
     my @image = $self->_get_image();
 
-    $self->render(template => 'layouts/frontend/gioithieu', banner=>\@banner, post=>\@post, activity=>\@activity, noti=>\@noti);
+    $self->render(template => 'layouts/frontend/gioithieu', banner=>\@banner, post=>\@post, activity=>\@activity, noti=>\@noti, image=>\@image);
 }
 
 sub tuyensinh($self){

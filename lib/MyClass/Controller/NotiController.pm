@@ -64,7 +64,7 @@ sub delete_noti {
         noti_name => $_->noti_name,
         content => $_->content
     } } @noti;
-    $self->render(template => 'layouts/backend_gv/noti/noti', noti =>\@noti);
+    $self->redirect_to('/teacher/noti');    
     }else {
     $self->render(template => 'layouts/backend_gv/noti/noti', noti =>\@noti);
     }

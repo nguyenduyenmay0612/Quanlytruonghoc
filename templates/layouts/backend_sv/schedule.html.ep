@@ -17,22 +17,18 @@
         <thead>
           <tr>
             <th>Tên HP</th>
-            <th>Giáo viên</th>
             <th>Thứ</th>
             <th>Tiết</th>
             <th>Phòng</th>
           </tr>
         </thead>
-        <tbody >
-              % foreach my $item (@{$schedule}) {
+        <tbody >            
             <tr>  
-              <td><%= $item->{name_subject} %></td>
-              <td><%= $item->{teacher} %></td>
-              <td><%= $item->{date} %></td>
-              <td><%= $item->{lession} %></td>
-              <td><%= $item->{room} %></td>
-            </tr>
-            %}
+              <td><%= $schedule->{name_subject} %></td>
+              <td><%= $schedule->{date} %></td>
+              <td><%= $schedule->{lession} %></td>
+              <td><%= $schedule->{room} %></td>
+            </tr>          
         </tbody>     
         </table>
 

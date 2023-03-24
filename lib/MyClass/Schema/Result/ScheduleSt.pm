@@ -37,6 +37,12 @@ __PACKAGE__->table("schedule_st");
 
 =head1 ACCESSORS
 
+=head2 id
+
+  data_type: 'integer'
+  is_auto_increment: 1
+  is_nullable: 0
+
 =head2 date
 
   data_type: 'varchar'
@@ -49,42 +55,98 @@ __PACKAGE__->table("schedule_st");
   is_nullable: 1
   size: 11
 
-=head2 name_subject
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 45
-
-=head2 teacher
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 45
-
 =head2 room
 
   data_type: 'varchar'
   is_nullable: 1
   size: 11
 
+=head2 class_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
+=head2 subject_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
+  "id",
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "date",
   { data_type => "varchar", is_nullable => 1, size => 45 },
   "lession",
   { data_type => "varchar", is_nullable => 1, size => 11 },
-  "name_subject",
-  { data_type => "varchar", is_nullable => 1, size => 45 },
-  "teacher",
-  { data_type => "varchar", is_nullable => 1, size => 45 },
   "room",
   { data_type => "varchar", is_nullable => 1, size => 11 },
+  "class_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
+  "subject_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
+);
+
+=head1 PRIMARY KEY
+
+=over 4
+
+=item * L</id>
+
+=back
+
+=cut
+
+__PACKAGE__->set_primary_key("id");
+
+=head1 RELATIONS
+
+=head2 class
+
+Type: belongs_to
+
+Related object: L<MyClass::Schema::Result::Class>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "class",
+  "MyClass::Schema::Result::Class",
+  { id_class => "class_id" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "RESTRICT",
+    on_update     => "RESTRICT",
+  },
+);
+
+=head2 subject
+
+Type: belongs_to
+
+Related object: L<MyClass::Schema::Result::Subject>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "subject",
+  "MyClass::Schema::Result::Subject",
+  { id_subject => "subject_id" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "RESTRICT",
+    on_update     => "RESTRICT",
+  },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-01-10 09:52:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Uc29GUoMvqsS2aENIT+fsw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-23 17:31:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5+lEUhgSrpVMC9ontoVA0w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -9,24 +9,29 @@ my $log = Mojo::Log->new(path => '/log/app.log', level => 'warn');
 
 #thoikhoabieu
 sub schedule($self){
-   my @schedule_sv = $self->app->{_dbh}->resultset('ScheduleSt')->search({});
-    @schedule_sv  = map { { 
-       name_subject => $_->name_subject,
-       teacher => $_->teacher,
+    my $emailStudent = $self->session('email');
+    my $student = $self->app->{_dbh}->resultset('Student')->search({"email" => $emailStudent})->first;
+    my @schedule = $self->app->{_dbh}->resultset('ScheduleSt')->search({ "class_id" => $student->class_id});
+    foreach my $schedule(@schedule) {
+        <%= $schedule->{subject_id} %>
+    }
+    die(Dumper(@schedule));
+    @schedule = map { { 
+    name_subject => $_->name_subject,
+    #    teacher => $_->teacher,
         room=> $_->room,
         date => $_->date,
         lession => $_->lession,
-    } } @schedule_sv ;
-    $self->render(template => 'layouts/backend_sv/schedule_week',schedule_sv =>\@schedule_sv);
+    } } @schedule ;
+    $self->render(template => 'layouts/backend_sv/schedule',schedule =>\@schedule);
 }
 
 #danhbadienthoai
 sub phone_student($self){
     my @student = $self->app->{_dbh}->resultset('Student')->search({});
     @student = map { { 
-       id_student => $_->id_student,
-       full_name => $_->full_name,
-        #birthday => $_->birthday,
+        id_student => $_->id_student,
+        full_name => $_->full_name,
         email => $_->email,
         phone => $_->phone,
     } } @student;
@@ -67,6 +72,14 @@ sub profile_student($self){
 }
 #ketquahoctap
 sub diemhocphan($self){
+    my $id_student = $self->param('id_student');
+    my $dbh = $self->app->{_dbh};
+    my $marks = $dbh->resultset('Mark')->search({});
+    if ($marks) {
+        my $my_marks = +{
+            
+        }
+    }
     $self->render(template => 'layouts/backend_sv/diemhocphan');
 }
 

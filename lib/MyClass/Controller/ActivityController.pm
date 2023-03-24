@@ -68,7 +68,7 @@ sub delete_activity {
         activity_des => $_->activity_des,
         image => $_->image
     } } @activity;
-    $self->render(template => 'layouts/backend_gv/activity/activity', activity =>\@activity);
+    $self-> redirect_to('teacher/activity');
     }else {
     $self->render(template => 'layouts/backend_gv/activity/activity', activity =>\@activity);
     }

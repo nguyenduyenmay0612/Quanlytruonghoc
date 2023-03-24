@@ -10,8 +10,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="../assets/css/style2.css">
-  <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+  <link rel="stylesheet" href="/../assets/css/style2.css">
+  <script type="text/javascript" src="/../ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="/../js/ckeditor.js"></script>
+
 </head>
 <body>
  
@@ -20,8 +22,8 @@
     <div class="w3-sidebar w3-light-grey w3-bar-block">
       <h3 class="w3-bar-item">Tùy chọn</h3>
       <ul class="nav navbar-nav">
-        <li><a href="/teacher/profile_gv" class="w3-bar-item w3-button">Thông tin cá nhân</a></li> <br> <hr>
-        <li><a href="/teacher/schedule_gv" class="w3-bar-item w3-button">Lịch giảng dạy</a></li> <br><hr>  
+        <li><a href="/teacher/profile_teacher" class="w3-bar-item w3-button">Thông tin cá nhân</a></li> <br> <hr>
+        <li><a href="/teacher/schedule" class="w3-bar-item w3-button">Lịch giảng dạy</a></li> <br><hr>  
         <li>
             <a type="button" data-toggle="dropdown" class="w3-bar-item w3-button">Quản lý sinh viên<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -32,8 +34,8 @@
         <li>
             <a type="button" data-toggle="dropdown" class="w3-bar-item w3-button">Danh bạ điện thoại<span class="caret"></span></a>
             <ul class="dropdown-menu">
-            <li><a href="/teacher/phone_student1">Sinh viên lớp</a></li>
-            <li><a href="/teacher/phone_teacher1">Giáo viên giảng dạy lớp</a></li>           
+            <li><a href="/teacher/phone_student">Sinh viên lớp</a></li>
+            <li><a href="/teacher/phone_teacher">Giáo viên giảng dạy lớp</a></li>           
             </ul>
         </li><br> <hr>  
         <li>

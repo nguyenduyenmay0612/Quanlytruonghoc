@@ -63,7 +63,7 @@ sub delete_post {
     my $self = shift;
     my $id_post = $self->param('id_post');
     my $dbh = $self->app->{_dbh};
-    my $result = $dbh->resultset('Post')->find($id_post)->delete({});
+    my $result = $dbh->resultset('Post')->find($id_post)->delete($id_post);
     my @post = $self->app->{_dbh}->resultset('Post')->search({});
     if($result) {
     @post = map { { 
@@ -73,7 +73,7 @@ sub delete_post {
         content => $_->content,
         image => $_->image
     } } @post;
-    $self->render(template => 'layouts/backend_gv/post/post', post =>\@post);
+    $self->redirect_to('/teacher/post');  
     }else {
     $self->render(template => 'layouts/backend_gv/post/post', post =>\@post);
     }

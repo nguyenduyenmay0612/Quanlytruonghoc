@@ -12,10 +12,11 @@ use Cwd qw();
 sub profile_gv($self){
     my $id_teacher = $self->param('id_teacher');
     my $dbh = $self->app->{_dbh};
-    my $teacher = $dbh->resultset('Teacher')->search({"id_teacher" => 1})->first;
+    my $emailTeacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
     if ($teacher) {
         my $teacher_info = +{
-            # avatar => $avatar->avatar,
+            avatar => $teacher->avatar,
             full_name => $teacher->full_name,
             birthday => $teacher->birthday,
             email => $teacher->email,
@@ -26,7 +27,7 @@ sub profile_gv($self){
 }
 
 #lich giang day theo tuan của giang vien
-sub schedule_gv($self){
+sub schedule($self){
    my @schedule = $self->app->{_dbh}->resultset('ScheduleTch')->search({});
     @schedule = map { { 
         name_subject => $_->name_subject,

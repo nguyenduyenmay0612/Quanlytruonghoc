@@ -25,10 +25,7 @@
                             <textarea cols="80" rows="10" id="content" name="content"> 
                                 &lt;h1&gt;Article Title&lt;/h1&gt;
                                 &lt;p&gt;Here's some sample text&lt;/p&gt;
-                            </textarea>
-                            <script type="text/javascript">
-                                CKEDITOR.replace( 'content')
-                            </script>
+                            </textarea>                    
                             <input type="submit" value="Submit"/>
                             </div>
                       </div>

@@ -14,18 +14,33 @@
             <th>Cập nhật</th>
           </tr>
       </thead>
-      <tbody >
+      <tbody>
+      <script type="text/javascript">
+        function decodeHtml(str) {
+          let txt = document.createElement("textarea");
+          txt.innerHTML = str;
+          return txt.value;
+        }
+      </script>
         % foreach my $item (@{$noti}) {
       <tr>  
         <td><%= $item->{id_noti} %></td>
         <td><%= $item->{noti_name} %></td>
-        <td><textarea  rows="4" cols="30"><%= $item->{content} %></textarea></td>
-        <td><a href='edit_noti/<%= $item->{id_noti} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_noti/<%= $item->{id_noti} %>'>Xóa</a></td>
+        <td>
+          <div id="<%= $item->{id_noti}%>" style =" overflow: auto ; max-height: 200px; width: 350px;"><div>
+        </td>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                document.getElementById(<%= $item->{id_noti} %>).innerHTML= decodeHtml(`<%= $item->{content} %>`);
+            });
+        </script>
+
+        <td><a href='/teacher/edit_noti/<%= $item->{id_noti} %>'>Sửa</a>|<a onclick="myFunction()" href='/teacher/delete_noti/<%= $item->{id_noti} %>'>Xóa</a></td>
       </tr>
     %}
     </tbody>      
   </table> <hr>
-    <form action='/add_noti' method = "get">
+    <form action='/teacher/add_noti' method = "get">
         <button type="submit" class="btn btn-primary me-2">Thêm thông báo</button>
     </form>
     % if ($error) {

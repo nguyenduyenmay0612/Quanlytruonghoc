@@ -1,6 +1,6 @@
 % layout 'frontend/index';
 % title 'Welcome';
-% my $content = $post->content;
+
 <h2>TIN TỨC | SỰ KIỆN | HOẠT ĐỘNG</h2>
 <div class = "title-sukien">
  <b> <%= $post->title_post %><b>
@@ -8,11 +8,18 @@
 <hr> 
 <div class = "content-sukien">
 <p></p>
-<img src="..\assets\image\<%= $post->image %>" class = "image-sukien"> <br> <br>
-<span id="content"> <%= {$post->content} %> </span><br> <br> 
-</div>
-<!--<script>
-var content = `<%== "$content" %>`;
-console.log(content);
-CKEDITOR.instances['content'].setData(content);
+<img src="..\assets\image\<%= $post->image %>" class ="image-sukien"> <br> <br>
+<script type="text/javascript">
+    function decodeHtml(str) {
+        let txt = document.createElement("textarea");
+        txt.innerHTML = str;
+        return txt.value;
+    }
 </script>
+<span id="content"> <%= {$post->content} %> </span><br> <br> 
+<script type="text/javascript">
+    $(document).ready(function(){
+        document.getElementById("content").innerHTML= decodeHtml(`<%= $post->content %>`);
+    });
+</script>
+</div>

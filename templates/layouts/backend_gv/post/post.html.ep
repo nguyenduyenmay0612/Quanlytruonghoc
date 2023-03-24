@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody >
-        <script>
+        <script type="text/javascript">
         function decodeHtml(str) {
             let txt = document.createElement("textarea");
             txt.innerHTML = str;
@@ -27,11 +27,11 @@
         <tr>  
             <td><%= $item->{id_post} %></td>
             <td><%= $item->{title_post} %></td>
-            <td><%= $item->{summary} %></td>
+            <td> <div style = "overflow: auto ; max-height: 200px; width: 250px;"><%= $item->{summary} %> </div></td>
             <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="100" height="100"></td>
             <!-- <td><textarea  rows="7" cols="30"><%= $item->{content} %></textarea></td> -->
             <td >
-                <div id="<%= $item->{id_post} %>"><div>
+                <div id="<%= $item->{id_post}%>" style =" overflow: auto ; max-height: 200px; width: 350px;"><div>
             </td>
             <script type="text/javascript">
             $(document).ready(function(){
@@ -43,7 +43,7 @@
       %}
         </tbody>      
     </table> <hr>
-    <form action='/add_post' method = "get">
+    <form action='/teacher/add_post' method = "get">
         <button type="submit" class="btn btn-primary me-2">Thêm bài viết</button>
     </form>
     % if ($error) {

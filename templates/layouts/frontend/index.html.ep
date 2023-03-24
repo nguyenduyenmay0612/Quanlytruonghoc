@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../assets/css/style.css">
-  <script type="text/javascript" src="../ckedtior/ckeditor.js"></script>
+  <script type="text/javascript" src="/js/ckeditor.js"></script>
 </head>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v16.0" nonce="bcXgS5CS"></script>
@@ -35,8 +35,8 @@
         <li>
             <a type="button" data-toggle="dropdown">Liên hệ<span class="caret"></span></a>
             <ul class="dropdown-menu">
-            <li><a href="/student">Sinh viên</a></li>
-            <li><a href="/teacher">Giảng viên</a></li>
+            <li><a href="/student/login">Sinh viên</a></li>
+            <li><a href="/teacher/login">Giảng viên</a></li>
             <li><a href="/login">Khách</a></li>
             </ul>
         </li>
@@ -51,7 +51,7 @@
             <a class="nav-link" href="/teacher/login">Giảng viên</a>
           <% }%> 
         </li>
-        <li><a href="/student"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       </ul>
     </div>
   </div>
