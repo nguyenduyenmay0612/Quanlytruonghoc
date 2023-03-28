@@ -113,13 +113,13 @@ Related object: L<MyClass::Schema::Result::Teacher>
 __PACKAGE__->has_many(
   "teachers",
   "MyClass::Schema::Result::Teacher",
-  { "foreign.id_class" => "self.id_class" },
+  { "foreign.class_id" => "self.id_class" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-24 10:49:27
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BIkS5oMzjRyq8oTG05ChaQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-27 15:26:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qEk11aLnoh8UxhO79ua16A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

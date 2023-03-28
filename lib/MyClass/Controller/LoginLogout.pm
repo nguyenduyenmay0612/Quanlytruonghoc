@@ -42,38 +42,59 @@ sub alreadyLoggedIn_teacher ($self){
 
 sub displayLogin_student ($self) {
   if(&alreadyLoggedIn_student($self)) {
-    my $class_id = $self->session('class_id');
-    my $id_subject = $self->param('id_subject');
-    my $class_id = $self->session('class_id');
-    my $name_subject = $self->param('name_subject');
-    
-    my $subject = $self->app->{_dbh}->resultset('Subject')->find({$name_subject});
-    my $schedule = $self->app->{_dbh}->resultset('ScheduleSt')->search({ Subject => $subject->id_subject});
+    my $dbh = $self->app->{_dbh};
+    my $emailStudent = $self->session('email');
+    my $student = $dbh->resultset('Student')->search({"email" => $emailStudent})->first;
+    my $class_id = $student->class_id;
+    my @schedule_rows = $dbh->resultset('ScheduleSt')->search({"class_id" => $class_id});
+    my @schedules = +();
 
-    $self->render(template => 'layouts/backend_sv/schedule',schedule =>$schedule, subject=>$subject );            
-            # @schedule  = map { { 
-            # subject_id => $_->subject_id,
-            # # teacher => $_->teacher,
-            # room=> $_->room,
-            # date => $_->date,
-            # lession => $_->lession,
-            # } } @schedule ;            
-           
-  } else {
+    foreach my $schedule (@schedule_rows) {
+        my $subject = $dbh->resultset('Subject')->find($schedule->subject_id);
+        push @schedules, +{
+            name_subject => $subject->name_subject,
+            date => $schedule->date,
+            lession => $schedule->lession,
+            room => $schedule->room,
+        }
+    }
+    if (@schedule_rows) {
+        $self->render(template => 'layouts/backend_sv/schedule', schedule => \@schedules);
+    }
+                   
+    } else {
     $self->flash(error => 'Mời bạn đăng nhập!');
     $self->redirect_to('/student/login');  }
 }
 
 sub displayLogin_teacher ($self) {
   if(&alreadyLoggedIn_student($self)) {
-   my @schedule = $self->app->{_dbh}->resultset('ScheduleTch')->search({});
-            @schedule  = map { { 
-            name_subject => $_->name_subject,
-            lession => $_->lession,
-            room=> $_->room,
-            date => $_->date,
-            } } @schedule ; 
-            $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedule);    
+    my $dbh = $self->app->{_dbh};
+    my $emailTeacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $id_teacher = $teacher->id_teacher;
+    my @schedule_rows = $dbh->resultset('ScheduleTch')->search({"teacher_id" => $id_teacher});
+    my @schedules = +();
+    foreach my $schedule (@schedule_rows) {
+        my $subject = $dbh->resultset('Subject')->find($schedule->subject_id);
+        push @schedules, +{
+            name_subject => $subject->name_subject,
+            lession => $schedule->lession,
+            room=> $schedule->room,
+            date => $schedule->date,
+        }
+    }
+    if (@schedule_rows){
+        $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedules);
+    }
+    # my @schedule = $self->app->{_dbh}->resultset('ScheduleTch')->search({});
+    #         @schedule  = map { { 
+    #         name_subject => $_->name_subject,
+    #         lession => $_->lession,
+    #         room=> $_->room,
+    #         date => $_->date,
+    #         } } @schedule ; 
+    #         $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedule);    
   } else {
     $self->flash(error => 'Mời bạn đăng nhập!');
     $self->redirect_to('/student/login');  }
@@ -88,19 +109,11 @@ sub validUserCheck_student ($self) {
     my $dbh = $self->app->{_dbh};
     my $data = $dbh->resultset('Student')->search({email=>$email, password=>$password})->first;
     if ($data && !!%$data) {
-      $self->session(is_auth => 1);
-      $self->session(email => $email);
-      $self->session(expiration => 600);
-      my $schedule = $self->app->{_dbh}->resultset('ScheduleSt')->find($class_id);
-            # @schedule  = map { { 
-            # subject_id => $_->subject_id,
-            # # teacher => $_->teacher,
-            # room=> $_->room,
-            # date => $_->date,
-            # lession => $_->lession,
-            # } } @schedule ;            
-            my $subject = $self->app->{_dbh}->resultset('Subject')->search({});                
-             $self->redirect_to('/student');  
+        $self->session(is_auth => 1);
+        $self->session(email => $email);         
+        $self->session(expiration => 600);              
+        
+        $self->redirect_to('/student');                                         
     } else {
         $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');
         $self->redirect_to('/student/login');
@@ -113,21 +126,25 @@ sub validUserCheck_teacher($self) {
     my $dbh = $self->app->{_dbh};
     my $data = $dbh->resultset('Teacher')->search({email=>$email, password=>$password})->first;
     if ($data && !!%$data) {
-      $self->session(is_auth => 1);
-      $self->session(email => $email);
-      my @schedule = $self->app->{_dbh}->resultset('ScheduleTch')->search({});
-            @schedule  = map { { 
-            name_subject => $_->name_subject,
-            lession => $_->lession,
-            room=> $_->room,
-            date => $_->date,
-            } } @schedule ;
-            $self->redirect_to('/teacher');    
+    $self->session(is_auth => 1);
+    $self->session(email => $email);
+    $self->session(expiration => 600);      
+    $self->redirect_to('/teacher'); 
+       
     } else {
         $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');
         $self->redirect_to('/teacher/login');
     }
 }
+
+sub _student_from_session {
+    my $self = shift;
+
+    return $self->app->{_dbh}->resultset ('Student')->find('class_id') 
+    if ($self->session('logged_in'));
+}
+
+
 #action form login
 # sub loginto_sv($self){
 #     my $email = $self->param('email');

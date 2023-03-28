@@ -89,7 +89,7 @@ __PACKAGE__->table("student");
 
   data_type: 'integer'
   is_foreign_key: 1
-  is_nullable: 1
+  is_nullable: 0
 
 =cut
 
@@ -111,7 +111,7 @@ __PACKAGE__->add_columns(
   "avatar",
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "class_id",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -131,18 +131,16 @@ __PACKAGE__->set_primary_key("id_student");
 =head2 class
 
 Type: belongs_to
+
+Related object: L<MyClass::Schema::Result::Class>
+
 =cut
 
 __PACKAGE__->belongs_to(
   "class",
   "MyClass::Schema::Result::Class",
   { id_class => "class_id" },
-  {
-    is_deferrable => 1,
-    join_type     => "LEFT",
-    on_delete     => "RESTRICT",
-    on_update     => "RESTRICT",
-  },
+  { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
 );
 
 =head2 marks
@@ -161,8 +159,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-24 10:49:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5yXh+DzjiFQnP04p2QdcUg
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-27 16:08:39
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Xk+MEHtbpuvDgI97l8gsPg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

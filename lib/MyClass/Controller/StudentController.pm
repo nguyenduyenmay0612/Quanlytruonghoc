@@ -8,22 +8,25 @@ use Mojo::Log;
 my $log = Mojo::Log->new(path => '/log/app.log', level => 'warn');
 
 #thoikhoabieu
-sub schedule($self){
+sub schedule($self){   
+    my $dbh = $self->app->{_dbh};
     my $emailStudent = $self->session('email');
-    my $student = $self->app->{_dbh}->resultset('Student')->search({"email" => $emailStudent})->first;
-    my @schedule = $self->app->{_dbh}->resultset('ScheduleSt')->search({ "class_id" => $student->class_id});
-    foreach my $schedule(@schedule) {
-        <%= $schedule->{subject_id} %>
+    my $student = $dbh->resultset('Student')->search({"email" => $emailStudent})->first;
+    my $class_id = $student->class_id;
+    my @schedule_rows = $dbh->resultset('ScheduleSt')->search({"class_id" => $class_id});
+    my @schedules = +();
+    foreach my $schedule (@schedule_rows) {
+        my $subject = $dbh->resultset('Subject')->find($schedule->subject_id);
+        push @schedules, +{
+            name_subject => $subject->name_subject,
+            date => $schedule->date,
+            lession => $schedule->lession,
+            room => $schedule->room,
+        };
     }
-    die(Dumper(@schedule));
-    @schedule = map { { 
-    name_subject => $_->name_subject,
-    #    teacher => $_->teacher,
-        room=> $_->room,
-        date => $_->date,
-        lession => $_->lession,
-    } } @schedule ;
-    $self->render(template => 'layouts/backend_sv/schedule',schedule =>\@schedule);
+    if(@schedule_rows){
+        $self->render(template => 'layouts/backend_sv/schedule', schedule => \@schedules);
+    }
 }
 
 #danhbadienthoai
@@ -90,4 +93,5 @@ sub ketqua_xhv($self){
 sub chungchi($self){
     $self->render(template => 'layouts/backend_sv/chungchi');
 }
+
 1;

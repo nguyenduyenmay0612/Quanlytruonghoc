@@ -48,12 +48,6 @@ __PACKAGE__->table("subject");
   is_nullable: 0
   size: 45
 
-=head2 id_teacher
-
-  data_type: 'integer'
-  is_foreign_key: 1
-  is_nullable: 0
-
 =cut
 
 __PACKAGE__->add_columns(
@@ -61,8 +55,6 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_nullable => 0 },
   "name_subject",
   { data_type => "varchar", is_nullable => 0, size => 45 },
-  "id_teacher",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -78,21 +70,6 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id_subject");
 
 =head1 RELATIONS
-
-=head2 id_teacher
-
-Type: belongs_to
-
-Related object: L<MyClass::Schema::Result::Teacher>
-
-=cut
-
-__PACKAGE__->belongs_to(
-  "id_teacher",
-  "MyClass::Schema::Result::Teacher",
-  { id_teacher => "id_teacher" },
-  { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
-);
 
 =head2 marks
 
@@ -124,9 +101,24 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 schedule_tches
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-23 17:31:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hlA5UjIynjof/PFwd0rWBA
+Type: has_many
+
+Related object: L<MyClass::Schema::Result::ScheduleTch>
+
+=cut
+
+__PACKAGE__->has_many(
+  "schedule_tches",
+  "MyClass::Schema::Result::ScheduleTch",
+  { "foreign.subject_id" => "self.id_subject" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-28 15:54:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sHmLlcNS9BNg9XAM8D2cxA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

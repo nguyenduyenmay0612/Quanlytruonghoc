@@ -96,7 +96,7 @@ __PACKAGE__->table("teacher");
   is_nullable: 1
   size: 45
 
-=head2 id_class
+=head2 class_id
 
   data_type: 'integer'
   is_foreign_key: 1
@@ -125,7 +125,7 @@ __PACKAGE__->add_columns(
   { data_type => "date", datetime_undef_if_invalid => 1, is_nullable => 1 },
   "avatar",
   { data_type => "varchar", is_nullable => 1, size => 45 },
-  "id_class",
+  "class_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
 );
 
@@ -143,7 +143,7 @@ __PACKAGE__->set_primary_key("id_teacher");
 
 =head1 RELATIONS
 
-=head2 id_class
+=head2 class
 
 Type: belongs_to
 
@@ -152,9 +152,9 @@ Related object: L<MyClass::Schema::Result::Class>
 =cut
 
 __PACKAGE__->belongs_to(
-  "id_class",
+  "class",
   "MyClass::Schema::Result::Class",
-  { id_class => "id_class" },
+  { id_class => "class_id" },
   {
     is_deferrable => 1,
     join_type     => "LEFT",
@@ -178,24 +178,9 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 subjects
 
-Type: has_many
-
-Related object: L<MyClass::Schema::Result::Subject>
-
-=cut
-
-__PACKAGE__->has_many(
-  "subjects",
-  "MyClass::Schema::Result::Subject",
-  { "foreign.id_teacher" => "self.id_teacher" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-24 10:49:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:edBPXfBN2RfBtoJ1OV6Kbg
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-27 15:39:23
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MSm4MICIPo6If8QS5G1RgA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

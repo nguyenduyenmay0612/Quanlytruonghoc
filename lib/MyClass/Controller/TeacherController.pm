@@ -9,8 +9,7 @@ use Mojo::Upload;
 use Cwd qw();
 
 #ly lich giang vien
-sub profile_gv($self){
-    my $id_teacher = $self->param('id_teacher');
+sub profile_teacher($self){
     my $dbh = $self->app->{_dbh};
     my $emailTeacher = $self->session('email');
     my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
@@ -18,7 +17,7 @@ sub profile_gv($self){
         my $teacher_info = +{
             avatar => $teacher->avatar,
             full_name => $teacher->full_name,
-            birthday => $teacher->birthday,
+            birthday => $teacher->birthday->strftime('%d/%m/%Y'),
             email => $teacher->email,
             phone => $teacher->phone,
         };
@@ -28,19 +27,42 @@ sub profile_gv($self){
 
 #lich giang day theo tuan của giang vien
 sub schedule($self){
-   my @schedule = $self->app->{_dbh}->resultset('ScheduleTch')->search({});
-    @schedule = map { { 
-        name_subject => $_->name_subject,
-        lession => $_->lession,
-        room=> $_->room,
-        date => $_->date,
-    } } @schedule ;
-
-    $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedule);
+    my $dbh = $self->app->{_dbh};
+    my $emailTeacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $id_teacher = $teacher->id_teacher;
+    my @schedule_rows = $dbh->resultset('ScheduleTch')->search({"teacher_id" => $id_teacher});
+    my @schedules = +();
+    foreach my $schedule (@schedule_rows) {
+        my $subject = $dbh->resultset('Subject')->find($schedule->subject_id);
+        push @schedules, +{
+            name_subject => $subject->name_subject,
+            lession => $schedule->lession,
+            room=> $schedule->room,
+            date => $schedule->date,
+        }
+    }
+    if (@schedule_rows){
+        $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedules);
+}
 }
 
 #hien thi danh ba dien thoai sinh vien lop
 sub phone_student($self){
+    my $dbh = $self->app->{_dbh};
+    my $emailTeacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $class_id = $teacher->class_id;
+    my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});             
+    my @student_rows = +();
+    foreach my $student (@students) {
+        push @student_rows, +{
+        id_student => $student->id_student,
+        full_name => $student->full_name,      
+        email => $student->email,
+        phone => $student->phone
+    };
+    }
     my @student = $self->app->{_dbh}->resultset('Student')->search({});
     @student = map { { 
        id_student => $_->id_student,
@@ -67,29 +89,32 @@ sub phone_teacher($self){
 
 #hien thi danh sach thong tin sinh vien
 sub list_sv($self){
+    my $dbh = $self->app->{_dbh};
+    my $emailTeacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $class_id = $teacher->class_id;
+    my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});             
+    my @student_rows = +();
+    foreach my $student (@students) {
+        push @student_rows, +{
+        id_student => $student->id_student,
+        full_name => $student->full_name,
+        birthday => $student->birthday->strftime('%d/%m/%Y'),
+        address => $student->address,
+        email => $student->email,
+        phone => $student->phone
+    };
+    }
+    # @students = map { { 
+    #     id_student => $_->id_student,
+    #     full_name => $_->full_name,
+    #     birthday => $_->birthday,
+    #     address => $_->address,
+    #     email => $_->email,
+    #     phone => $_->phone
+    # } } @student;
 
-    my $dbh = $self->app->{dbh};                
-    # my $paginate = $self->app->_get_pagination;    
-    # my $page = ( !$self->param('page') ) ? 1 : $self->param('page');
-    # my $total_students =$self->app->{_dbh}->resultset('Student')->search({})->count;
-
-    my @student = $self->app->{_dbh}->resultset('Student')->search({},
-    # { rows => $paginate, page => $page }
-    );
-    @student = map { { 
-        id_student => $_->id_student,
-        full_name => $_->full_name,
-        birthday => $_->birthday,
-        address => $_->address,
-        email => $_->email,
-        phone => $_->phone
-    } } @student;
-
-    $self->render(template => 'layouts/backend_gv/student/list_sv', 
-    student=>\@student,
-    # total_pages => $total_students / $paginate,
-    # current_page => $page
-    );
+    $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student_rows);
 }
 
 #them sinh vien moi
@@ -116,7 +141,9 @@ sub add_sv {
         $self->flash(error => 'Tên sinh viên, ngày sinh, email, password và địa chỉ là các trường không thể thiếu');
         $self->redirect_to('add_sv');
     }
-
+    my $emailTeacher = $self->session('email');
+    my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    # my $class_id = $teacher->class_id;
     my $dbh = $self->app->{_dbh};
     my $student = $dbh->resultset('Student')->search({ email => $email});
 
@@ -124,6 +151,7 @@ sub add_sv {
         eval {
             $dbh->resultset('Student')->create({
                 # id_student => $id_student,
+                class_id => $teacher->class_id,
                 full_name => $full_name,
                 birthday => $birthday,
                 address => $address,

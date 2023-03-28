@@ -22,13 +22,15 @@
             <th>Phòng</th>
           </tr>
         </thead>
-        <tbody >            
-            <tr>  
-              <td><%= $schedule->{name_subject} %></td>
-              <td><%= $schedule->{date} %></td>
-              <td><%= $schedule->{lession} %></td>
-              <td><%= $schedule->{room} %></td>
-            </tr>          
+        <tbody > 
+          % foreach my $items (@{$schedule}) {
+          <tr>  
+            <td><%= $items->{name_subject} %></td>
+            <td><%= $items->{date} %></td>
+            <td><%= $items->{lession} %></td>
+            <td><%= $items->{room} %></td>
+          </tr>
+        %}
         </tbody>     
         </table>
 
