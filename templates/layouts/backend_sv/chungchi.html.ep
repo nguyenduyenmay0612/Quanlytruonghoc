@@ -3,8 +3,8 @@
     <div class="row content">
         <div class="col-sm-2 sidenav">  
         <div> <br>             
-            <b><a href="/student/diemhocphan">Điểm học phần</a></b> <br> <hr>
-            <b><a href="/student/ketqua_xhv">Kết quả xét học vụ</a></b> <br> <hr>
+            <b><a href="/student/marks_student">Điểm học phần</a></b> <br> <hr>
+            <b><a href="/student/result">Kết quả xét học vụ</a></b> <br> <hr>
             <b><a class="active" href="/student/tkb_ngay">Chứng chỉ của bạn</a></b> <br> <hr>                    
         </div> <br>
         </div>

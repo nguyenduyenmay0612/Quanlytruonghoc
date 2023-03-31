@@ -28,7 +28,7 @@
                                 return txt.value;
                             }
                         </script>
-                        <div style = "overflow: auto; max-height: 300px" class="ckeditor1" id="activity_des" name="activity_des"> <%= $activity->activity_des %></div>
+                        <textarea style = "overflow: auto; max-height: 300px" class="ckeditor" id="activity_des" name="activity_des"> <%= $activity->activity_des %></textarea>
                         <script type="text/javascript">
                               $(document).ready(function(){
                                   document.getElementById("activity_des").innerHTML= decodeHtml(`<%= $activity->activity_des %>`);

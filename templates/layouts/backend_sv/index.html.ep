@@ -43,9 +43,8 @@
         <li>
             <a type="button" data-toggle="dropdown">Kết quả học tập<span class="caret"></span></a>
             <ul class="dropdown-menu">
-            <li><a href="/student/diemhocphan">Điểm học phần</a></li>
-            <li><a href="/student/ketqua_xhv">Kết quả xét học vụ</a></li>
-            <li><a href="/student/chungchi">Chứng chỉ</a></li>
+            <li><a href="/student/marks_student">Điểm học phần</a></li>
+            <li><a href="/student/result">Kết quả xét học vụ</a></li>
             </ul>
         </li>
       </ul>

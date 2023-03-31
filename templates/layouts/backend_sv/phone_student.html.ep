@@ -4,8 +4,8 @@
     <div class="col-sm-2 sidenav">  
       <div>
           <br> 
-          <b><a class="active" href="/danhba_sv">Danh bạ sinh viên lớp</a></b> <br> <hr>
-          <b><a  href="/danhba_gv">Danh bạ giáo viên</a></b> <br> <hr>
+          <b><a class="active" href="/student/phone_student">Danh bạ sinh viên lớp</a></b> <br> <hr>
+          <b><a  href="/student/phone_teacher">Danh bạ giáo viên</a></b> <br> <hr>
                 
       </div> <br>
     </div>

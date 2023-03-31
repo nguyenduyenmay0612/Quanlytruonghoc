@@ -82,7 +82,7 @@ Related object: L<MyClass::Schema::Result::Mark>
 __PACKAGE__->has_many(
   "marks",
   "MyClass::Schema::Result::Mark",
-  { "foreign.id_subject" => "self.id_subject" },
+  { "foreign.subject_id" => "self.id_subject" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -117,8 +117,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-28 15:54:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sHmLlcNS9BNg9XAM8D2cxA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-31 10:00:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:c6mpPD4NRuTG2vlHvqTvNA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

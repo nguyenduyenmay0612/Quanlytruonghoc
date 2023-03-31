@@ -111,8 +111,7 @@ sub validUserCheck_student ($self) {
     if ($data && !!%$data) {
         $self->session(is_auth => 1);
         $self->session(email => $email);         
-        $self->session(expiration => 600);              
-        
+        $self->session(expiration => 600);                     
         $self->redirect_to('/student');                                         
     } else {
         $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');

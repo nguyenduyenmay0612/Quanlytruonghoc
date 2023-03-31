@@ -28,8 +28,8 @@ sub profile_teacher($self){
 #lich giang day theo tuan của giang vien
 sub schedule($self){
     my $dbh = $self->app->{_dbh};
-    my $emailTeacher = $self->session('email');
-    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $email_teacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_teacher})->first;
     my $id_teacher = $teacher->id_teacher;
     my @schedule_rows = $dbh->resultset('ScheduleTch')->search({"teacher_id" => $id_teacher});
     my @schedules = +();
@@ -50,8 +50,8 @@ sub schedule($self){
 #hien thi danh ba dien thoai sinh vien lop
 sub phone_student($self){
     my $dbh = $self->app->{_dbh};
-    my $emailTeacher = $self->session('email');
-    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $email_teacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_teacher})->first;
     my $class_id = $teacher->class_id;
     my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});             
     my @student_rows = +();
@@ -63,15 +63,8 @@ sub phone_student($self){
         phone => $student->phone
     };
     }
-    my @student = $self->app->{_dbh}->resultset('Student')->search({});
-    @student = map { { 
-       id_student => $_->id_student,
-       full_name => $_->full_name,
-        email => $_->email,
-        phone => $_->phone,
-    } } @student;
 
-    $self->render(template => 'layouts/backend_gv/phone_student', student=>\@student);
+    $self->render(template => 'layouts/backend_gv/phone_student', student=>\@student_rows);
 }
 
 #hien thi danh ba dien thoai giang vien lop
@@ -114,7 +107,7 @@ sub list_sv($self){
     #     phone => $_->phone
     # } } @student;
 
-    $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student_rows);
+    $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student_rows, error => '', message => '');
 }
 
 #them sinh vien moi
@@ -221,16 +214,8 @@ sub delete_sv{
     my $result = $dbh->resultset('Student')->find($id_student)->delete({});
     my @student = $self->app->{_dbh}->resultset('Student')->search({});
     if($result) {
-    @student = map { { 
-       id_student => $_->id_student,
-       full_name => $_->full_name,
-        birthday => $_->birthday,
-        address => $_->address,
-        email => $_->email,
-        phone => $_->phone,
-        avatar => $_->avatar
-    } } @student;
-    $self->render(template => 'layouts/backend_gv/student/list_sv', student =>\@student);
+        $self->redirect_to('/teacher/list_sv');
+        $self->flash(message => 'Đã xóa thành công');
     }else {
     $self->render(template => 'layouts/backend_gv/student/list_sv', student =>\@student);
     }
@@ -238,19 +223,26 @@ sub delete_sv{
 
 sub search_sv{
     my $self = shift;
+    my $dbh = $self->app->{_dbh};
     my $full_name = $self->param('full_name');
+    my $emailTeacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $class_id = $teacher->class_id;
+    my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});
+    if (@students) {
     my @student = $self->app->{_dbh}->resultset('Student')->search_like({ full_name => '%'.$full_name.'%' });
     @student = map { { 
-       id_student => $_->id_student,
-       full_name => $_->full_name,
+        id_student => $_->id_student,
+        full_name => $_->full_name,
         birthday => $_->birthday,
         address => $_->address,
         email => $_->email,
         phone => $_->phone,
         avatar => $_->avatar
     } } @student;
-
-    $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student);
+    $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student, error => '', message =>'');
 }
+}
+
 
 1;

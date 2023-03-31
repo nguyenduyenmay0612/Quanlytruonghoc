@@ -31,15 +31,23 @@ sub schedule($self){
 
 #danhbadienthoai
 sub phone_student($self){
-    my @student = $self->app->{_dbh}->resultset('Student')->search({});
-    @student = map { { 
-        id_student => $_->id_student,
-        full_name => $_->full_name,
-        email => $_->email,
-        phone => $_->phone,
-    } } @student;
+    my $dbh = $self->app->{_dbh};
+    my $email_student = $self->session('email');
+    my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
+    my $class_id = $student->class_id;
+    my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});             
+    my @student_rows = +();
+    foreach my $student (@students) {
+        push @student_rows, +{
+        id_student => $student->id_student,
+        full_name => $student->full_name,      
+        email => $student->email,
+        phone => $student->phone
+    };
+    }
 
-    $self->render(template => 'layouts/backend_sv/phone_student', student=>\@student);
+
+    $self->render(template => 'layouts/backend_sv/phone_student', student=>\@student_rows);
 }
 
 sub phone_teacher($self){
@@ -61,33 +69,64 @@ sub profile_student($self){
     my $dbh = $self->app->{_dbh};
     my $emailStudent = $self->session('email');
     my $student = $dbh->resultset('Student')->search({"email" => $emailStudent})->first;
-    if ($student) {
+
+    if ($student) {    
+        my $class_id = $student->class_id;
+        my $class = $dbh->resultset('Class')->search({"id_class" => $class_id});
+        my $class_row =  $dbh->resultset('Class')->find($student->class_id);
         my $student_info = +{
+            name_class => $class_row->name_class,
             avatar => $student->avatar,
             full_name => $student->full_name,
-            birthday => $student->birthday,
+            birthday => $student->birthday->strftime('%d/%m/%Y'),
             address => $student->address,
             email => $student->email,
             phone => $student->phone,
         };
-        $self->render(template => 'layouts/backend_sv/profile_student', student=>$student_info);
+        $self->render(template => 'layouts/backend_sv/profile_student', student=>$student_info, );
     }    
 }
 #ketquahoctap
-sub diemhocphan($self){
-    my $id_student = $self->param('id_student');
+sub get_marks($self){
     my $dbh = $self->app->{_dbh};
-    my $marks = $dbh->resultset('Mark')->search({});
-    if ($marks) {
-        my $my_marks = +{
-            
+    my $email_student = $self->session('email');
+    my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
+    my $id_student = $student->id_student;
+    my @mark_student = $dbh->resultset('Mark')->search({"student_id" => $id_student});
+    my @marks = +();
+    foreach my $mark (@mark_student) {
+        my $subject = $dbh->resultset('Subject')->find($mark->subject_id);
+        push @marks, +{
+             name_subject => $subject->name_subject,
+             marks_1 => $mark->marks_1,
+             marks_2 => $mark->marks_2,
+             marks_3 => $mark->marks_3,
+             marks_total => $mark->marks_total
         }
     }
-    $self->render(template => 'layouts/backend_sv/diemhocphan');
+
+    $self->render(template => 'layouts/backend_sv/marks_student', marks => \@marks);
 }
 
-sub ketqua_xhv($self){
-    $self->render(template => 'layouts/backend_sv/ketqua_xhv');
+sub get_result($self){
+    my $dbh = $self->app->{_dbh};
+    my $email_student = $self->session('email');
+    my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
+    my $id_student = $student->id_student;
+    my @result_student = $dbh->resultset('Result')->search({"student_id" => $id_student});
+    my @results = +();
+    foreach my $result (@result_student) {
+        push @results, +{
+            semester => $result->semester,
+            school_year => $result->school_year,
+            result_4 => $result->result_4,
+            reult_10 => $result->reult_10,
+            level => $result->level,
+            result_total_4 => $result->result_total_4,
+            result_total_10 => $result->result_total_10,
+        }
+    }
+    $self->render(template => 'layouts/backend_sv/result', results =>\@results);
 }
 
 sub chungchi($self){

@@ -154,13 +154,28 @@ Related object: L<MyClass::Schema::Result::Mark>
 __PACKAGE__->has_many(
   "marks",
   "MyClass::Schema::Result::Mark",
-  { "foreign.id_student" => "self.id_student" },
+  { "foreign.student_id" => "self.id_student" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 results
+
+Type: has_many
+
+Related object: L<MyClass::Schema::Result::Result>
+
+=cut
+
+__PACKAGE__->has_many(
+  "results",
+  "MyClass::Schema::Result::Result",
+  { "foreign.student_id" => "self.id_student" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-27 16:08:39
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Xk+MEHtbpuvDgI97l8gsPg
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-31 11:07:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oJ303tLUG5/Q9Ee61CGlRA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

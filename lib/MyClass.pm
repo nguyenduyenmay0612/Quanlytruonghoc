@@ -69,8 +69,8 @@ sub startup ($self) {
     $teacher->get('/profile_teacher')->to('TeacherController#profile_teacher'); 
     
     #ketquahoctap
-    $student->get('/diemhocphan')->to('StudentController#diemhocphan');
-    $student->get('/ketqua_xhv')->to('StudentController#ketqua_xhv');
+    $student->get('/marks_student')->to('StudentController#get_marks');
+    $student->get('/result')->to('StudentController#get_result');
     $student->get('/chungchi')->to('StudentController#chungchi');  
 
     #lichday

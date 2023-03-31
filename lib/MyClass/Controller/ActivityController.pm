@@ -24,7 +24,6 @@ sub activity {
 sub edit_activity_view {
     my $self = shift;
     my $id_activity = $self->param('id_activity');
-    # my $dbh = $self->app->{_dbh};
     my $activity = $self->app->{_dbh}->resultset('Activity')->find($id_activity);   
     if ($activity) {
         $self->render(template => 'layouts/backend_gv/activity/edit_activity', activity => $activity , message => '', error=>'');

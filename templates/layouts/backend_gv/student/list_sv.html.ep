@@ -34,9 +34,20 @@
         <td><%= $item->{phone} %></td>
         <td><a href='edit_sv/<%= $item->{id_student} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_sv/<%= $item->{id_student} %>'>Xóa</a></td>
       </tr>
-    %}
+      %}
     </tbody>      
-  </table> 
+  </table>
+    % if ($error) {
+    <div class="error" style="color: red">
+      <small> <%= $error %> </small>
+    </div>
+    %}
+
+    % if ($message) {
+    <div class="error" style="color: green">
+      <small> <%= $message %> </small>
+    </div>
+    %} 
 </div>
 </div>
 
