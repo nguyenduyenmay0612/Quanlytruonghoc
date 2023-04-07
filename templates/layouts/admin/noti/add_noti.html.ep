@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
 <div class="page-header">
         <h3 class="page-title"> Thêm thông báo mới </h3>
         <nav aria-label="breadcrumb"></nav>
@@ -7,7 +7,7 @@
             <div >
                 <div class="card">
                   <div class="card-body">                                  
-                    <form method="post" action='/teacher/add_noti' class="form-add-student">                       
+                    <form method="post" action='/admin/add_noti' class="form-add-student">                       
                       <div class="form-group">
                         <label>Tên bài đăng</label>
                         <input type="text" class="form-control" id="noti_name" name="noti_name" placeholder="Tiêu đề thông báo" required>

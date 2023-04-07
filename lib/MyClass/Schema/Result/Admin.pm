@@ -1,12 +1,12 @@
 use utf8;
-package MyClass::Schema::Result::Activity;
+package MyClass::Schema::Result::Admin;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-MyClass::Schema::Result::Activity
+MyClass::Schema::Result::Admin
 
 =cut
 
@@ -29,32 +29,27 @@ use base 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
 
-=head1 TABLE: C<activity>
+=head1 TABLE: C<admin>
 
 =cut
 
-__PACKAGE__->table("activity");
+__PACKAGE__->table("admin");
 
 =head1 ACCESSORS
 
-=head2 id_activity
+=head2 id_admin
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
 
-=head2 activity_name
+=head2 email
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 100
+  size: 45
 
-=head2 activity_des
-
-  data_type: 'text'
-  is_nullable: 0
-
-=head2 image
+=head2 password
 
   data_type: 'varchar'
   is_nullable: 0
@@ -63,13 +58,11 @@ __PACKAGE__->table("activity");
 =cut
 
 __PACKAGE__->add_columns(
-  "id_activity",
+  "id_admin",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "activity_name",
-  { data_type => "varchar", is_nullable => 0, size => 100 },
-  "activity_des",
-  { data_type => "text", is_nullable => 0 },
-  "image",
+  "email",
+  { data_type => "varchar", is_nullable => 0, size => 45 },
+  "password",
   { data_type => "varchar", is_nullable => 0, size => 45 },
 );
 
@@ -77,17 +70,17 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</id_activity>
+=item * L</id_admin>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("id_activity");
+__PACKAGE__->set_primary_key("id_admin");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-04 16:23:34
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5NURT3PHdGW9HGsssY0EkQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-07 11:05:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GeKTX4q0t6gxjRUyHJFk3A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

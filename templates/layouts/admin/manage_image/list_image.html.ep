@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
 <div>
     <br>
     <h3>
@@ -27,7 +27,7 @@
                 <td><%= $item->{id_image} %></td>
                 <td><%= $item->{image_name} %></td>
                 <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="100" height="100"></td>
-                <td><a href='edit_image/<%= $item->{id_image} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_image/<%= $item->{id_image} %>'>Xóa</a></td>
+                <td><a href='/admin/edit_image/<%= $item->{id_image} %>'>Sửa</a>|<a onclick="myFunction()" href='/admin/delete_image/<%= $item->{id_image} %>'>Xóa</a></td>
             </tr>
         %}
         </tbody>      

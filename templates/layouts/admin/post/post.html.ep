@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
 <div><br>
     <h3>
         Quản lý bài đăng
@@ -38,12 +38,12 @@
                 document.getElementById(<%= $item->{id_post} %>).innerHTML= decodeHtml(`<%= $item->{content} %>`);
             });
             </script>
-            <td><a href='/teacher/edit_post/<%= $item->{id_post} %>'>Sửa</a>|<a onclick="myFunction()" href='/teacher/delete_post/<%= $item->{id_post} %>'>Xóa</a></td>
+            <td><a href='/admin/edit_post/<%= $item->{id_post} %>'>Sửa</a>|<a onclick="myFunction()" href='/admin/delete_post/<%= $item->{id_post} %>'>Xóa</a></td>
         </tr>
       %}
         </tbody>      
     </table> <hr>
-    <form action='/teacher/add_post' method = "get">
+    <form action='/admin/add_post' method = "get">
         <button type="submit" class="btn btn-primary me-2">Thêm bài viết</button>
     </form>
     % if ($error) {

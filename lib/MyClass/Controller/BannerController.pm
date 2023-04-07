@@ -17,7 +17,7 @@ sub banner{
        image=> $_->image
     } } @banner;
 
-    $self->render(template => 'layouts/backend_gv/banner/banner', banner=>\@banner, message=>'', error=>'');    
+    $self->render(template => 'layouts/admin/banner/banner', banner=>\@banner, message=>'', error=>'');    
 }
 
 sub edit_banner_view{
@@ -27,9 +27,9 @@ sub edit_banner_view{
     my $banner = $dbh->resultset('Banner')->find($id_banner);
     
     if ($banner) {
-        $self->render(template => 'layouts/backend_gv/banner/edit_banner', banner => $banner , message => '', error=>'');
+        $self->render(template => 'layouts/admin/banner/edit_banner', banner => $banner , message => '', error=>'');
     } else {
-        $self->render(template => 'layouts/backend_gv/banner/banner');
+        $self->render(template => 'layouts/admin/banner/banner');
     }
 }
 
@@ -49,7 +49,7 @@ sub edit_banner{
             image => $image,
             });
             my $banner = $dbh->resultset('Banner')->find($id_banner);
-            $self->render(template => 'layouts/backend_gv/banner/edit_banner', banner => $banner, message => 'Cập nhật thành công', error=>'');   
+            $self->render(template => 'layouts/admin/banner/edit_banner', banner => $banner, message => 'Cập nhật thành công', error=>'');   
         }
 }
 
@@ -65,9 +65,9 @@ sub delete_banner{
        banner_name => $_->banner_name,
         image => $_->image
     } } @banner;
-    $self->render(template => 'layouts/backend_gv/banner/banner', banner =>\@banner);
+    $self->render(template => 'layouts/admin/banner/banner', banner =>\@banner);
     }else {
-    $self->render(template => 'layouts/backend_gv/banner/banner', banner =>\@banner);
+    $self->render(template => 'layouts/admin/banner/banner', banner =>\@banner);
     }
 }
 
@@ -90,7 +90,7 @@ sub add_banner{
         banner_name => $_->banner_name,
         image => $_->image
     } } @banner;
-    $self->render(template => 'layouts/backend_gv/banner/banner', banner =>\@banner, message => 'Thêm thành công', error=>'');
+    $self->render(template => 'layouts/admin/banner/banner', banner =>\@banner, message => 'Thêm thành công', error=>'');
 }     
 
 

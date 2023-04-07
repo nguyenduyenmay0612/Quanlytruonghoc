@@ -83,8 +83,8 @@ sub phone_teacher($self){
 #hien thi danh sach thong tin sinh vien
 sub list_sv($self){
     my $dbh = $self->app->{_dbh};
-    my $emailTeacher = $self->session('email');
-    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $email_Teacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_Teacher})->first;
     my $class_id = $teacher->class_id;
     my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});             
     my @student_rows = +();
@@ -98,15 +98,6 @@ sub list_sv($self){
         phone => $student->phone
     };
     }
-    # @students = map { { 
-    #     id_student => $_->id_student,
-    #     full_name => $_->full_name,
-    #     birthday => $_->birthday,
-    #     address => $_->address,
-    #     email => $_->email,
-    #     phone => $_->phone
-    # } } @student;
-
     $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student_rows, error => '', message => '');
 }
 
@@ -225,11 +216,7 @@ sub search_sv{
     my $self = shift;
     my $dbh = $self->app->{_dbh};
     my $full_name = $self->param('full_name');
-    my $emailTeacher = $self->session('email');
-    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
-    my $class_id = $teacher->class_id;
-    my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});
-    if (@students) {
+       
     my @student = $self->app->{_dbh}->resultset('Student')->search_like({ full_name => '%'.$full_name.'%' });
     @student = map { { 
         id_student => $_->id_student,
@@ -242,7 +229,28 @@ sub search_sv{
     } } @student;
     $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student, error => '', message =>'');
 }
-}
+
+# sub show_marks{
+#     my $self = shift;
+#     my $dbh = $self->app->{_dbh};
+#     my $email_Teacher = $self->session('email');
+#     my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_Teacher})->first;
+#     my $class_id = $teacher->class_id;
+#     my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});
+#     my @mark_student=+();
+#     foreach my $show_marks (@students){
+#     my @marks = $dbh->resultset('Mark')->find($show_marks->student_id);
+#     push @mark_student, +{
+#         id_student => $show_marks->id_student,
+#         full_name => $show_marks->full_name,
+#         marks_total => $marks->marks_total
+
+
+
+#     };
+#     }
+
+# }
 
 
 1;

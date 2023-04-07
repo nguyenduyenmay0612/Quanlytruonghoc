@@ -17,7 +17,7 @@ sub image{
        image=> $_->image
     } } @image;
 
-    $self->render(template => 'layouts/backend_gv/manage_image/list_image', image=>\@image, message=>'', error=>'');    
+    $self->render(template => 'layouts/admin/manage_image/list_image', image=>\@image, message=>'', error=>'');    
 }
 
 sub edit_image_view{
@@ -27,9 +27,9 @@ sub edit_image_view{
     my $image = $dbh->resultset('Image')->find($id_image);
     
     if ($image) {
-        $self->render(template => 'layouts/backend_gv/manage_image/edit_image', image => $image , message => '', error=>'');
+        $self->render(template => 'layouts/admin/manage_image/edit_image', image => $image , message => '', error=>'');
     } else {
-        $self->render(template => 'layouts/backend_gv/manage_image/list_image');
+        $self->render(template => 'layouts/admin/manage_image/list_image');
     }
 }
 
@@ -48,7 +48,7 @@ sub edit_image{
             image => $image1
             });
             my $image = $dbh->resultset('Image')->find($id_image);
-            $self->render(template => 'layouts/backend_gv/manage_image/edit_image', image => $image, message => 'Cập nhật thành công', error=>'');   
+            $self->render(template => 'layouts/admin/manage_image/edit_image', image => $image, message => 'Cập nhật thành công', error=>'');   
         }
 }
 
@@ -64,9 +64,9 @@ sub delete_image{
        image_name => $_->image_name,
         image => $_->image
     } } @image;
-    $self->render(template => 'layouts/backend_gv/manage_image/list_image', image =>\@image, message => '', error=>'');
+    $self->render(template => 'layouts/admin/manage_image/list_image', image =>\@image, message => '', error=>'');
     }else {
-    $self->render(template => 'layouts/backend_gv/manage_image/list_image', image =>\@image, message => '', error=>'');
+    $self->render(template => 'layouts/admin/manage_image/list_image', image =>\@image, message => '', error=>'');
     }
 }
 
@@ -88,7 +88,7 @@ sub add_image{
         image_name => $_->image_name,
         image => $_->image
     } } @image;
-    $self->render(template => 'layouts/backend_gv/manage_image/list_image', image =>\@image, message => 'Thêm thành công', error=>'');
+    $self->render(template => 'layouts/admin/manage_image/list_image', image =>\@image, message => 'Thêm thành công', error=>'');
 }     
 
 

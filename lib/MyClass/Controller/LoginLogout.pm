@@ -16,6 +16,11 @@ sub login_teacher($self){
     error=> $self->flash('error'));
 }
 
+sub login_admin($self){
+    $self->render(template => 'layouts/admin/login_admin', 
+    error=> $self->flash('error'));
+}
+
 sub logout {
     my $self = shift;
     $self->session(expires => 1);
@@ -40,11 +45,20 @@ sub alreadyLoggedIn_teacher ($self){
     }
 }
 
+sub alreadyLoggedIn_admin ($self){
+    if($self->session("is_auth")){
+        return 1;
+    } else {
+        $self->redirect_to('/admin/login');
+        return;
+    }
+}
+
 sub displayLogin_student ($self) {
   if(&alreadyLoggedIn_student($self)) {
     my $dbh = $self->app->{_dbh};
-    my $emailStudent = $self->session('email');
-    my $student = $dbh->resultset('Student')->search({"email" => $emailStudent})->first;
+    my $email_student = $self->session('email');
+    my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
     my $class_id = $student->class_id;
     my @schedule_rows = $dbh->resultset('ScheduleSt')->search({"class_id" => $class_id});
     my @schedules = +();
@@ -70,8 +84,8 @@ sub displayLogin_student ($self) {
 sub displayLogin_teacher ($self) {
   if(&alreadyLoggedIn_student($self)) {
     my $dbh = $self->app->{_dbh};
-    my $emailTeacher = $self->session('email');
-    my $teacher = $dbh->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $email_teacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_teacher})->first;
     my $id_teacher = $teacher->id_teacher;
     my @schedule_rows = $dbh->resultset('ScheduleTch')->search({"teacher_id" => $id_teacher});
     my @schedules = +();
@@ -86,19 +100,22 @@ sub displayLogin_teacher ($self) {
     }
     if (@schedule_rows){
         $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedules);
-    }
-    # my @schedule = $self->app->{_dbh}->resultset('ScheduleTch')->search({});
-    #         @schedule  = map { { 
-    #         name_subject => $_->name_subject,
-    #         lession => $_->lession,
-    #         room=> $_->room,
-    #         date => $_->date,
-    #         } } @schedule ; 
-    #         $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedule);    
+    }  
   } else {
     $self->flash(error => 'Mời bạn đăng nhập!');
     $self->redirect_to('/student/login');  }
 }
+
+sub displayLogin_admin ($self) {
+    if(&alreadyLoggedIn_admin($self)) {
+        $self->render(template => 'layouts/admin/index');
+                   
+    } else {
+        $self->flash(error => 'Mời bạn đăng nhập!');
+        $self->redirect_to('/admin/login'); 
+    }
+}
+
 
 #validUserCheck 
 sub validUserCheck_student ($self) {
@@ -136,12 +153,23 @@ sub validUserCheck_teacher($self) {
     }
 }
 
-sub _student_from_session {
-    my $self = shift;
-
-    return $self->app->{_dbh}->resultset ('Student')->find('class_id') 
-    if ($self->session('logged_in'));
+sub validUserCheck_admin($self) {
+    my $email = $self->param('email');
+    my $password = $self->param('password');
+    my $dbh = $self->app->{_dbh};
+    my $data = $dbh->resultset('Admin')->search({email=>$email, password=>$password})->first;
+    if ($data && !!%$data) {
+    $self->session(is_auth => 1);
+    $self->session(email => $email);
+    $self->session(expiration => 600);      
+    $self->redirect_to('/admin'); 
+       
+    } else {
+        $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');
+        $self->redirect_to('/admin/login');
+    }
 }
+
 
 
 #action form login

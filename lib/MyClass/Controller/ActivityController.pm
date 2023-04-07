@@ -18,7 +18,7 @@ sub activity {
        activity_des=> $_->activity_des
     } } @activity;
 
-    $self->render(template => 'layouts/backend_gv/activity/activity', activity=>\@activity, message=>'', error=>'');    
+    $self->render(template => 'layouts/admin/activity/activity', activity=>\@activity, message=>'', error=>'');    
 }
 
 sub edit_activity_view {
@@ -26,9 +26,9 @@ sub edit_activity_view {
     my $id_activity = $self->param('id_activity');
     my $activity = $self->app->{_dbh}->resultset('Activity')->find($id_activity);   
     if ($activity) {
-        $self->render(template => 'layouts/backend_gv/activity/edit_activity', activity => $activity , message => '', error=>'');
+        $self->render(template => 'layouts/admin/activity/edit_activity', activity => $activity , message => '', error=>'');
     } else {
-        $self->render(template => 'layouts/backend_gv/activity/activity');
+        $self->render(template => 'layouts/admin/activity/activity');
     }
 }
 
@@ -50,7 +50,7 @@ sub edit_activity {
             image => $image
             });
             my $activity = $dbh->resultset('Activity')->find($id_activity);
-            $self->render(template => 'layouts/backend_gv/activity/edit_activity', activity => $activity, message => 'Cập nhật thành công', error=>'');   
+            $self->render(template => 'layouts/admin/activity/edit_activity', activity => $activity, message => 'Cập nhật thành công', error=>'');   
         }
 }
 
@@ -69,13 +69,13 @@ sub delete_activity {
     } } @activity;
     $self-> redirect_to('teacher/activity');
     }else {
-    $self->render(template => 'layouts/backend_gv/activity/activity', activity =>\@activity);
+    $self->render(template => 'layouts/admin/activity/activity', activity =>\@activity);
     }
 }
 
 sub add_activity_view {
     my $self = shift;  
-    $self -> render(template => 'layouts/backend_gv/activity/add_activity', error =>'', message =>'');
+    $self -> render(template => 'layouts/admin/activity/add_activity', error =>'', message =>'');
 }
 
 sub add_activity {
@@ -100,7 +100,7 @@ sub add_activity {
         activity_des => $_->activity_des,
         image => $_->image
     } } @activity;
-    $self->render(template => 'layouts/backend_gv/activity/add_activity', activity =>\@activity, message => 'Thêm thành công', error=>'');
+    $self->render(template => 'layouts/admin/activity/add_activity', activity =>\@activity, message => 'Thêm thành công', error=>'');
 }     
 
 

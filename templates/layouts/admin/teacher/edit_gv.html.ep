@@ -1,0 +1,58 @@
+% layout 'admin/index';
+    <div class="page-header">
+        <h3 class="page-title"> Sửa thông tin sinh viên </h3>
+        <nav aria-label="breadcrumb"></nav>
+    </div>
+    <div class="row">           
+                <div class="card">
+                  <div class="card-body">                                  
+                    <form method="post" action='/admin/edit_gv/<%= $teacher->id_teacher %>' class="form-edit-student">
+                      <div class="form-group">
+                        <label>ID giảng viên</label>
+                        <input type="full_name" class="form-control" id="id_teacher" name="id_teacher" placeholder="ID sinh viên" value="<%= $teacher->id_teacher %>" disabled>
+                      </div>   
+                      <div class="form-group">
+                        <label>Tên giảng viên</label>
+                        <input type="full_name" class="form-control" id="full_name" name="full_name" placeholder="Tên sinh viên" value="<%= $teacher->full_name %>" required>
+                      </div>                                                                                                     
+                      <div class="form-group">
+                        <label>Ngày sinh</label>
+                        <input type="birthday" class="form-control" id="birthday" name="birthday" placeholder="Ngày sinh" value="<%= $teacher->birthday %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" id="email"  name ="email" placeholder="Email" value="<%= $teacher->email %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Address</label>
+                        <input type="address" class="form-control" id="address" name = "address" placeholder="Địa chỉ" value="<%= $teacher->address %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Phone</label>
+                        <input type="phone" class="form-control" id="phone" name = "phone" placeholder="Phone" value="<%= $teacher->phone %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Ảnh đại diện</label>
+                        <input type="file" class="form-control" id="avatar" name="avatar" placeholder="Ảnh" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Mã lớp</label>
+                        <input type="text" class="form-control" id="class_id" name = "class_id" placeholder="Mã lớp" value="<%= $teacher->class_id %>" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                      <button class="btn btn-dark">Cancel</button>
+                    </form>
+                    % if ($error) {
+                         <div class="error" style="color: red">
+                            <small> <%= $error %> </small>
+                         </div>
+                    %}
+
+                    % if ($message) {
+                         <div class="error" style="color: green">
+                            <small> <%= $message %> </small>
+                         </div>
+                     %}
+                  </div>
+        </div>             
+    </div>

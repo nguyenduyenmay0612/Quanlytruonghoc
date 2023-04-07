@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
     <div class="page-header">
         <h3 class="page-title"> Sửa hình ảnh </h3>
         <nav aria-label="breadcrumb"></nav>

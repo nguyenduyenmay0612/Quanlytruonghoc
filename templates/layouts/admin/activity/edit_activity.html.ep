@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
     <div class="page-header">
         <h3 class="page-title"> Sửa hoạt động </h3>
         <nav aria-label="breadcrumb"></nav>
@@ -6,7 +6,7 @@
     <div class="row">           
                 <div class="card">
                   <div class="card-body">                                  
-                    <form method="post" action='/teacher/edit_activity/<%= $activity->id_activity %>' class="form-edit-student">
+                    <form method="post" action='/admin/edit_activity/<%= $activity->id_activity %>' class="form-edit-student">
                       <div class="form-group">
                         <label>ID hoạt động</label>
                         <input type="id" class="form-control" id="id_activity" name="id_activity" placeholder="ID activity" value="<%= $activity->id_activity %>" disabled>

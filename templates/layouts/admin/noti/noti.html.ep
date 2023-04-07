@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
 <div>
   <br>
   <h3>
@@ -35,12 +35,12 @@
             });
         </script>
 
-        <td><a href='/teacher/edit_noti/<%= $item->{id_noti} %>'>Sửa</a>|<a onclick="myFunction()" href='/teacher/delete_noti/<%= $item->{id_noti} %>'>Xóa</a></td>
+        <td><a href='/admin/edit_noti/<%= $item->{id_noti} %>'>Sửa</a>|<a onclick="myFunction()" href='/admin/delete_noti/<%= $item->{id_noti} %>'>Xóa</a></td>
       </tr>
     %}
     </tbody>      
   </table> <hr>
-    <form action='/teacher/add_noti' method = "get">
+    <form action='/admin/add_noti' method = "get">
         <button type="submit" class="btn btn-primary me-2">Thêm thông báo</button>
     </form>
     % if ($error) {

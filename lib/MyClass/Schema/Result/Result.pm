@@ -60,7 +60,7 @@ __PACKAGE__->table("result");
   data_type: 'float'
   is_nullable: 1
 
-=head2 reult_10
+=head2 result_10
 
   data_type: 'float'
   is_nullable: 1
@@ -98,7 +98,7 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 1, size => 45 },
   "result_4",
   { data_type => "float", is_nullable => 1 },
-  "reult_10",
+  "result_10",
   { data_type => "float", is_nullable => 1 },
   "level",
   { data_type => "varchar", is_nullable => 1, size => 45 },
@@ -145,8 +145,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-31 11:07:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IL3EIYhZJxnCYOdvidxmVA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-04 16:23:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:AZUd81I6UbB5Me7Qg1b+jw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

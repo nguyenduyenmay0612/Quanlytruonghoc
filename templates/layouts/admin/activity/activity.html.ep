@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
 <div>
   <br>
   <h3>
@@ -41,7 +41,7 @@
     %}
     </tbody>      
   </table> <hr>
-    <form action='/teacher/add_activity' method = "get">
+    <form action='/admin/add_activity' method = "get">
         <button type="submit" class="btn btn-primary me-2">Thêm hoạt động </button>
     </form>
     % if ($error) {

@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
     <div class="page-header">
         <h3 class="page-title"> Sửa bài viết </h3>
         <nav aria-label="breadcrumb"></nav>
@@ -6,7 +6,7 @@
     <div class="row">           
                 <div class="card">
                   <div class="card-body">                                  
-                    <form method="post" action='/teacher/edit_post/<%= $post->id_post %>' class="form-edit-student">
+                    <form method="post" action='/admin/edit_post/<%= $post->id_post %>' class="form-edit-student">
                       <div class="form-group">
                         <label>ID post</label>
                         <input type="id" class="form-control" id="id_post" name="id_post" placeholder="ID post" value="<%= $post->id_post %>" disabled>

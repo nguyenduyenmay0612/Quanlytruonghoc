@@ -44,15 +44,19 @@ sub startup ($self) {
 
     #login_logout
     $r->get('/student')->to('LoginLogout#displayLogin_student');
-    $r->get('/teacher')->to('LoginLogout#displayLogin_teacher');
     $r->get('/student/login')->to('LoginLogout#login_student');
-    $r->get('/teacher/login')->to('LoginLogout#login_teacher');
     $r->post('/student/login')->to('LoginLogout#validUserCheck_student');
+    $r->get('/teacher')->to('LoginLogout#displayLogin_teacher');
+    $r->get('/teacher/login')->to('LoginLogout#login_teacher');  
     $r->post('/teacher/login')->to('LoginLogout#validUserCheck_teacher');
+    $r->get('/admin')->to('LoginLogout#displayLogin_admin');
+    $r->get('/admin/login')->to('LoginLogout#login_admin');  
+    $r->post('/admin/login')->to('LoginLogout#validUserCheck_admin');
     $r->any('/logout')->to('LoginLogout#logout');
 
     my $student = $r->under('/student/')->to('LoginLogout#alreadyLoggedIn_student');
     my $teacher = $r->under('/teacher/')->to('LoginLogout#alreadyLoggedIn_teacher');
+    my $admin = $r->under('/admin/')->to('LoginLogout#alreadyLoggedIn_admin');
     
     #thoikhoabieu
     $student->get('/schedule')->to('StudentController#schedule');
@@ -84,53 +88,62 @@ sub startup ($self) {
     $teacher->post('/edit_sv/:id')->to('TeacherController#edit_sv');
     $teacher->get('/delete_sv/:id_student')->to('TeacherController#delete_sv');
 
-    #cap nhat thong tin giang vien
-    $teacher->get('/edit_gv')->to('TeacherController#edit_gv');
+     #quan ly giang vien
+    $admin->get('/list_gv')->to('AdminController#list_gv');
+    $admin->get('/add_gv')->to('AdminController#add_view');
+    $admin->post('/add_gv')->to('AdminController#add_gv');
+    $admin->get('/edit_gv/:id_teacher')->to('AdminController#edit_view');
+    $admin->post('/edit_gv/:id_teacher')->to('AdminController#edit_gv');
+    $admin->get('/delete_gv/:id_teacher')->to('AdminController#delete_gv');
 
-    #tim kiem sinh vien
+
+    #tim kiem sinh vien/ giang vien
     $teacher->post('/search_sv')->to('TeacherController#search_sv');
+    $admin->post('/search_gv')->to('AdminController#search_gv');
+
+
+    #quan ly diem 
+    $teacher->post('/show_marks')->to('ScheduleController#show_marks');
 
     #quan ly banner
-    $teacher->get('/banner')->to('BannerController#banner');
-    $teacher->get('/edit_banner/:id_banner')->to('BannerController#edit_banner_view');
-    $teacher->post('/edit_banner/:id_banner')->to('BannerController#edit_banner');
-    $teacher->get('/delete_banner/:id_banner')->to('BannerController#delete_banner');
-    $teacher->post('/add_banner')->to('BannerController#add_banner');
+    $admin->get('/banner')->to('BannerController#banner');
+    $admin->get('/edit_banner/:id_banner')->to('BannerController#edit_banner_view');
+    $admin->post('/edit_banner/:id_banner')->to('BannerController#edit_banner');
+    $admin->get('/delete_banner/:id_banner')->to('BannerController#delete_banner');
+    $admin->post('/add_banner')->to('BannerController#add_banner');
 
-    #quan ly TKB sinh vien
-    $teacher->get('/edit_schedule')->to('ScheduleController#edit_schedule_view');
-    $teacher->post('/edit_schedule')->to('ScheduleController#edit_schedule');
+    
 
     #quan ly bai viet tren trang chủ 
-    $teacher->get('/post')->to('PostController#post');
-    $teacher->get('/edit_post/:id_post')->to('PostController#edit_post_view');
-    $teacher->post('/edit_post/:id_post')->to('PostController#edit_post');
-    $teacher->get('/delete_post/:id_post')->to('PostController#delete_post');
-    $teacher->get('/add_post')->to('PostController#add_post_view');
-    $teacher->post('/add_post')->to('PostController#add_post');
+    $admin->get('/post')->to('PostController#post');
+    $admin->get('/edit_post/:id_post')->to('PostController#edit_post_view');
+    $admin->post('/edit_post/:id_post')->to('PostController#edit_post');
+    $admin->get('/delete_post/:id_post')->to('PostController#delete_post');
+    $admin->get('/add_post')->to('PostController#add_post_view');
+    $admin->post('/add_post')->to('PostController#add_post');
 
     #quan ly hoat dong
-    $teacher->get('/activity')->to('ActivityController#activity');
-    $teacher->get('/edit_activity/:id_activity')->to('ActivityController#edit_activity_view');
-    $teacher->post('/edit_activity/:id_activity')->to('ActivityController#edit_activity');
-    $teacher->get('/delete_activity/:id_activity')->to('ActivityController#delete_activity');
-    $teacher->get('/add_activity')->to('ActivityController#add_activity_view');
-    $teacher->post('/add_activity')->to('ActivityController#add_activity');
+    $admin->get('/activity')->to('ActivityController#activity');
+    $admin->get('/edit_activity/:id_activity')->to('ActivityController#edit_activity_view');
+    $admin->post('/edit_activity/:id_activity')->to('ActivityController#edit_activity');
+    $admin->get('/delete_activity/:id_activity')->to('ActivityController#delete_activity');
+    $admin->get('/add_activity')->to('ActivityController#add_activity_view');
+    $admin->post('/add_activity')->to('ActivityController#add_activity');
 
     #quan ly thong bao
-    $teacher->get('/noti')->to('NotiController#noti');
-    $teacher->get('/edit_noti/:id_noti')->to('NotiController#edit_noti_view');
-    $teacher->post('/edit_noti/:id_noti')->to('NotiController#edit_noti');
-    $teacher->get('/delete_noti/:id_noti')->to('NotiController#delete_noti');
-    $teacher->get('/add_noti')->to('NotiController#add_noti_view');
-    $teacher->post('/add_noti')->to('NotiController#add_noti');
+    $admin->get('/noti')->to('NotiController#noti');
+    $admin->get('/edit_noti/:id_noti')->to('NotiController#edit_noti_view');
+    $admin->post('/edit_noti/:id_noti')->to('NotiController#edit_noti');
+    $admin->get('/delete_noti/:id_noti')->to('NotiController#delete_noti');
+    $admin->get('/add_noti')->to('NotiController#add_noti_view');
+    $admin->post('/add_noti')->to('NotiController#add_noti');
 
     #quan ly hinh anh 
-    $teacher->get('/image')->to('ImageController#image');
-    $teacher->get('/edit_image/:id_image')->to('ImageController#edit_image_view');
-    $teacher->post('/edit_image/:id_image')->to('ImageController#edit_image');
-    $teacher->get('/delete_image/:id_image')->to('ImageController#delete_image');
-    $teacher->post('/add_image')->to('ImageController#add_image');
+    $admin->get('/image')->to('ImageController#image');
+    $admin->get('/edit_image/:id_image')->to('ImageController#edit_image_view');
+    $admin->post('/edit_image/:id_image')->to('ImageController#edit_image');
+    $admin->get('/delete_image/:id_image')->to('ImageController#delete_image');
+    $admin->post('/add_image')->to('ImageController#add_image');
 
     }
 

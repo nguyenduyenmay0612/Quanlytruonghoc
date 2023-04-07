@@ -83,7 +83,7 @@ sub profile_student($self){
             email => $student->email,
             phone => $student->phone,
         };
-        $self->render(template => 'layouts/backend_sv/profile_student', student=>$student_info, );
+        $self->render(template => 'layouts/backend_sv/profile_student', student=>$student_info );
     }    
 }
 #ketquahoctap
@@ -120,7 +120,7 @@ sub get_result($self){
             semester => $result->semester,
             school_year => $result->school_year,
             result_4 => $result->result_4,
-            reult_10 => $result->reult_10,
+            result_10 => $result->result_10,
             level => $result->level,
             result_total_4 => $result->result_total_4,
             result_total_10 => $result->result_total_10,
