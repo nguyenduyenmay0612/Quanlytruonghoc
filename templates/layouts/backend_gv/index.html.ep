@@ -39,7 +39,7 @@
             <li><a href="/teacher/phone_teacher">Giáo viên giảng dạy lớp</a></li>           
             </ul>
         </li><br> <hr>  
-        
+        <li><a href="/teacher/schedule_student" class="w3-bar-item w3-button">Quản lý TKB sinh viên lớp</a></li> <br><hr>
         <li><a href="/logout" class="w3-bar-item w3-button">Đăng xuất</a></li> <br><hr>  
         
       </ul>

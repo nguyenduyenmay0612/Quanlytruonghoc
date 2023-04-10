@@ -17,7 +17,7 @@
                       </div>                                                                                                     
                       <div class="form-group">
                         <label>Ngày sinh</label>
-                        <input type="birthday" class="form-control" id="birthday" name="birthday" placeholder="Ngày sinh" value="<%= $student->birthday %>" required>
+                        <input type="birthday" class="form-control" id="birthday" name="birthday" placeholder="Ngày sinh" value="<%= $student->birthday->strftime('%d/%m/%Y')%> %>" required>
                       </div>
                       <div class="form-group">
                         <label>Email</label>

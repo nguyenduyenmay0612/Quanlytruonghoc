@@ -125,16 +125,14 @@ sub add_sv {
         $self->flash(error => 'Tên sinh viên, ngày sinh, email, password và địa chỉ là các trường không thể thiếu');
         $self->redirect_to('add_sv');
     }
-    my $emailTeacher = $self->session('email');
-    my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $emailTeacher})->first;
-    # my $class_id = $teacher->class_id;
+    my $email_teacher = $self->session('email');
+    my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $email_teacher})->first;
     my $dbh = $self->app->{_dbh};
     my $student = $dbh->resultset('Student')->search({ email => $email});
 
     if (!$student ->first ) {
         eval {
             $dbh->resultset('Student')->create({
-                # id_student => $id_student,
                 class_id => $teacher->class_id,
                 full_name => $full_name,
                 birthday => $birthday,
@@ -229,6 +227,116 @@ sub search_sv{
     } } @student;
     $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student, error => '', message =>'');
 }
+
+sub schedule_student{
+    my $self = shift;
+    my $dbh = $self->app->{_dbh};
+    my $emailTeacher = $self->session('email');
+    my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+    my $class_id = $teacher->class_id;
+    my @schedule_rows = $dbh->resultset('ScheduleSt')->search({"class_id" => $class_id});
+    my @schedules = +();
+    foreach my $schedule (@schedule_rows) {
+        my $subject = $dbh->resultset('Subject')->find($schedule->subject_id);
+        push @schedules, +{
+            id => $schedule->id,
+            name_subject => $subject->name_subject,
+            date => $schedule->date,
+            lession => $schedule->lession,
+            room => $schedule->room,
+        };
+    }
+    if(@schedule_rows){
+        $self->render(template => 'layouts/backend_gv/manage_schedule_student/schedule_student', schedule => \@schedules);
+    }
+}
+
+sub add_schedule_student_view{
+    my $self = shift;  
+    $self -> render(template => 'layouts/backend_gv/manage_schedule_student/add_schedule_student', 
+            error    => $self->flash('error'),
+            message  => $self->flash('message')
+    );
+}
+
+sub add_schedule_student{
+    my $self = shift;
+    my $id = $self->param('id');
+    my $date = $self->param('date');
+    my $lession = $self->param('lession');
+    my $subject_id = $self->param('subject_id');
+    my $lession = $self->param('lession');
+    my $room= $self->param('room');
+
+    if (! $date || ! $lession || ! $subject_id || ! $lession || ! $room) {
+        $self->flash(error => 'Các trường không thể thiếu');
+        $self->redirect_to('add_sv');
+    }
+    my $email_teacher = $self->session('email');
+    my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $email_teacher})->first;
+
+    eval {
+        $self->app->{_dbh}->resultset('ScheduleSt')->create({
+            class_id => $teacher->class_id,
+            lession => $lession,
+            date => $date,
+            subject_id => $subject_id,
+            lession => $lession,              
+            room => $room
+            });
+    };
+       $self->render(template => 'layouts/backend_gv/manage_schedule_student/add_schedule_student', message => 'Thêm thành công', error=>'');
+            
+}
+
+sub edit_schedule_student_view{
+    my $self = shift;
+    my $id = $self->param('id');
+    my $dbh = $self->app->{_dbh};
+    my $schedule = $dbh->resultset('ScheduleSt')->find($id);
+    
+    if ($schedule) {
+        $self->render(template => 'layouts/backend_gv/manage_schedule_student/edit_schedule_student', schedule => $schedule , message => '', error=>'');
+    } else {
+        $self->render(template => 'layouts/backend_gv/manage_schedule_student/schedule_student');
+    }
+
+}
+sub edit_schedule_student{
+    my $self = shift;
+    my $id = $self->param('id');
+    my $date = $self->param('date');
+    my $subject_id = $self->param('subject_id');
+    my $lession = $self->param('lession');
+    my $room = $self->param('room');
+    my $dbh = $self->app->{_dbh}; 
+    my $schedule = $dbh->resultset('ScheduleSt')->find($id);
+    if ($schedule) {
+            my $result= $dbh->resultset('ScheduleSt')->find($id)->update({  
+            date => $date,
+            subject_id => $subject_id,
+            lession => $lession,
+            room => $room,
+            });
+            my $schedule1 = $dbh->resultset('ScheduleSt')->find($id);
+            $self->render(template => 'layouts/backend_gv/manage_schedule_student/edit_schedule_student', schedule => $schedule1, message => 'Cập nhật thành công', error=>'');   
+    }
+}
+
+sub delete_schedule_student{
+    my $self = shift;
+    my $id = $self->param('id');
+    my $dbh = $self->app->{_dbh};
+    my $result = $dbh->resultset('ScheduleSt')->find($id)->delete({});
+    my @schedule = $self->app->{_dbh}->resultset('ScheduleSt')->search({});
+    if($result) {
+        $self->redirect_to('/teacher/schedule_student');
+        $self->flash(message => 'Đã xóa thành công');
+    }else {
+    $self->render(template => 'layouts/backend_gv/manage_schedule_student/schedule_student', schedule =>\@schedule);
+    }
+}
+
 
 # sub show_marks{
 #     my $self = shift;

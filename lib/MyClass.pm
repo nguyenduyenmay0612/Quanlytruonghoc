@@ -145,6 +145,16 @@ sub startup ($self) {
     $admin->get('/delete_image/:id_image')->to('ImageController#delete_image');
     $admin->post('/add_image')->to('ImageController#add_image');
 
+    #update schedule student 
+    $teacher->get('/schedule_student')->to('TeacherController#schedule_student');
+
+    $teacher->get('/add_schedule_student')->to('TeacherController#add_schedule_student_view');
+    $teacher->post('/add_schedule_student')->to('TeacherController#add_schedule_student');
+    $teacher->get('/edit_schedule_student/:id')->to('TeacherController#edit_schedule_student_view');
+    $teacher->post('/edit_schedule_student/:id')->to('TeacherController#edit_schedule_student');
+    $teacher->get('/delete_schedule_student/:id')->to('TeacherController#delete_schedule_student');
+
+
     }
 
     # Pagination 
