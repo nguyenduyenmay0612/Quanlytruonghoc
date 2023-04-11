@@ -97,68 +97,75 @@
     to {opacity: 1}
     }
 
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-  .text {font-size: 11px}
-}
-
-/* sukien*/
-.title-sukien{
-  text-align: left;
-  color: red;
-  font-size: 20px;
-}
-
-.content-sukien{
-  font-weight: lighter;
-}
-
-/*gioithieu*/
-.title-gioithieu{
-  background-color: bisque;
-}
-.content-gioithieu{
-  text-align : left;
-  font-weight: lighter;
-  margin-left: 40px;
-}
-
-
-
-/*BACKEND*/
-.jumbotron {
-  margin-bottom: 0;
-  /* background-color: yellow; */
-}
-
-.image-sukien {
-  width:500px ; 
-  height: 350px;
-  margin-left: 100px;
-}
-
-.image-activity {
-    max-width: 310px;
-    max-height: 210px;
-}
-
-.col-sm-3 sidenav{
-    text-align: left;
-}
-
-.noti{
-    color: crimson;
-}
-
-.title-thongbao{
-    color: crimson;
-}
-
-/* width */
-::-webkit-scrollbar {
-	width: 10px;
+  /* On smaller screens, decrease text size */
+  @media only screen and (max-width: 300px) {
+    .text {font-size: 11px}
   }
-  
+
+  /* sukien*/
+  .title-sukien{
+    text-align: left;
+    color: red;
+    font-size: 20px;
+  }
+
+  .content-sukien{
+    font-weight: lighter;
+  }
+
+  /*gioithieu*/
+  .title-gioithieu{
+    background-color: bisque;
+  }
+  .content-gioithieu{
+    text-align : left;
+    font-weight: lighter;
+    margin-left: 40px;
+  }
+  #activity_des{
+    font-weight: lighter;
+  }
+
+  #content{
+    font-weight: lighter;
+  }
+
+
+
+  /*BACKEND*/
+  .jumbotron {
+    margin-bottom: 0;
+    /* background-color: yellow; */
+  }
+
+  .image-sukien {
+    width:500px ; 
+    height: 350px;
+    margin-left: 100px;
+  }
+
+  .image-activity {
+      max-width: 310px;
+      max-height: 210px;
+  }
+
+  .col-sm-3 sidenav{
+      text-align: left;
+  }
+
+  .noti{
+      color: crimson;
+  }
+
+  .title-thongbao{
+      color: crimson;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+    }
+    
   /* Track */
   ::-webkit-scrollbar-track {
 	background: #f1f1f1; 
@@ -273,5 +280,6 @@
   }
 
   .title-thongbao{
-    text-transform: uppercase;
+  text-transform: uppercase;
   }
+

@@ -312,14 +312,14 @@ sub edit_schedule_student{
     my $dbh = $self->app->{_dbh}; 
     my $schedule = $dbh->resultset('ScheduleSt')->find($id);
     if ($schedule) {
-            my $result= $dbh->resultset('ScheduleSt')->find($id)->update({  
-            date => $date,
-            subject_id => $subject_id,
-            lession => $lession,
-            room => $room,
-            });
-            my $schedule1 = $dbh->resultset('ScheduleSt')->find($id);
-            $self->render(template => 'layouts/backend_gv/manage_schedule_student/edit_schedule_student', schedule => $schedule1, message => 'Cập nhật thành công', error=>'');   
+        my $result= $dbh->resultset('ScheduleSt')->find($id)->update({  
+        date => $date,
+        subject_id => $subject_id,
+        lession => $lession,
+        room => $room,
+        });
+        my $schedule1 = $dbh->resultset('ScheduleSt')->find($id);
+        $self->render(template => 'layouts/backend_gv/manage_schedule_student/edit_schedule_student', schedule => $schedule1, message => 'Cập nhật thành công', error=>'');   
     }
 }
 

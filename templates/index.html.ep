@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="vn" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Teacher</title>
+  <title>School</title>
   <meta charset="utf-8">
   <meta http-equiv="Content-type" content="text/html" charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,38 +14,12 @@
   <script type="text/javascript" src="/../ckeditor/ckeditor.js"></script>
   <script type="text/javascript" src="/../js/ckeditor.js"></script>
 
-  <style>
-    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {height: 1000px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height: auto;} 
-    }
-  </style>
 </head>
 <body>
-
-<div class="container-fluid">
-  <div class="row content">
-    <div class="col-sm-3 sidenav">
+ 
+<div class="container-fluid text-center" style ="margin-left:-10px" > 
+      <!-- Sidebar -->
+    <div class="w3-sidebar w3-light-grey w3-bar-block navbar-fixed-top" >
       <h3 class="w3-bar-item">Tùy chọn</h3> <br> <br> <br>
       <ul class="nav navbar-nav">
         <li><a href="/teacher/profile_teacher" class="w3-bar-item w3-button">Thông tin cá nhân</a></li> <br> <hr>
@@ -66,24 +40,27 @@
             </ul>
         </li><br> <hr>  
         <li><a href="/teacher/schedule_student" class="w3-bar-item w3-button">Quản lý TKB sinh viên</a></li> <br><hr>
-        <li><a href="/logout" class="w3-bar-item w3-button">Đăng xuất</a></li> <br><hr>         
+        <li><a href="/logout" class="w3-bar-item w3-button">Đăng xuất</a></li> <br><hr>  
+        
       </ul>
     </div>
 
-    <div class="col-sm-9">
-        <div class="w3-container w3-gray">
+    <!-- Page Content -->
+    <div >
+        <div class="w3-container w3-gray  ">
           <h2>Trang quản lý dành cho giảng viên</h2>
-        </div> <br> <br> <br>
-        <div class="w3-container-fluid" >
+        </div>
+        <div class="w3-container-fluid" style="margin-left: 300px">
          <%= content %>
         </div>
-    </div>
-  </div>
+    </div>  
 </div>
 
-<footer class="container-fluid">
+<footer class="container-fluid text-center" >
   <p>Bản quyền thuộc quyền sở hữu của Duyên Mây</p>
 </footer>
-
+  
+</div>
 </body>
 </html>
+

@@ -10,7 +10,7 @@
   <h3>
     Danh sách sinh viên lớp
   </h3>
-  <div style =" overflow: auto ; max-height: 500px">
+  <div style =" overflow: auto ; max-height: 480px">
   <table class="w3-table w3-striped w3-bordered" >
       <thead>
           <tr>

@@ -4,8 +4,8 @@
       <h3>
       Danh bạ giảng viên đang giảng
       </h3>
-      <table class="w3-table w3-striped w3-bordered">
-         <thead>
+    <table class="w3-table w3-striped w3-bordered">
+      <thead>
           <tr>
             <th>STT</th>
             <th>Tên giáo viên</th>
@@ -21,7 +21,7 @@
         <td><%= $item->{email} %></td>
         <td><%= $item->{phone} %></td>
       </tr>
-    %}
-    </tbody>              
-        </table>
+      %}
+      </tbody>              
+    </table>
 </div>

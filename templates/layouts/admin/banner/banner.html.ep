@@ -4,8 +4,8 @@
   <h3>
    Banner
   </h3>
-  <button id ="Mybtn" class="btn btn-primary me-2"> Thêm banner</button>
-  <form id="MyForm" action='/add_banner' method="post">
+  <button id ="Mybtn" class="btn btn-primary me-2"> Thêm banner</button> <br> <br>
+  <form id="MyForm" action='/add_banner' method="post" style="margin-left: 380px;">
   	<label>Tên banner</label>
 	<input type="text" id ="banner_name" name="banner_name" placeholder="Tên banner" required/><br>
   	<label>Ảnh </label>

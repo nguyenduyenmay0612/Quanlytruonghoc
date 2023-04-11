@@ -4,8 +4,8 @@
     <h3>
         Danh sách hình ảnh
     </h3>
-    <button id ="Mybtn" class="btn btn-primary me-2"> Thêm hình ảnh</button>
-    <form id="MyForm" action='/add_image' method="post">
+    <button id ="Mybtn" class="btn btn-primary me-2"> Thêm hình ảnh</button> <br> <br>
+    <form id="MyForm" action='/add_image' method="post" style="margin-left: 380px;">
   	    <label>Tên hình ảnh</label>
 	    <input type="text" id ="image_name" name="image_name" placeholder="Tên hình ảnh" required/><br>
   	    <label>Ảnh </label>

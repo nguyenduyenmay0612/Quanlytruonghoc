@@ -17,8 +17,7 @@
                             <textarea cols="80" rows="10" id="content" name="content"> 
                                 &lt;h1&gt;Tiêu đề &lt;/h1&gt;
                                 &lt;p&gt;Mô tả hoạt động&lt;/p&gt;                                
-                            </textarea>                    
-                            <input type="submit" value="Submit"/>
+                            </textarea>                                               
                             </div>
                       </div>
                       <script type="text/javascript">

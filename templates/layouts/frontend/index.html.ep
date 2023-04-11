@@ -45,7 +45,8 @@
         <li> 
           <% if (!$self->session("is_auth")){%>
             <a class="nav-link" href="/student/login">Sinh viên</a>
-          <% } %> </li>
+          <% } %> 
+        </li>
         <li>
           <% if (!$self->session("is_auth")){%>
             <a class="nav-link" href="/teacher/login">Giảng viên</a>
@@ -148,7 +149,7 @@
     }
     slides[slideIndex-1].style.display = "block";  
     dots[slideIndex-1].className += " active";
-    setTimeout(showSlides, 3000); // Change image every 2 seconds
+    setTimeout(showSlides, 2000); // Change image every 2 seconds
     }
 
     //slide 2
