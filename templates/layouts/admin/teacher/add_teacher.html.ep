@@ -1,20 +1,17 @@
-% layout 'backend_gv/index';
+% layout 'admin/index';
 <div class="page-header">
-        <h3 class="page-title"> Thêm sinh viên mới </h3>
+        <h3 class="page-title"> Thêm giảng viên mới </h3>
         <nav aria-label="breadcrumb"></nav>
     </div>
     <div class="row">
             <div >
                 <div class="card">
                   <div class="card-body">                                  
-                    <form method="post" action='/teacher/add_sv' class="form-add-student">
-                      <!--<div class="form-group">
-                        <label>ID sinh viên</label>
-                        <input type="text" class="form-control" id="id_student" name="id_student" placeholder="ID sinh viên">
-                      </div> -->
+                    <form method="post" action='/admin/add_teacher' class="form-add-student">
+                      
                       <div class="form-group">
-                        <label>Tên sinh viên</label>
-                        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Tên sinh viên" required>
+                        <label>Tên giảng viên</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Tên giảng viên" required>
                       </div>
                       <div class="form-group">
                         <label>Ngày sinh</label>
@@ -35,6 +32,10 @@
                       <div class="form-group">
                         <label>Phone</label>
                         <input type="text" class="form-control" id="phone" name = "phone" placeholder="Phone" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Mã lớp</label>
+                        <input type="text" class="form-control" id="class_id" name = "class_id" placeholder="Mã lớp" >
                       </div>
                       <div class="form-group">
                         <label>Ảnh</label>

@@ -7,6 +7,30 @@ use Data::Dumper;
 use Mojo::Log;
 my $log = Mojo::Log->new(path => '/log/app.log', level => 'warn');
 
+#lylichsinhvien
+sub profile_student($self){
+    my $id_student = $self->param('id_student');
+    my $dbh = $self->app->{_dbh};
+    my $emailStudent = $self->session('email');
+    my $student = $dbh->resultset('Student')->search({"email" => $emailStudent})->first;
+
+    if ($student) {    
+        my $class_id = $student->class_id;
+        my $class = $dbh->resultset('Class')->search({"id_class" => $class_id});
+        my $class_row =  $dbh->resultset('Class')->find($student->class_id);
+        my $student_info = +{
+            name_class => $class_row->name_class,
+            avatar => $student->avatar,
+            full_name => $student->full_name,
+            birthday => $student->birthday->strftime('%d/%m/%Y'),
+            address => $student->address,
+            email => $student->email,
+            phone => $student->phone,
+        };
+        $self->render(template => 'layouts/backend_student/profile_student', student=>$student_info );
+    }    
+}
+
 #thoikhoabieu
 sub schedule($self){   
     my $dbh = $self->app->{_dbh};
@@ -25,7 +49,7 @@ sub schedule($self){
         };
     }
     if(@schedule_rows){
-        $self->render(template => 'layouts/backend_sv/schedule', schedule => \@schedules);
+        $self->render(template => 'layouts/backend_student/schedule', schedule => \@schedules);
     }
 }
 
@@ -47,7 +71,7 @@ sub phone_student($self){
     }
 
 
-    $self->render(template => 'layouts/backend_sv/phone_student', student=>\@student_rows);
+    $self->render(template => 'layouts/backend_student/phone_student', student=>\@student_rows);
 }
 
 sub phone_teacher($self){
@@ -60,32 +84,9 @@ sub phone_teacher($self){
         phone => $_->phone,
     } } @teacher;
 
-    $self->render(template => 'layouts/backend_sv/phone_teacher', teacher=>\@teacher);
+    $self->render(template => 'layouts/backend_student/phone_teacher', teacher=>\@teacher);
 }
 
-#lylichsinhvien
-sub profile_student($self){
-    my $id_student = $self->param('id_student');
-    my $dbh = $self->app->{_dbh};
-    my $emailStudent = $self->session('email');
-    my $student = $dbh->resultset('Student')->search({"email" => $emailStudent})->first;
-
-    if ($student) {    
-        my $class_id = $student->class_id;
-        my $class = $dbh->resultset('Class')->search({"id_class" => $class_id});
-        my $class_row =  $dbh->resultset('Class')->find($student->class_id);
-        my $student_info = +{
-            name_class => $class_row->name_class,
-            avatar => $student->avatar,
-            full_name => $student->full_name,
-            birthday => $student->birthday->strftime('%d/%m/%Y'),
-            address => $student->address,
-            email => $student->email,
-            phone => $student->phone,
-        };
-        $self->render(template => 'layouts/backend_sv/profile_student', student=>$student_info );
-    }    
-}
 #ketquahoctap
 sub get_marks($self){
     my $dbh = $self->app->{_dbh};
@@ -105,7 +106,7 @@ sub get_marks($self){
         }
     }
 
-    $self->render(template => 'layouts/backend_sv/marks_student', marks => \@marks);
+    $self->render(template => 'layouts/backend_student/marks_student', marks => \@marks);
 }
 
 sub get_result($self){
@@ -126,11 +127,11 @@ sub get_result($self){
             result_total_10 => $result->result_total_10,
         }
     }
-    $self->render(template => 'layouts/backend_sv/result', results =>\@results);
+    $self->render(template => 'layouts/backend_student/result', results =>\@results);
 }
 
 sub chungchi($self){
-    $self->render(template => 'layouts/backend_sv/chungchi');
+    $self->render(template => 'layouts/backend_student/chungchi');
 }
 
 1;

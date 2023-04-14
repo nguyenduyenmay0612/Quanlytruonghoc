@@ -62,9 +62,11 @@ sub displayLogin_student ($self) {
     my $class_id = $student->class_id;
     my @schedule_rows = $dbh->resultset('ScheduleSt')->search({"class_id" => $class_id});
     my @schedules = +();
-
+    my $full_name = $student->full_name;
+    
     foreach my $schedule (@schedule_rows) {
         my $subject = $dbh->resultset('Subject')->find($schedule->subject_id);
+        
         push @schedules, +{
             name_subject => $subject->name_subject,
             date => $schedule->date,
@@ -73,7 +75,7 @@ sub displayLogin_student ($self) {
         }
     }
     if (@schedule_rows) {
-        $self->render(template => 'layouts/backend_sv/schedule', schedule => \@schedules);
+        $self->render(template => 'layouts/backend_student/schedule', schedule => \@schedules, full_name=>$full_name );
     }
                    
     } else {
@@ -99,11 +101,12 @@ sub displayLogin_teacher ($self) {
         }
     }
     if (@schedule_rows){
-        $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedules);
+        $self->render(template => 'layouts/backend_teacher/schedule',schedule =>\@schedules);
     }  
-  } else {
+    } else {
     $self->flash(error => 'Mời bạn đăng nhập!');
-    $self->redirect_to('/student/login');  }
+    $self->redirect_to('/teacher/login');  
+    }
 }
 
 sub displayLogin_admin ($self) {
@@ -190,7 +193,7 @@ sub validUserCheck_admin($self) {
 #             lession => $_->lession,
 #             } } @schedule_sv ;
 
-#             $self->render(template => 'layouts/backend_sv/schedule_week',schedule_sv =>\@schedule_sv);
+#             $self->render(template => 'layouts/backend_student/schedule_week',schedule_sv =>\@schedule_sv);
 
 #     } else {
 #         $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');
@@ -215,7 +218,7 @@ sub validUserCheck_admin($self) {
 #             date => $_->date,
 #         } } @schedule_gv ;
 
-#         $self->render(template => 'layouts/backend_gv/schedule_gv',schedule_gv =>\@schedule_gv);
+#         $self->render(template => 'layouts/backend_teacher/schedule_gv',schedule_gv =>\@schedule_gv);
 #     } else {
 #          $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');
 #         $self->redirect_to('login_gv');

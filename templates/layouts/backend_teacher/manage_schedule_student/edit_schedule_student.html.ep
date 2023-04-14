@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'backend_teacher/index';
     <div class="page-header">
         <h3 class="page-title"> Cập nhật TKB </h3>
         <nav aria-label="breadcrumb"></nav>

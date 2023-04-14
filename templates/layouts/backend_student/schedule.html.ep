@@ -1,12 +1,10 @@
-% layout 'backend_sv/index';
+% layout 'backend_student/index';
 
 <div class="row content">
     <div class="col-sm-2 sidenav">  
       <div>
           <br> 
-          <!--<b><a  href="/tkb_ngay">Thời khóa biểu ngày</a></b> <br> <hr>-->
-          <!--<b><a class="active" href="/tkb_tuan">Thời khóa biểu tuần</a></b> <br> <hr>-->
-               
+          Xin chào <%= $full_name %>              
       </div> <br>
     </div>
     <div class="col-sm-10 text-left"> 

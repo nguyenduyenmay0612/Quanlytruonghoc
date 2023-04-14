@@ -8,7 +8,7 @@ use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
-sub list_gv($self){
+sub list_teacher($self){
     my $dbh = $self->app->{_dbh};   
     my @teachers = $dbh->resultset('Teacher')->search({});             
     my @teacher_rows = +();
@@ -24,18 +24,18 @@ sub list_gv($self){
         name_class => $class->name_class
         }
     }
-    $self->render(template => 'layouts/admin/teacher/list_gv', teacher=>\@teacher_rows, error => '', message => '');
+    $self->render(template => 'layouts/admin/teacher/list_teacher', teacher=>\@teacher_rows, error => '', message => '');
 }
 #them sinh vien moi
 sub add_view {
     my $self = shift;  
-    $self -> render(template => 'layouts/admin/teacher/add_gv', 
+    $self -> render(template => 'layouts/admin/teacher/add_teacher', 
             error    => $self->flash('error'),
             message  => $self->flash('message')
     );
 }
 
-sub add_gv {
+sub add_teacher {
     my $self = shift;
     my $id_student = $self->param('id_teacher');
     my $full_name = $self->param('full_name');
@@ -49,7 +49,7 @@ sub add_gv {
 
     if (! $full_name || ! $birthday || ! $email || ! $address || ! $password) {
         $self->flash(error => 'Tên, ngày sinh, email, password và địa chỉ là các trường không thể thiếu');
-        $self->redirect_to('add_gv');
+        $self->redirect_to('add_teacher');
     }
     my $dbh = $self->app->{_dbh};
     my $teacher = $dbh->resultset('Teacher')->search({ email => $email});
@@ -67,10 +67,10 @@ sub add_gv {
                 class_id => $class_id
             });
         };
-       $self->render(template => 'layouts/admin/teacher/add_gv', teacher => $teacher, message => 'Thêm thành công', error=>'');
+       $self->render(template => 'layouts/admin/teacher/add_teacher', teacher => $teacher, message => 'Thêm thành công', error=>'');
     } 
     else {
-        $self->render(template => 'layouts/admin/teacher/add_gv', teacher => $teacher, message => '', error=>'Email này đã tồn tại');
+        $self->render(template => 'layouts/admin/teacher/add_teacher', teacher => $teacher, message => '', error=>'Email này đã tồn tại');
     }     
 }
 
@@ -82,13 +82,13 @@ sub edit_view {
     my $teacher = $dbh->resultset('Teacher')->find($id_teacher);
     
     if ($teacher) {
-        $self->render(template => 'layouts/admin/teacher/edit_gv', teacher => $teacher , message => '', error=>'');
+        $self->render(template => 'layouts/admin/teacher/edit_teacher', teacher => $teacher , message => '', error=>'');
     } else {
-        $self->render(template => 'layouts/admin/teacher/list_gv');
+        $self->render(template => 'layouts/admin/teacher/list_teacher');
     }
 
 }
-sub edit_gv {
+sub edit_teacher {
     my $self = shift;
     my $id_teacher = $self->param('id_teacher');
     my $full_name = $self->param('full_name');
@@ -103,7 +103,7 @@ sub edit_gv {
     my $teacher = $dbh->resultset('Teacher')->find($id_teacher);
     if ($teacher) {
         if ( ! $full_name || ! $birthday || ! $email || ! $address || ! $phone) {
-            $self->render(template => 'layouts/admin/teacher/edit_gv', teacher => $teacher, error=>'Không được bỏ trống các trường trên', message =>'');
+            $self->render(template => 'layouts/admin/teacher/edit_teacher', teacher => $teacher, error=>'Không được bỏ trống các trường trên', message =>'');
         }    
         else {
             my $result= $dbh->resultset('Teacher')->find($id_teacher)->update({  
@@ -116,27 +116,27 @@ sub edit_gv {
             avatar => $avatar
             });
             my $teacher1 = $dbh->resultset('Teacher')->find($id_teacher);
-            $self->render(template => 'layouts/admin/teacher/edit_gv', teacher => $teacher1, message => 'Cập nhật thông tin thành công', error=>'');   
+            $self->render(template => 'layouts/admin/teacher/edit_teacher', teacher => $teacher1, message => 'Cập nhật thông tin thành công', error=>'');   
         }
     }
 }
 
 #xoa sinh vien 
-sub delete_gv{
+sub delete_teacher{
     my $self = shift;
     my $id_teacher = $self->param('id_student');
     my $dbh = $self->app->{_dbh};
     my $result = $dbh->resultset('Teacher')->find($id_teacher)->delete({});
     my @teacher = $self->app->{_dbh}->resultset('Teacher')->search({});
     if($result) {
-        $self->redirect_to('/admin/list_gv');
+        $self->redirect_to('/admin/list_teacher');
         $self->flash(message => 'Đã xóa thành công');
     }else {
     $self->render(template => 'layouts/admin/teacher/list_sv', teacher =>\@teacher);
     }
 }
 
-sub search_gv{
+sub search_teacher{
     my $self = shift;
     my $dbh = $self->app->{_dbh};
     my $full_name = $self->param('full_name');
@@ -150,7 +150,7 @@ sub search_gv{
         phone => $_->phone,
         avatar => $_->avatar
     } } @teacher;
-    $self->render(template => 'layouts/admin/teacher/list_gv', teacher=>\@teacher, error => '', message =>'');
+    $self->render(template => 'layouts/admin/teacher/list_teacher', teacher=>\@teacher, error => '', message =>'');
 }
 
 

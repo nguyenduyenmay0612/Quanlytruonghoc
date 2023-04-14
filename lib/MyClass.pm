@@ -81,25 +81,24 @@ sub startup ($self) {
     $teacher->get('/schedule')->to('TeacherController#schedule');
 
     #quan ly sinh viên
-    $teacher->get('/list_sv')->to('TeacherController#list_sv');
-    $teacher->get('/add_sv')->to('TeacherController#add_view');
-    $teacher->post('/add_sv')->to('TeacherController#add_sv');
-    $teacher->get('/edit_sv/:id')->to('TeacherController#edit_view');
-    $teacher->post('/edit_sv/:id')->to('TeacherController#edit_sv');
-    $teacher->get('/delete_sv/:id_student')->to('TeacherController#delete_sv');
+    $teacher->get('/list_student')->to('TeacherController#list_student');
+    $teacher->get('/add_student')->to('TeacherController#add_view');
+    $teacher->post('/add_student')->to('TeacherController#add_student');
+    $teacher->get('/edit_student/:id')->to('TeacherController#edit_view');
+    $teacher->post('/edit_student/:id')->to('TeacherController#edit_student');
+    $teacher->get('/delete_student/:id_student')->to('TeacherController#delete_student');
+    $teacher->post('/search_student')->to('TeacherController#search_student');
 
      #quan ly giang vien
-    $admin->get('/list_gv')->to('AdminController#list_gv');
-    $admin->get('/add_gv')->to('AdminController#add_view');
-    $admin->post('/add_gv')->to('AdminController#add_gv');
-    $admin->get('/edit_gv/:id_teacher')->to('AdminController#edit_view');
-    $admin->post('/edit_gv/:id_teacher')->to('AdminController#edit_gv');
-    $admin->get('/delete_gv/:id_teacher')->to('AdminController#delete_gv');
-
-
-    #tim kiem sinh vien/ giang vien
-    $teacher->post('/search_sv')->to('TeacherController#search_sv');
-    $admin->post('/search_gv')->to('AdminController#search_gv');
+    $admin->get('/list_teacher')->to('AdminController#list_teacher');
+    $admin->get('/add_teacher')->to('AdminController#add_view');
+    $admin->post('/add_teacher')->to('AdminController#add_teacher');
+    $admin->get('/edit_teacher/:id_teacher')->to('AdminController#edit_view');
+    $admin->post('/edit_teacher/:id_teacher')->to('AdminController#edit_teacher');
+    $admin->get('/delete_teacher/:id_teacher')->to('AdminController#delete_teacher');
+    $admin->post('/search_teacher')->to('AdminController#search_teacher');
+    
+    
 
 
     #quan ly diem 
@@ -121,6 +120,7 @@ sub startup ($self) {
     $admin->get('/delete_post/:id_post')->to('PostController#delete_post');
     $admin->get('/add_post')->to('PostController#add_post_view');
     $admin->post('/add_post')->to('PostController#add_post');
+    $admin->post('/search_post')->to('PostController#search_post');
 
     #quan ly hoat dong
     $admin->get('/activity')->to('ActivityController#activity');
@@ -129,6 +129,7 @@ sub startup ($self) {
     $admin->get('/delete_activity/:id_activity')->to('ActivityController#delete_activity');
     $admin->get('/add_activity')->to('ActivityController#add_activity_view');
     $admin->post('/add_activity')->to('ActivityController#add_activity');
+    $admin->post('/search_activity')->to('ActivityController#search_activity');
 
     #quan ly thong bao
     $admin->get('/noti')->to('NotiController#noti');
@@ -137,6 +138,7 @@ sub startup ($self) {
     $admin->get('/delete_noti/:id_noti')->to('NotiController#delete_noti');
     $admin->get('/add_noti')->to('NotiController#add_noti_view');
     $admin->post('/add_noti')->to('NotiController#add_noti');
+    $admin->post('/search_noti')->to('NotiController#search_noti');
 
     #quan ly hinh anh 
     $admin->get('/image')->to('ImageController#image');

@@ -110,8 +110,23 @@ sub add_post {
         image => $_->image
     } } @post;
     $self->render(template => 'layouts/admin/post/add_post', post =>\@post, message => 'Thêm thành công', error=>'');
-}     
+} 
 
-
+sub search_post{
+    my $self = shift;
+    my $dbh = $self->app->{_dbh};
+    my $title_post = $self->param('title_post');
+       
+    my @post = $self->app->{_dbh}->resultset('Post')->search_like({ title_post => '%'.$title_post.'%' });
+    @post = map { { 
+        id_post => $_->id_post,
+        title_post => $_->title_post,
+        summary => $_->summary,
+        content => $_->content,
+        image => $_->image
+    } } @post;
+    $self->render(template => 'layouts/admin/post/post', post=>\@post, error => '', message =>'');
+}
 
 1;
+

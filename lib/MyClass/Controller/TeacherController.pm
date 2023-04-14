@@ -21,7 +21,7 @@ sub profile_teacher($self){
             email => $teacher->email,
             phone => $teacher->phone,
         };
-        $self->render(template => 'layouts/backend_gv/profile_gv', teacher=>$teacher_info);
+        $self->render(template => 'layouts/backend_teacher/profile_gv', teacher=>$teacher_info);
     }    
 }
 
@@ -43,7 +43,7 @@ sub schedule($self){
         }
     }
     if (@schedule_rows){
-        $self->render(template => 'layouts/backend_gv/schedule',schedule =>\@schedules);
+        $self->render(template => 'layouts/backend_teacher/schedule',schedule =>\@schedules);
 }
 }
 
@@ -64,7 +64,7 @@ sub phone_student($self){
     };
     }
 
-    $self->render(template => 'layouts/backend_gv/phone_student', student=>\@student_rows);
+    $self->render(template => 'layouts/backend_teacher/phone_student', student=>\@student_rows);
 }
 
 #hien thi danh ba dien thoai giang vien lop
@@ -77,11 +77,11 @@ sub phone_teacher($self){
         phone => $_->phone,
     } } @teacher;
 
-    $self->render(template => 'layouts/backend_gv/phone_teacher', teacher=>\@teacher);
+    $self->render(template => 'layouts/backend_teacher/phone_teacher', teacher=>\@teacher);
 }
 
 #hien thi danh sach thong tin sinh vien
-sub list_sv($self){
+sub list_student($self){
     my $dbh = $self->app->{_dbh};
     my $email_Teacher = $self->session('email');
     my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_Teacher})->first;
@@ -98,19 +98,19 @@ sub list_sv($self){
         phone => $student->phone
     };
     }
-    $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student_rows, error => '', message => '');
+    $self->render(template => 'layouts/backend_teacher/student/list_student', student=>\@student_rows, error => '', message => '');
 }
 
 #them sinh vien moi
 sub add_view {
     my $self = shift;  
-    $self -> render(template => 'layouts/backend_gv/student/add_sv', 
+    $self -> render(template => 'layouts/backend_teacher/student/add_student', 
             error    => $self->flash('error'),
             message  => $self->flash('message')
     );
 }
 
-sub add_sv {
+sub add_student {
     my $self = shift;
     my $id_student = $self->param('id_student');
     my $full_name = $self->param('full_name');
@@ -123,7 +123,7 @@ sub add_sv {
 
     if (! $full_name || ! $birthday || ! $email || ! $address || ! $password) {
         $self->flash(error => 'Tên sinh viên, ngày sinh, email, password và địa chỉ là các trường không thể thiếu');
-        $self->redirect_to('add_sv');
+        $self->redirect_to('add_student');
     }
     my $email_teacher = $self->session('email');
     my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $email_teacher})->first;
@@ -143,10 +143,10 @@ sub add_sv {
                 avatar => $avatar
             });
         };
-       $self->render(template => 'layouts/backend_gv/student/add_sv', student => $student, message => 'Thêm thành công', error=>'');
+       $self->render(template => 'layouts/backend_teacher/student/add_student', student => $student, message => 'Thêm thành công', error=>'');
     } 
     else {
-        $self->render(template => 'layouts/backend_gv/student/add_sv', student => $student, message => '', error=>'Email này đã tồn tại');
+        $self->render(template => 'layouts/backend_teacher/student/add_student', student => $student, message => '', error=>'Email này đã tồn tại');
     }     
 }
 
@@ -158,13 +158,13 @@ sub edit_view {
     my $student = $dbh->resultset('Student')->find($id_student);
     
     if ($student) {
-        $self->render(template => 'layouts/backend_gv/student/edit_sv', student => $student , message => '', error=>'');
+        $self->render(template => 'layouts/backend_teacher/student/edit_student', student => $student , message => '', error=>'');
     } else {
-        $self->render(template => 'layouts/backend_gv/student/list_sv');
+        $self->render(template => 'layouts/backend_teacher/student/list_student');
     }
 
 }
-sub edit_sv {
+sub edit_student {
     my $self = shift;
     my $id_student = $self->param('id');
     my $full_name = $self->param('full_name');
@@ -178,7 +178,7 @@ sub edit_sv {
     my $student = $dbh->resultset('Student')->find($id_student);
     if ($student) {
         if ( ! $full_name || ! $birthday || ! $email || ! $address || ! $phone) {
-            $self->render(template => 'layouts/backend_gv/student/edit_sv', student => $student, error=>'Không được bỏ trống các trường trên', message =>'');
+            $self->render(template => 'layouts/backend_teacher/student/edit_student', student => $student, error=>'Không được bỏ trống các trường trên', message =>'');
         }    
         else {
             my $result= $dbh->resultset('Student')->find($id_student)->update({  
@@ -190,27 +190,27 @@ sub edit_sv {
             avatar => $avatar
             });
             my $student1 = $dbh->resultset('Student')->find($id_student);
-            $self->render(template => 'layouts/backend_gv/student/edit_sv', student => $student1, message => 'Cập nhật thông tin thành công', error=>'');   
+            $self->render(template => 'layouts/backend_teacher/student/edit_student', student => $student1, message => 'Cập nhật thông tin thành công', error=>'');   
         }
     }
 }
 
 #xoa sinh vien 
-sub delete_sv{
+sub delete_student{
     my $self = shift;
     my $id_student = $self->param('id_student');
     my $dbh = $self->app->{_dbh};
     my $result = $dbh->resultset('Student')->find($id_student)->delete({});
     my @student = $self->app->{_dbh}->resultset('Student')->search({});
     if($result) {
-        $self->redirect_to('/teacher/list_sv');
+        $self->redirect_to('/teacher/list_student');
         $self->flash(message => 'Đã xóa thành công');
     }else {
-    $self->render(template => 'layouts/backend_gv/student/list_sv', student =>\@student);
+    $self->render(template => 'layouts/backend_teacher/student/list_student', student =>\@student);
     }
 }
 
-sub search_sv{
+sub search_student{
     my $self = shift;
     my $dbh = $self->app->{_dbh};
     my $full_name = $self->param('full_name');
@@ -225,7 +225,7 @@ sub search_sv{
         phone => $_->phone,
         avatar => $_->avatar
     } } @student;
-    $self->render(template => 'layouts/backend_gv/student/list_sv', student=>\@student, error => '', message =>'');
+    $self->render(template => 'layouts/backend_teacher/student/list_student', student=>\@student, error => '', message =>'');
 }
 
 sub schedule_student{
@@ -247,13 +247,13 @@ sub schedule_student{
         };
     }
     if(@schedule_rows){
-        $self->render(template => 'layouts/backend_gv/manage_schedule_student/schedule_student', schedule => \@schedules);
+        $self->render(template => 'layouts/backend_teacher/manage_schedule_student/schedule_student', schedule => \@schedules);
     }
 }
 
 sub add_schedule_student_view{
     my $self = shift;  
-    $self -> render(template => 'layouts/backend_gv/manage_schedule_student/add_schedule_student', 
+    $self -> render(template => 'layouts/backend_teacher/manage_schedule_student/add_schedule_student', 
             error    => $self->flash('error'),
             message  => $self->flash('message')
     );
@@ -270,7 +270,7 @@ sub add_schedule_student{
 
     if (! $date || ! $lession || ! $subject_id || ! $lession || ! $room) {
         $self->flash(error => 'Các trường không thể thiếu');
-        $self->redirect_to('add_sv');
+        $self->redirect_to('add_student');
     }
     my $email_teacher = $self->session('email');
     my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $email_teacher})->first;
@@ -285,7 +285,7 @@ sub add_schedule_student{
             room => $room
             });
     };
-       $self->render(template => 'layouts/backend_gv/manage_schedule_student/add_schedule_student', message => 'Thêm thành công', error=>'');
+       $self->render(template => 'layouts/backend_teacher/manage_schedule_student/add_schedule_student', message => 'Thêm thành công', error=>'');
             
 }
 
@@ -296,9 +296,9 @@ sub edit_schedule_student_view{
     my $schedule = $dbh->resultset('ScheduleSt')->find($id);
     
     if ($schedule) {
-        $self->render(template => 'layouts/backend_gv/manage_schedule_student/edit_schedule_student', schedule => $schedule , message => '', error=>'');
+        $self->render(template => 'layouts/backend_teacher/manage_schedule_student/edit_schedule_student', schedule => $schedule , message => '', error=>'');
     } else {
-        $self->render(template => 'layouts/backend_gv/manage_schedule_student/schedule_student');
+        $self->render(template => 'layouts/backend_teacher/manage_schedule_student/schedule_student');
     }
 
 }
@@ -319,7 +319,7 @@ sub edit_schedule_student{
         room => $room,
         });
         my $schedule1 = $dbh->resultset('ScheduleSt')->find($id);
-        $self->render(template => 'layouts/backend_gv/manage_schedule_student/edit_schedule_student', schedule => $schedule1, message => 'Cập nhật thành công', error=>'');   
+        $self->render(template => 'layouts/backend_teacher/manage_schedule_student/edit_schedule_student', schedule => $schedule1, message => 'Cập nhật thành công', error=>'');   
     }
 }
 
@@ -333,7 +333,7 @@ sub delete_schedule_student{
         $self->redirect_to('/teacher/schedule_student');
         $self->flash(message => 'Đã xóa thành công');
     }else {
-    $self->render(template => 'layouts/backend_gv/manage_schedule_student/schedule_student', schedule =>\@schedule);
+    $self->render(template => 'layouts/backend_teacher/manage_schedule_student/schedule_student', schedule =>\@schedule);
     }
 }
 

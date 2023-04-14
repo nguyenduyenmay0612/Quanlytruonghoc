@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vn">
+<head>
+    <title>School</title>
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="..\assets/css/style.css">
+</head>
+<body>
+    <div class="jumbotron">
+        <div class="container text-center">
+            <img src="..\assets\image\banner.png" >
+        </div>
+    </div>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+                <img src="..\assets\image\logo.png" alt="school" width = "50px" height = "50px"> 
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Thông báo</a></li>
+                    <li><a href="/student/profile_student">Lý lịch sinh viên</a></li>
+                    <li>
+                        <a type="button" data-toggle="dropdown">Danh bạ điện thoại<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/student/phone_student">Sinh viên lớp</a></li>
+                            <li><a href="/student/phone_teacher">Giáo viên giảng dạy</a></li>           
+                        </ul>
+                    </li>
+                    <li><a href="/student/schedule">Thời khóa biểu</a></li>
+            
+                    <li>
+                        <a type="button" data-toggle="dropdown">Kết quả học tập<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/student/marks_student">Điểm học phần</a></li>
+                            <li><a href="/student/result">Kết quả xét học vụ</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class=""></span> Đăng xuất</a></li>       
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid text-center">   
+        <%= content %>
+    </div>
+<footer class="container-fluid text-center" style="margin-top:290px;">
+  <p>Bản quyền thuộc quyền sở hữu của Duyên Mây</p>
+</footer>
+
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}    
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+        setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+</script>
+</body>
+</html>

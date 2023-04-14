@@ -4,6 +4,10 @@
   <h3>
    Quản lý hoạt động
   </h3>
+  <form action='/admin/search_activity' method = "post">
+    <input type="text" class="form-search" name="activity_name" placeholder="Tìm kiếm hoạt động...">
+    <button type="submit" class="btn btn-primary me-2">Search</button>
+  </form>
   
   <table class="w3-table w3-striped w3-bordered">
       <thead>

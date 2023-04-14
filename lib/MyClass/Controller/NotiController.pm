@@ -97,6 +97,19 @@ sub add_noti {
     $self->render(template => 'layouts/admin/noti/add_noti', noti =>\@noti, message => 'Thêm thành công', error=>'');
 }     
 
-
+sub search_noti{
+    my $self = shift;
+    my $dbh = $self->app->{_dbh};
+    my $noti_name = $self->param('noti_name');
+       
+    my @noti = $self->app->{_dbh}->resultset('Noti')->search_like({ noti_name => '%'.$noti_name.'%' });
+    @noti = map { { 
+        id_noti => $_->id_noti,
+        noti_name => $_->noti_name,
+        content => $_->content,
+    } } @noti;
+    $self->render(template => 'layouts/admin/noti/noti', noti=>\@noti, error => '', message =>'');
+}
 
 1;
+

@@ -1,45 +1,49 @@
 % layout 'admin/index';
-<div>
-  <br>
-  <h3>
-   Quản lý thông báo
-  </h3>
-  
-  <table class="w3-table w3-striped w3-bordered">
-      <thead>
-          <tr>
-            <th>ID</th>
-            <th>Tên thông báo</th>
-            <th>Nội dung</th>
-            <th>Cập nhật</th>
-          </tr>
-      </thead>
-      <tbody>
-      <script type="text/javascript">
-        function decodeHtml(str) {
-          let txt = document.createElement("textarea");
-          txt.innerHTML = str;
-          return txt.value;
-        }
-      </script>
-        % foreach my $item (@{$noti}) {
-      <tr>  
-        <td><%= $item->{id_noti} %></td>
-        <td><%= $item->{noti_name} %></td>
-        <td>
-          <div id="<%= $item->{id_noti}%>" style =" overflow: auto ; max-height: 200px; width: 350px;"><div>
-        </td>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                document.getElementById(<%= $item->{id_noti} %>).innerHTML= decodeHtml(`<%= $item->{content} %>`);
-            });
-        </script>
+<div> <br> 
+    <h3>
+        Quản lý thông báo
+    </h3> <hr>
+    <form action='/admin/search_noti' method = "post">
+        <input type="text" class="form-search" name="noti_name" placeholder="Tìm kiếm thông báo...">
+        <button type="submit" class="btn btn-primary me-2">Search</button>
+    </form>
+    <div style =" overflow: auto ; max-height: 800px">
+        <table class="w3-table w3-striped w3-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên thông báo</th>
+                    <th>Nội dung</th>
+                    <th>Cập nhật</th>
+                </tr>
+            </thead>
+        <tbody>
+            <script type="text/javascript">
+                function decodeHtml(str) {
+                let txt = document.createElement("textarea");
+                txt.innerHTML = str;
+                return txt.value;
+                }
+            </script>
+                % foreach my $item (@{$noti}) {
+            <tr>  
+                <td><%= $item->{id_noti} %></td>
+                <td><%= $item->{noti_name} %></td>
+                <td>
+                <div id="<%= $item->{id_noti}%>" style =" overflow: auto ; max-height: 200px; width: 350px;"><div>
+                </td>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        document.getElementById(<%= $item->{id_noti} %>).innerHTML= decodeHtml(`<%= $item->{content} %>`);
+                    });
+                </script>
 
-        <td><a href='/admin/edit_noti/<%= $item->{id_noti} %>'>Sửa</a>|<a onclick="myFunction()" href='/admin/delete_noti/<%= $item->{id_noti} %>'>Xóa</a></td>
-      </tr>
-    %}
-    </tbody>      
-  </table> <hr>
+                <td><a href='/admin/edit_noti/<%= $item->{id_noti} %>'>Sửa</a>|<a onclick="myFunction()" href='/admin/delete_noti/<%= $item->{id_noti} %>'>Xóa</a></td>
+            </tr>
+            %}
+        </tbody>      
+        </table> <hr>
+    </div>
     <form action='/admin/add_noti' method = "get">
         <button type="submit" class="btn btn-primary me-2">Thêm thông báo</button>
     </form>
@@ -56,13 +60,13 @@
     %}
 </div>
 <script>
-function myFunction() {
-  confirm("Bạn có chắc chắn muốn xóa không?");
-}
+    function myFunction() {
+    confirm("Bạn có chắc chắn muốn xóa không?");
+    }
 
-$(document).ready(function(){
-	$('#Mybtn').click(function(){
-  		$('#MyForm').toggle(500);
-  });
-});
+    $(document).ready(function(){
+        $('#Mybtn').click(function(){
+            $('#MyForm').toggle(500);
+    });
+    });
 </script>

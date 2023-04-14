@@ -103,6 +103,19 @@ sub add_activity {
     $self->render(template => 'layouts/admin/activity/add_activity', activity =>\@activity, message => 'Thêm thành công', error=>'');
 }     
 
-
+sub search_activity{
+    my $self = shift;
+    my $dbh = $self->app->{_dbh};
+    my $activity_name = $self->param('activity_name');
+       
+    my @activity = $self->app->{_dbh}->resultset('Activity')->search_like({ activity_name => '%'.$activity_name.'%' });
+    @activity = map { { 
+        id_activity => $_->id_activity,
+        activity_name => $_->activity_name,
+        activity_des => $_->activity_des,
+        image => $_->image
+    } } @activity;
+    $self->render(template => 'layouts/admin/activity/activity', activity=>\@activity, error => '', message =>'');
+}
 
 1;

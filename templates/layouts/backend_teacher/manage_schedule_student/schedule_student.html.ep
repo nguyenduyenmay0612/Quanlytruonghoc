@@ -1,4 +1,4 @@
-% layout 'backend_gv/index';
+% layout 'backend_teacher/index';
 
 <h3> Cập nhật thời khóa biểu lớp </h3>
       <table class="w3-table w3-striped w3-bordered">

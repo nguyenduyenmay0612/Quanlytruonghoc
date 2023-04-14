@@ -1,4 +1,4 @@
-% layout 'backend_sv/index';
+% layout 'backend_student/index';
 
 <div class="row content">
     <div class="col-sm-2 sidenav">  
