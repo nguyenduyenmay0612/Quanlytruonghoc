@@ -1,14 +1,11 @@
 % layout 'admin/index';
 <div>
   <br>
-  <h3>
-   Quản lý hoạt động
-  </h3>
+  <h3>  Quản lý hoạt động </h3>
   <form action='/admin/search_activity' method = "post">
     <input type="text" class="form-search" name="activity_name" placeholder="Tìm kiếm hoạt động...">
     <button type="submit" class="btn btn-primary me-2">Search</button>
-  </form>
-  
+  </form> 
   <table class="w3-table w3-striped w3-bordered">
       <thead>
           <tr>
@@ -21,11 +18,11 @@
       </thead>
       <tbody >
         <script type="text/javascript">
-        function decodeHtml(str) {
+          function decodeHtml(str) {
             let txt = document.createElement("textarea");
             txt.innerHTML = str;
             return txt.value;
-        }
+          }
         </script>
         % foreach my $item (@{$activity}) {
       <tr>  
@@ -36,9 +33,9 @@
           <div id="<%= $item->{id_activity}%>" style =" overflow: auto ; max-height: 200px; width: 350px;"><div>
         </td>
         <script type="text/javascript">
-            $(document).ready(function(){
-                document.getElementById(<%= $item->{id_activity} %>).innerHTML= decodeHtml(`<%= $item->{activity_des} %>`);
-            });
+          $(document).ready(function(){
+              document.getElementById(<%= $item->{id_activity} %>).innerHTML= decodeHtml(`<%= $item->{activity_des} %>`);
+          });
         </script>
         <td><a href='edit_activity/<%= $item->{id_activity} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_activity/<%= $item->{id_activity} %>'>Xóa</a></td>
       </tr>
@@ -53,7 +50,6 @@
         <small> <%= $error %> </small>
     </div>
     %}
-
     % if ($message) {
     <div class="error" style="color: green">
         <small> <%= $message %> </small>
@@ -61,13 +57,12 @@
     %}
 </div>
 <script>
-function myFunction() {
-  confirm("Bạn có chắc chắn muốn xóa không?");
-}
-
-$(document).ready(function(){
-	$('#Mybtn').click(function(){
-  		$('#MyForm').toggle(500);
+  function myFunction() {
+    confirm("Bạn có chắc chắn muốn xóa không?");
+  }
+  $(document).ready(function(){
+    $('#Mybtn').click(function(){
+        $('#MyForm').toggle(500);
+    });
   });
-});
 </script>

@@ -35,11 +35,11 @@ sub startup ($self) {
 
     # Normal route to controller
     $r->get('/')->to('Example#welcome');
-    $r->get('/sukien/:id_post')->to('Example#sukien_detail');
-    $r->get('/thongbao/:id_noti')->to('Example#thongbao_detail');
-    $r->get('/hoatdong/:id_activity')->to('Example#hoatdong_detail');
-    $r->get('/gioithieu')->to('Example#gioithieu');
-    $r->get('/tuyensinh')->to('Example#tuyensinh');
+    $r->get('/sukien/:id_post')->to('Example#post_detail');
+    $r->get('/thongbao/:id_noti')->to('Example#noti_detail');
+    $r->get('/hoatdong/:id_activity')->to('Example#activity_detail');
+    $r->get('/gioithieu')->to('Example#introduce');
+    $r->get('/tuyensinh')->to('Example#admissions');
     $r->get('/sukien')->to('Example#welcome');
 
     #login_logout

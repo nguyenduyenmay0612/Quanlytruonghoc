@@ -8,12 +8,12 @@ use Mojo::Log;
 my $log = Mojo::Log->new(path => '/log/app.log', level => 'warn');
 
 #lylichsinhvien
-sub profile_student($self){
-    my $id_student = $self->param('id_student');
+sub profile_student($self) {
     my $dbh = $self->app->{_dbh};
-    my $emailStudent = $self->session('email');
-    my $student = $dbh->resultset('Student')->search({"email" => $emailStudent})->first;
 
+    my $id_student = $self->param('id_student');   
+    my $email_student = $self->session('email');
+    my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
     if ($student) {    
         my $class_id = $student->class_id;
         my $class = $dbh->resultset('Class')->search({"id_class" => $class_id});
@@ -32,13 +32,15 @@ sub profile_student($self){
 }
 
 #thoikhoabieu
-sub schedule($self){   
+sub schedule($self) {
     my $dbh = $self->app->{_dbh};
+
     my $emailStudent = $self->session('email');
     my $student = $dbh->resultset('Student')->search({"email" => $emailStudent})->first;
     my $class_id = $student->class_id;
     my @schedule_rows = $dbh->resultset('ScheduleSt')->search({"class_id" => $class_id});
     my @schedules = +();
+    my $full_name = $student->full_name;
     foreach my $schedule (@schedule_rows) {
         my $subject = $dbh->resultset('Subject')->find($schedule->subject_id);
         push @schedules, +{
@@ -48,48 +50,46 @@ sub schedule($self){
             room => $schedule->room,
         };
     }
-    if(@schedule_rows){
-        $self->render(template => 'layouts/backend_student/schedule', schedule => \@schedules);
+    if (@schedule_rows) {
+        $self->render(template => 'layouts/backend_student/schedule', schedule => \@schedules, full_name=>$full_name);
     }
 }
 
 #danhbadienthoai
-sub phone_student($self){
+sub phone_student($self) {
     my $dbh = $self->app->{_dbh};
+
     my $email_student = $self->session('email');
     my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
     my $class_id = $student->class_id;
-    my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});             
+    my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});
     my @student_rows = +();
     foreach my $student (@students) {
         push @student_rows, +{
         id_student => $student->id_student,
-        full_name => $student->full_name,      
+        full_name => $student->full_name,
         email => $student->email,
         phone => $student->phone
-    };
+        };
     }
-
-
     $self->render(template => 'layouts/backend_student/phone_student', student=>\@student_rows);
 }
 
-sub phone_teacher($self){
-    my @teacher = $self->app->{_dbh}->resultset('Teacher')->search({});
-    @teacher = map { { 
-       id_teacher => $_->id_teacher,
-       full_name => $_->full_name,
-        #birthday => $_->birthday,
+sub phone_teacher($self) {
+    my @teacher = $self->app->{_dbh}->resultset('Teacher')->search(+{});
+    @teacher = map { +{ 
+        id_teacher => $_->id_teacher,
+        full_name => $_->full_name,
         email => $_->email,
-        phone => $_->phone,
+        phone => $_->phone
     } } @teacher;
-
     $self->render(template => 'layouts/backend_student/phone_teacher', teacher=>\@teacher);
 }
 
 #ketquahoctap
-sub get_marks($self){
+sub get_marks($self) {
     my $dbh = $self->app->{_dbh};
+
     my $email_student = $self->session('email');
     my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
     my $id_student = $student->id_student;
@@ -98,19 +98,19 @@ sub get_marks($self){
     foreach my $mark (@mark_student) {
         my $subject = $dbh->resultset('Subject')->find($mark->subject_id);
         push @marks, +{
-             name_subject => $subject->name_subject,
-             marks_1 => $mark->marks_1,
-             marks_2 => $mark->marks_2,
-             marks_3 => $mark->marks_3,
-             marks_total => $mark->marks_total
+            name_subject => $subject->name_subject,
+            marks_1 => $mark->marks_1,
+            marks_2 => $mark->marks_2,
+            marks_3 => $mark->marks_3,
+            marks_total => $mark->marks_total
         }
     }
-
     $self->render(template => 'layouts/backend_student/marks_student', marks => \@marks);
 }
 
-sub get_result($self){
+sub get_result($self) {
     my $dbh = $self->app->{_dbh};
+
     my $email_student = $self->session('email');
     my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
     my $id_student = $student->id_student;
@@ -128,10 +128,6 @@ sub get_result($self){
         }
     }
     $self->render(template => 'layouts/backend_student/result', results =>\@results);
-}
-
-sub chungchi($self){
-    $self->render(template => 'layouts/backend_student/chungchi');
 }
 
 1;

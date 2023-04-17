@@ -1,16 +1,17 @@
 html {
     height: 100%;
-  }
-  
-body {
-    min-height: 100%; 
 }
-.container-fluid{
-    margin-top:20px;
+
+body {
+    min-height: 100%;
+}
+
+.container-fluid {
+    margin-top: 20px;
 }
 
 .w3-sidebar {
-    width:20%;
+    width: 20%;
 }
 
 footer {
@@ -21,28 +22,33 @@ footer {
     flex-shrink: 0;
     top: 100%;
 }
-.form-add-student{
-    margin-left:300px;
+
+.form-add-student {
+    margin-left: 300px;
     width: 500px;
 }
-.form-edit-student{
-    margin-left:300px;
+
+.form-edit-student {
+    margin-left: 300px;
     width: 500px;
 }
-.form-search{
-    width : 300px;
-    
+
+.form-search {
+    width: 300px;
 }
-#MyForm{
-	display: none;
+
+#MyForm {
+    display: none;
     width: 300px;
     border: 1px solid #ccc;
     padding: 14px;
     background: #ececec;
-}	
-.page-title{
-    margin-left:300px;
 }
-.error{
-    margin-left:300px;
+
+.page-title {
+    margin-left: 300px;
+}
+
+.error {
+    margin-left: 300px;
 }

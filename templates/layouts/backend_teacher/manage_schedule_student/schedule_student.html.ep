@@ -1,33 +1,33 @@
 % layout 'backend_teacher/index';
-
 <h3> Cập nhật thời khóa biểu lớp </h3>
-      <table class="w3-table w3-striped w3-bordered">
-        <thead>
-          <tr>
-            <th>Tên HP</th>
-            <th>Thứ</th>
-            <th>Tiết</th>
-            <th>Phòng</th>
-            <th>Cập nhật</th>
-          </tr>
-        </thead>
-        <tbody > 
-          % foreach my $items (@{$schedule}) {
-          <tr>  
-            <td><%= $items->{name_subject} %></td>
-            <td><%= $items->{date} %></td>
-            <td><%= $items->{lession} %></td>
-            <td><%= $items->{room} %></td>
-            <td><a href='edit_schedule_student/<%= $items->{id} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_schedule_student/<%= $items->{id} %>'>Xóa</a></td>
-          </tr>
-        %}
-        </tbody>     
-      </table> <br> <br>
-      <form action='/teacher/add_schedule_student' method = "get">
-        <button type="submit" class="btn btn-primary me-2">Thêm TKB mới</button>
-    </form>
-    <script>
-      function myFunction() {
-        confirm("Bạn có chắc chắn muốn xóa không?");
-      }
-    </script>
+<table class="w3-table w3-striped w3-bordered">
+  <thead>
+    <tr>
+      <th>Tên HP</th>
+      <th>Thứ</th>
+      <th>Tiết</th>
+      <th>Phòng</th>
+      <th>Cập nhật</th>
+    </tr>
+  </thead>
+  <tbody>
+    % foreach my $items (@{$schedule}) {
+    <tr>
+      <td><%= $items->{name_subject} %></td>
+      <td><%= $items->{date} %></td>
+      <td><%= $items->{lession} %></td>
+      <td><%= $items->{room} %></td>
+      <td><a href='edit_schedule_student/<%= $items->{id} %>'>Sửa</a>|<a onclick="myFunction()"
+          href='delete_schedule_student/<%= $items->{id} %>'>Xóa</a></td>
+    </tr>
+    %}
+  </tbody>
+</table> <br> <br>
+<form action='/teacher/add_schedule_student' method="get">
+  <button type="submit" class="btn btn-primary me-2">Thêm TKB mới</button>
+</form>
+<script>
+  function myFunction() {
+    confirm("Bạn có chắc chắn muốn xóa không?");
+  }
+</script>

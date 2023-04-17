@@ -1,58 +1,56 @@
 % layout 'backend_teacher/index';
-
-
 <div>
-    <br>
-    <form action='/teacher/search_student' method = "post">
-        <input type="text" class="form-search" name="full_name" placeholder="Tìm kiếm sinh viên...">
-        <button type="submit" class="btn btn-primary me-2">Search</button>
-    </form>
-    <h3>
-        Danh sách sinh viên lớp
-    </h3>
-    <div style =" overflow: auto ; max-height: 480px">
-    <table class="w3-table w3-striped w3-bordered" >
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tên sinh viên</th>
-                <th>Ngày sinh</th>
-                <th>Địa chỉ</th>
-                <th>Email</th>
-                <th>Số điện thoại</th>
-                <th>Cập nhật</th>
-            </tr>
-        </thead>
-        <tbody >
-            % foreach my $item (@{$student}) {
-            <tr>  
-                <td><%= $item->{id_student} %></td>
-                <td><%= $item->{full_name} %></td>
-                <td><%= $item->{birthday} %></td>
-                <td><%= $item->{address} %></td>
-                <td><%= $item->{email} %></td>
-                <td><%= $item->{phone} %></td>
-                <td><a href='edit_student/<%= $item->{id_student} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_student/<%= $item->{id_student} %>'>Xóa</a></td>
-            </tr>
-            %}
-        </tbody>      
-    </table>
-        % if ($error) {
-        <div class="error" style="color: red">
-        <small> <%= $error %> </small>
-        </div>
+  <br>
+  <form action='/teacher/search_student' method="post">
+    <input type="text" class="form-search" name="full_name" placeholder="Tìm kiếm sinh viên...">
+    <button type="submit" class="btn btn-primary me-2">Search</button>
+  </form>
+  <h3>
+    Danh sách sinh viên lớp
+  </h3>
+  <div style=" overflow: auto ; max-height: 480px">
+    <table class="w3-table w3-striped w3-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên sinh viên</th>
+          <th>Ngày sinh</th>
+          <th>Địa chỉ</th>
+          <th>Email</th>
+          <th>Số điện thoại</th>
+          <th>Cập nhật</th>
+        </tr>
+      </thead>
+      <tbody>
+        % foreach my $item (@{$student}) {
+        <tr>
+          <td><%= $item->{id_student} %></td>
+          <td><%= $item->{full_name} %></td>
+          <td><%= $item->{birthday} %></td>
+          <td><%= $item->{address} %></td>
+          <td><%= $item->{email} %></td>
+          <td><%= $item->{phone} %></td>
+          <td><a href='edit_student/<%= $item->{id_student} %>'>Sửa</a>|<a onclick="myFunction()"
+              href='delete_student/<%= $item->{id_student} %>'>Xóa</a></td>
+        </tr>
         %}
-
-        % if ($message) {
-        <div class="error" style="color: green">
-        <small> <%= $message %> </small>
-        </div>
-    %} 
+      </tbody>
+    </table>
+    % if ($error) {
+    <div class="error" style="color: red">
+      <small> <%= $error %> </small>
     </div>
-</div>
+    %}
 
+    % if ($message) {
+    <div class="error" style="color: green">
+      <small> <%= $message %> </small>
+    </div>
+    %}
+  </div>
+</div>
 <script>
-    function myFunction() {
+  function myFunction() {
     confirm("Bạn có chắc chắn muốn xóa không?");
-    }
+  }
 </script>

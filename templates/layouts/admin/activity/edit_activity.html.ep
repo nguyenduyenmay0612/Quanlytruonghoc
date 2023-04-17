@@ -1,57 +1,57 @@
 % layout 'admin/index';
-    <div class="page-header">
-        <h3 class="page-title"> Sửa hoạt động </h3>
-        <nav aria-label="breadcrumb"></nav>
+<div class="page-header">
+  <h3 class="page-title"> Sửa hoạt động </h3>
+  <nav aria-label="breadcrumb"></nav>
+</div>
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+      <form method="post" action='/admin/edit_activity/<%= $activity->id_activity %>' class="form-edit-student">
+        <div class="form-group">
+          <label>ID hoạt động</label>
+          <input type="id" class="form-control" id="id_activity" name="id_activity" placeholder="ID activity"
+            value="<%= $activity->id_activity %>" disabled>
+        </div>
+        <div class="form-group">
+          <label>Tên bài đăng</label>
+          <input type="text" class="form-control" id="activity_name" name="activity_name" placeholder="Tên bài đăng"
+            value="<%= $activity->activity_name %>" required>
+        </div>
+        <label>Ảnh</label>
+        <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh"
+          value="<%= $activity->image %>" required>
     </div>
-    <div class="row">           
-                <div class="card">
-                  <div class="card-body">                                  
-                    <form method="post" action='/admin/edit_activity/<%= $activity->id_activity %>' class="form-edit-student">
-                      <div class="form-group">
-                        <label>ID hoạt động</label>
-                        <input type="id" class="form-control" id="id_activity" name="id_activity" placeholder="ID activity" value="<%= $activity->id_activity %>" disabled>
-                      </div>   
-                      <div class="form-group">
-                        <label>Tên bài đăng</label>
-                        <input type="text" class="form-control" id="activity_name" name="activity_name" placeholder="Tên bài đăng" value="<%= $activity->activity_name %>" required>
-                      </div>                                                                                                     
-                      <div class="form-group">
-                        <label>Ảnh</label>
-                        <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh" value="<%= $activity->image %>" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Mô tả</label>                  
-                        <script type="text/javascript">
-                            function decodeHtml(str) {
-                                let txt = document.createElement("textarea");
-                                txt.innerHTML = str;
-                                return txt.value;
-                            }
-                        </script>
-                        <textarea style = "overflow: auto; max-height: 300px" class="ckeditor" id="activity_des" name="activity_des"> <%= $activity->activity_des %></textarea>
-                        <script type="text/javascript">
-                              $(document).ready(function(){
-                                  document.getElementById("activity_des").innerHTML= decodeHtml(`<%= $activity->activity_des %>`);
-                              });
-                        </script>
-                      </div>                     
-                      <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
-                      <button class="btn btn-dark">Cancel</button>
-                    </form>
-                    % if ($error) {
-                         <div class="error" style="color: red">
-                            <small> <%= $error %> </small>
-                         </div>
-                    %}
-
-                    % if ($message) {
-                         <div class="error" style="color: green">
-                            <small> <%= $message %> </small>
-                         </div>
-                     %}
-                  </div>
-        </div>             
+    <div class="form-group">
+      <label>Mô tả</label>
+      <script type="text/javascript">
+        function decodeHtml(str) {
+          let txt = document.createElement("textarea");
+          txt.innerHTML = str;
+          return txt.value;
+        }
+      </script>
+      <textarea style="overflow: auto; max-height: 300px" class="ckeditor" id="activity_des" name="activity_des"> <%= $activity->activity_des %> </textarea>
+      <script type="text/javascript">
+        $(document).ready(function() {
+          document.getElementById("activity_des").innerHTML = decodeHtml(`<%= $activity->activity_des %>`);
+        });
+      </script>
     </div>
-    <script type="text/javascript">
-    CKEDITOR.replaceAll('ckeditor1');
-    </script>
+    <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+    <button class="btn btn-dark">Cancel</button>
+    </form>
+    % if ($error) {
+    <div class="error" style="color: red">
+      <small> <%= $error %> </small>
+    </div>
+    %}
+    % if ($message) {
+    <div class="error" style="color: green">
+      <small> <%= $message %> </small>
+    </div>
+    %}
+  </div>
+</div>
+<script type="text/javascript">
+  CKEDITOR.replaceAll('ckeditor');
+</script>

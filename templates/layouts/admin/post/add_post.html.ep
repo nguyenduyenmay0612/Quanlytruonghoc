@@ -1,53 +1,51 @@
 % layout 'admin/index';
 <div class="page-header">
-        <h3 class="page-title"> Thêm bài viết mới </h3>
-        <nav aria-label="breadcrumb"></nav>
-    </div>
-    <div class="row">
-            <div >
-                <div class="card">
-                  <div class="card-body">                                  
-                    <form method="post" action='/admin/add_post' class="form-add-student">                       
-                      <div class="form-group">
-                        <label>Tên bài đăng</label>
-                        <input type="text" class="form-control" id="title_post" name="title_post" placeholder="Tên bài đăng" required>
-                      </div>                                                                                                     
-                      <div class="form-group">
-                        <label>Ảnh</label>
-                        <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Tóm tắt</label>
-                        <input type="text" class="form-control" id="summary" name="summary" placeholder="Tóm tắt"  required>
-                      </div>
-                      <div class="form-group">
-                            <div>
-                            <textarea cols="80" rows="10" id="content" name="content"> 
-                                &lt;h1&gt;Article Title&lt;/h1&gt;
-                                &lt;p&gt;Here's some sample text&lt;/p&gt;
-                            </textarea>                    
-                            <input type="submit" value="Submit"/>
-                            </div>
-                      </div>
-                    
-                      <button type="submit" class="btn btn-primary me-2">Thêm</button>
-                      <button class="btn btn-dark">Cancel</button>
-                    </form>
-                     % if ($error) {
-                         <div class="error" style="color: red">
-                            <small> <%= $error %> </small>
-                         </div>
-                    %}
-                    
-                    % if ($message) {
-                         <div class="error" style="color: green">
-                            <small> <%= $message %> </small>
-                         </div>
-                     %}
-                  </div>
-                </div>
-            </div>             
+  <h3 class="page-title"> Thêm bài viết mới </h3>
+  <nav aria-label="breadcrumb"></nav>
+</div>
+<div class="row">
+  <div>
+    <div class="card">
+      <div class="card-body">
+        <form method="post" action='/admin/add_post' class="form-add-student">
+          <div class="form-group">
+            <label>Tên bài đăng</label>
+            <input type="text" class="form-control" id="title_post" name="title_post" placeholder="Tên bài đăng" required>
+          </div>
+          <div class="form-group">
+            <label>Ảnh</label>
+            <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh" required>
+          </div>
+          <div class="form-group">
+            <label>Tóm tắt</label>
+            <input type="text" class="form-control" id="summary" name="summary" placeholder="Tóm tắt" required>
+          </div>
+          <div class="form-group">
+            <div>
+              <textarea cols="80" rows="10" id="content" name="content">
+                &lt;h1&gt;Article Title&lt;/h1&gt;
+                &lt;p&gt;Here's some sample text&lt;/p&gt;
+              </textarea>
+              <input type="submit" value="Submit"/>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary me-2">Thêm</button>
+          <button class="btn btn-dark">Cancel</button>
+        </form>
+        % if ($error) {
+        <div class="error" style="color: red">
+          <small> <%= $error %> </small>
         </div>
-        <script type="text/javascript">
-             CKEDITOR.replace('content');                        
-        </script>
+        %}
+        % if ($message) {
+        <div class="error" style="color: green">
+          <small> <%= $message %> </small>
+        </div>
+        %}
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  CKEDITOR.replace('content');
+</script>

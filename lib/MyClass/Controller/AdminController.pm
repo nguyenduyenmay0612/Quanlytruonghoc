@@ -8,35 +8,39 @@ use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
-sub list_teacher($self){
-    my $dbh = $self->app->{_dbh};   
-    my @teachers = $dbh->resultset('Teacher')->search({});             
+sub list_teacher($self) {
+    my $dbh = $self->app->{_dbh};
+
+    my @teachers = $dbh->resultset('Teacher')->search(+{});
     my @teacher_rows = +();
     foreach my $teacher (@teachers) {
         my $class = $dbh->resultset('Class')->find($teacher->class_id);
         push @teacher_rows, +{
-        id_teacher => $teacher->id_teacher,
-        full_name => $teacher->full_name,
-        birthday => $teacher->birthday->strftime('%d/%m/%Y'),
-        address => $teacher->address,
-        email => $teacher->email,
-        phone => $teacher->phone,
-        name_class => $class->name_class
+            id_teacher => $teacher->id_teacher,
+            full_name => $teacher->full_name,
+            birthday => $teacher->birthday->strftime('%d/%m/%Y'),
+            address => $teacher->address,
+            email => $teacher->email,
+            phone => $teacher->phone,
+            name_class => $class->name_class
         }
     }
     $self->render(template => 'layouts/admin/teacher/list_teacher', teacher=>\@teacher_rows, error => '', message => '');
 }
+
 #them sinh vien moi
 sub add_view {
-    my $self = shift;  
-    $self -> render(template => 'layouts/admin/teacher/add_teacher', 
-            error    => $self->flash('error'),
-            message  => $self->flash('message')
+    my $self = shift;
+    $self->render(template => 'layouts/admin/teacher/add_teacher',
+        error => $self->flash('error'),
+        message => $self->flash('message')
     );
 }
 
-sub add_teacher {
+sub add_teacher{
     my $self = shift;
+    my $dbh = $self->app->{_dbh};
+
     my $id_student = $self->param('id_teacher');
     my $full_name = $self->param('full_name');
     my $birthday = $self->param('birthday');
@@ -46,21 +50,18 @@ sub add_teacher {
     my $password= $self->param('password');
     my $avatar= $self->param('avatar');
     my $class_id= $self->param('class_id');
-
     if (! $full_name || ! $birthday || ! $email || ! $address || ! $password) {
         $self->flash(error => 'Tên, ngày sinh, email, password và địa chỉ là các trường không thể thiếu');
         $self->redirect_to('add_teacher');
-    }
-    my $dbh = $self->app->{_dbh};
+    }   
     my $teacher = $dbh->resultset('Teacher')->search({ email => $email});
-
-    if (!$teacher ->first ) {
+    if (!$teacher ->first) {
         eval {
-            $dbh->resultset('Teacher')->create({                        
+            $dbh->resultset('Teacher')->create({
                 full_name => $full_name,
                 birthday => $birthday,
                 address => $address,
-                phone => $phone,               
+                phone => $phone,
                 email => $email,
                 password => $password,
                 avatar => $avatar,
@@ -68,8 +69,7 @@ sub add_teacher {
             });
         };
        $self->render(template => 'layouts/admin/teacher/add_teacher', teacher => $teacher, message => 'Thêm thành công', error=>'');
-    } 
-    else {
+    } else {
         $self->render(template => 'layouts/admin/teacher/add_teacher', teacher => $teacher, message => '', error=>'Email này đã tồn tại');
     }     
 }
@@ -77,19 +77,21 @@ sub add_teacher {
 #sua thong tin sinh vien
 sub edit_view {
     my $self = shift;
-    my $id_teacher = $self->param('id_teacher');
     my $dbh = $self->app->{_dbh};
-    my $teacher = $dbh->resultset('Teacher')->find($id_teacher);
-    
+
+    my $id_teacher = $self->param('id_teacher');   
+    my $teacher = $dbh->resultset('Teacher')->find($id_teacher);    
     if ($teacher) {
         $self->render(template => 'layouts/admin/teacher/edit_teacher', teacher => $teacher , message => '', error=>'');
     } else {
         $self->render(template => 'layouts/admin/teacher/list_teacher');
     }
-
 }
+
 sub edit_teacher {
     my $self = shift;
+    my $dbh = $self->app->{_dbh};
+
     my $id_teacher = $self->param('id_teacher');
     my $full_name = $self->param('full_name');
     my $birthday = $self->param('birthday');
@@ -98,14 +100,12 @@ sub edit_teacher {
     my $phone= $self->param('phone');
     my $avatar= $self->param('avatar');
     my $class_id= $self->param('class_id');
-    my $dbh = $self->app->{_dbh}; 
-
+     
     my $teacher = $dbh->resultset('Teacher')->find($id_teacher);
     if ($teacher) {
         if ( ! $full_name || ! $birthday || ! $email || ! $address || ! $phone) {
             $self->render(template => 'layouts/admin/teacher/edit_teacher', teacher => $teacher, error=>'Không được bỏ trống các trường trên', message =>'');
-        }    
-        else {
+        } else {
             my $result= $dbh->resultset('Teacher')->find($id_teacher)->update({  
             full_name => $full_name,
             birthday => $birthday,
@@ -122,26 +122,28 @@ sub edit_teacher {
 }
 
 #xoa sinh vien 
-sub delete_teacher{
+sub delete_teacher {
     my $self = shift;
-    my $id_teacher = $self->param('id_student');
     my $dbh = $self->app->{_dbh};
+
+    my $id_teacher = $self->param('id_student');    
     my $result = $dbh->resultset('Teacher')->find($id_teacher)->delete({});
     my @teacher = $self->app->{_dbh}->resultset('Teacher')->search({});
-    if($result) {
+    if ($result) {
         $self->redirect_to('/admin/list_teacher');
         $self->flash(message => 'Đã xóa thành công');
-    }else {
-    $self->render(template => 'layouts/admin/teacher/list_sv', teacher =>\@teacher);
+    } else {
+        $self->render(template => 'layouts/admin/teacher/list_sv', teacher =>\@teacher);
     }
 }
 
-sub search_teacher{
+sub search_teacher {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
+
     my $full_name = $self->param('full_name');
-    my @teacher = $self->app->{_dbh}->resultset('Teacher')->search_like({ full_name => '%'.$full_name.'%' });
-    @teacher = map { { 
+    my @teacher = $dbh->resultset('Teacher')->search_like(+{ full_name => '%'.$full_name.'%' });
+    @teacher = map { +{ 
         id_teacher => $_->id_teacher,
         full_name => $_->full_name,
         birthday => $_->birthday,
@@ -152,7 +154,5 @@ sub search_teacher{
     } } @teacher;
     $self->render(template => 'layouts/admin/teacher/list_teacher', teacher=>\@teacher, error => '', message =>'');
 }
-
-
 
 1;

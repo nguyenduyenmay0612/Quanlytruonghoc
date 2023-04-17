@@ -1,77 +1,78 @@
 % layout 'admin/index';
 <div><br>
-    <h3>
-        Quản lý bài đăng
-    </h3> <br>
-    <form action='/admin/search_post' method = "post">
-        <input type="text" class="form-search" name="title_post" placeholder="Tìm kiếm bài viết...">
-        <button type="submit" class="btn btn-primary me-2">Search</button>
-    </form> 
-    <form action='/admin/add_post' method = "get" style="position: absolute; right: 100px;">
-        <button type="submit" class="btn btn-primary me-2">Thêm bài viết</button>
-    </form> <br><hr>
-    <div style =" overflow: auto ; max-height: 800px">
+  <h3> Quản lý bài đăng </h3> <br>
+  <form action='/admin/search_post' method="post">
+    <input type="text" class="form-search" name="title_post" placeholder="Tìm kiếm bài viết...">
+    <button type="submit" class="btn btn-primary me-2">Search</button>
+  </form>
+  <form action='/admin/add_post' method="get" style="position: absolute; right: 100px;">
+    <button type="submit" class="btn btn-primary me-2">Thêm bài viết</button>
+  </form> <br>
+  <hr>
+  <div style=" overflow: auto ; max-height: 800px">
     <table class="w3-table w3-striped w3-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tiêu đề</th>
-                <th>Tóm tắt</th>
-                <th>Ảnh</th>
-                <th>Nội dung</th>
-                <th>Cập nhật</th>
-            </tr>
-        </thead>
-        <tbody >
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tiêu đề</th>
+          <th>Tóm tắt</th>
+          <th>Ảnh</th>
+          <th>Nội dung</th>
+          <th>Cập nhật</th>
+        </tr>
+      </thead>
+      <tbody>
         <script type="text/javascript">
-            function decodeHtml(str) {
-                let txt = document.createElement("textarea");
-                txt.innerHTML = str;
-                return txt.value;
-            }
+          function decodeHtml(str) {
+            let txt = document.createElement("textarea");
+            txt.innerHTML = str;
+            return txt.value;
+          }
         </script>
         % foreach my $item (@{$post}) {
-        <tr>  
-            <td><%= $item->{id_post} %></td>
-            <td><%= $item->{title_post} %></td>
-            <td> <div style = "overflow: auto ; max-height: 200px; width: 250px;"><%= $item->{summary} %> </div></td>
-            <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="100" height="100"></td>
-            <!-- <td><textarea  rows="7" cols="30"><%= $item->{content} %></textarea></td> -->
-            <td >
-                <div id="<%= $item->{id_post}%>" style =" overflow: auto ; max-height: 250px; width: 350px;"><div>
-            </td>
-            <script type="text/javascript">
-                $(document).ready(function(){
-                    document.getElementById(<%= $item->{id_post} %>).innerHTML= decodeHtml(`<%= $item->{content} %>`);
-                });
-            </script>
-            <td><a href='/admin/edit_post/<%= $item->{id_post} %>'>Sửa</a>|<a onclick="myFunction()" href='/admin/delete_post/<%= $item->{id_post} %>'>Xóa</a></td>
+        <tr>
+          <td><%= $item->{id_post} %></td>
+          <td><%= $item->{title_post} %></td>
+          <td>
+            <div style="overflow: auto ; max-height: 200px; width: 250px;"><%= $item->{summary} %> </div>
+          </td>
+          <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="100" height="100"></td>
+          <!-- <td><textarea  rows="7" cols="30"><%= $item->{content} %></textarea></td> -->
+          <td>
+            <div id="<%= $item->{id_post}%>" style=" overflow: auto ; max-height: 250px; width: 350px;"> <div>
+          </td>
+          <script type="text/javascript">
+            $(document).ready(function() {
+              document.getElementById( < %= $item - > {
+                id_post
+              } % > ).innerHTML = decodeHtml(`<%= $item->{content} %>`);
+            });
+          </script>
+          <td><a href='/admin/edit_post/<%= $item->{id_post} %>'>Sửa</a>|<a onclick="myFunction()" href='/admin/delete_post/<%= $item->{id_post} %>'>Xóa</a>
+          </td>
         </tr>
-      %}
-        </tbody>      
-    </table> 
-    </div> 
-    
-    % if ($error) {
-    <div class="error" style="color: red">
-        <small> <%= $error %> </small>
-    </div>
-    %}
-
-    % if ($message) {
-    <div class="error" style="color: green">
-        <small> <%= $message %> </small>
-    </div>
-    %}
+        %}
+      </tbody>
+    </table>
+  </div>
+  % if ($error) {
+  <div class="error" style="color: red">
+    <small> <%= $error %> </small>
+  </div>
+  %}
+  % if ($message) {
+  <div class="error" style="color: green">
+    <small> <%= $message %> </small>
+  </div>
+  %}
 </div>
 <script>
-function myFunction() {
-  confirm("Bạn có chắc chắn muốn xóa không?");
-}
-
-$(document).ready(function(){
-	$('#Mybtn').click(function(){
-  		$('#MyForm').toggle(500);
+  function myFunction() {
+    confirm("Bạn có chắc chắn muốn xóa không?");
+  }
+  $(document).ready(function() {
+    $('#Mybtn').click(function() {
+      $('#MyForm').toggle(500);
+    });
   });
-});
 </script>
