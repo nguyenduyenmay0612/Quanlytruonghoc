@@ -2,7 +2,11 @@ package MyClass::Controller::Example;
 use utf8;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 
-# This action will render a template
+#
+# This is the show index function
+# @param $self[Object] the instance of it self
+# @return @banner, @activity, @post, @noti, @image [Array] 
+#
 sub welcome ($self) {
     my @banner = $self->_get_banner();
     my @activity = $self->_get_activity();
@@ -13,11 +17,9 @@ sub welcome ($self) {
 }
 
 #
-# Hiển thị chi tiết bài viết
-# Kế thừa hàm _get_banner(), _get_activity(), _get_noti(), _get_image()
-# param $self [Object] Bien moi truong, param $id_post Biến cục bộ  
-# return [Array] chi tiết bài viết theo $id_post
-# @public
+# this is the show post details function
+# @param $self[Object] the instance of it self
+# @return $post[Hash], @banner, @activity, @noti, @image [Array]
 #
 sub post_detail {
     my $self = shift;
@@ -36,11 +38,9 @@ sub post_detail {
 }
 
 #
-# Hiển thị chi tiết thông báo
-# Kế thừa hàm _get_banner(), _get_activity(), _get_noti(), _get_image()
-# param $self [Object] Bien moi truong, param $id_noti Biến cục bộ  
-# return [Array] chi tiết thông báo theo $id_noti
-# @public
+# this is the show notification details function
+# @param $self[Object] the instance of it self
+# @return $noti1[Hash], @banner, @activity, @image [Array]
 #
 sub noti_detail($self) {
     my @banner= $self->_get_banner();
@@ -57,11 +57,9 @@ sub noti_detail($self) {
 }
 
 #
-# Hiển thị chi tiết hoạt động
-# Kế thừa hàm _get_banner(), _get_activity(), _get_noti(), _get_image()
-# param $self [Object] Bien moi truong, param $id_activity Biến cục bộ  
-# return [Array] chi tiết thông báo theo $id_activity
-# @public
+# this is the show activity details function
+# @param $self[Object] the instance of it self
+# @return $activity1[Hash], @banner, @noti, @image [Array]
 #
 sub activity_detail($self) {
     my @banner= $self->_get_banner();
@@ -78,30 +76,24 @@ sub activity_detail($self) {
 }
 
 #
-# Hiển thị trang giới thiệu trường
-# Kế thừa hàm _get_banner(), _get_activity(), _get_noti(), _get_image(), _get_post()
-# param $self [Object] Bien moi truong  
-# return [Array] chi tiết thông báo theo id_noti
-# @public
+# This is the introcuce page show  function
+# @param $self[Object] the instance of it self
+# @return @banner, @activity, @noti, @image [Array] 
 #
 sub introduce($self) {
     my @banner = $self->_get_banner();
     my @activity = $self->_get_activity();
-    my @post = $self->_get_post();
     my @noti = $self->_get_noti();
     my @image = $self->_get_image();
 
-    $self->render(template => 'layouts/frontend/introduce', banner=>\@banner, post=>\@post, activity=>\@activity, noti=>\@noti, image=>\@image);
+    $self->render(template => 'layouts/frontend/introduce', banner=>\@banner, activity=>\@activity, noti=>\@noti, image=>\@image);
 }
 
 #
-# Hiển thị trang giới thiệu trường
-# Kế thừa hàm _get_banner(), _get_activity(), _get_noti(), _get_image(), _get_post()
-# param $self [Object] Bien moi truong  
-# return [Array] chi tiết thông báo theo id_noti
-# @public
+# This is the admissions page show function
+# @param $self[Object] the instance of it self
+# @return @banner, @activity, @noti, @image [Array] 
 #
-
 sub admissions($self) {
     my @banner = $self->_get_banner();
     my @activity = $self->_get_activity();
@@ -112,10 +104,10 @@ sub admissions($self) {
 }
 
 #
-# Lay danh sach banner 
-# param $self [Object] Bien moi truong
-# return [Array] List banner
-# @private
+# This is the get list banner function
+# @param $self[Object] the instance of it self
+# @return @banner[Array] 
+# @pravite
 #
 sub _get_banner($self) {
     my @banner = $self->app->{_dbh}->resultset('Banner')->search({});
@@ -129,10 +121,10 @@ sub _get_banner($self) {
 }
 
 #
-# Lay danh sach banner 
-# param $self [Object] Bien moi truong
-# return [Array] danh sach banner
-# @private
+# This is the get list activity function
+# @param $self[Object] the instance of it self
+# @return @activity[Array] 
+# @pravite
 #
 sub _get_activity($self) {
     my @activity = $self->app->{_dbh}->resultset('Activity')->search({});
@@ -147,10 +139,10 @@ sub _get_activity($self) {
 }
 
 #
-# Lay danh sach bai viet
-# param $self [Object] Bien moi truong
-# return [Array] danh sach bai viet
-# @private
+# This is the get list post function
+# @param $self[Object] the instance of it self
+# @return @post[Array] 
+# @pravite
 #
 sub _get_post($self) {
     my @post = $self->app->{_dbh}->resultset('Post')->search({});
@@ -166,10 +158,10 @@ sub _get_post($self) {
 }
 
 #
-# Lay danh sach thong bao
-# param $self [Object] Bien moi truong
-# return [Array] danh sach thong bao
-# @private
+# This is the get list notification function
+# @param $self[Object] the instance of it self
+# @return @noti[Array] 
+# @pravite
 #
 sub _get_noti($self) {
     my @noti = $self->app->{_dbh}->resultset('Noti')->search({});
@@ -183,10 +175,10 @@ sub _get_noti($self) {
 }
 
 #
-# Lay danh sach hinh anh
-# param $self [Object] Bien moi truong
-# return [Array] danh sach hinh anh
-# @private
+# This is the get list image function
+# @param $self[Object] the instance of it self
+# @return @image[Array] 
+# @pravite
 #
 sub _get_image($self) {
     my @image = $self->app->{_dbh}->resultset('Image')->search({});

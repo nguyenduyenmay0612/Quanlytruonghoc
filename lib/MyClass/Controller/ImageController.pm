@@ -8,6 +8,11 @@ use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
+#
+# This is the show list image function
+# @param $self[Object] the instance of it self
+# @return @image [Array] The response data list image 
+#
 sub image {
     my $self = shift;
 
@@ -20,57 +25,11 @@ sub image {
     $self->render(template => 'layouts/admin/manage_image/list_image', image=>\@image, message=>'', error=>'');    
 }
 
-sub edit_image_view {
-    my $self = shift;
-
-    my $id_image = $self->param('id_image');
-    my $dbh = $self->app->{_dbh};
-    my $image = $dbh->resultset('Image')->find($id_image);    
-    if ($image) {
-        $self->render(template => 'layouts/admin/manage_image/edit_image', image => $image , message => '', error=>'');
-    } else {
-        $self->render(template => 'layouts/admin/manage_image/list_image');
-    }
-}
-
-sub edit_image {
-    my $self = shift;
-    
-    my $id_image = $self->param('id_image');
-    my $image_name = $self->param('image_name');
-    my $image1 = $self->param('image');  
-    my $dbh = $self->app->{_dbh}; 
-    my $image = $dbh->resultset('Image')->find($id_image);
-    if ($image) {
-        my $result= $dbh->resultset('Image')->find($id_image)->update({  
-            id_image => $id_image,
-            image_name => $image_name,
-            image => $image1
-        });
-        my $image = $dbh->resultset('Image')->find($id_image);
-        $self->render(template => 'layouts/admin/manage_image/edit_image', image => $image, message => 'Cập nhật thành công', error=>'');   
-    }
-}
-
-sub delete_image {
-    my $self = shift;
-    my $dbh = $self->app->{_dbh};
-
-    my $id_image = $self->param('id_image');
-    my $result = $dbh->resultset('Image')->find($id_image)->delete({});
-    my @image = $self->app->{_dbh}->resultset('Image')->search({});
-    if ($result) {
-    @image = map { { 
-        id_image => $_->id_image,
-        image_name => $_->image_name,
-        image => $_->image
-    } } @image;
-        $self->redirect_to('/admin/image');
-    } else {
-        $self->render(template => 'layouts/admin/manage_image/list_image', image =>\@image, message => '', error=>'');
-    }
-}
-
+#
+# This is  form add image handle function
+# @param $self [Object] the instance of it self  
+# @return @image[Array]
+#
 sub add_image {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -90,6 +49,72 @@ sub add_image {
         image => $_->image
     } } @image;
     $self->render(template => 'layouts/admin/manage_image/list_image', image =>\@image, message => 'Thêm thành công', error=>'');
-}     
+} 
+
+#
+# This is view edit image function 
+# @param $self [Object] the instance of it self
+# @return [Hash] include properties of activity
+#
+sub edit_image_view {
+    my $self = shift;
+
+    my $id_image = $self->param('id_image');
+    my $dbh = $self->app->{_dbh};
+    my $image = $dbh->resultset('Image')->find($id_image);    
+    if ($image) {
+        $self->render(template => 'layouts/admin/manage_image/edit_image', image => $image , message => '', error=>'');
+    } else {
+        $self->render(template => 'layouts/admin/manage_image/list_image');
+    }
+}
+
+#
+# This is  form edit image handle function
+# @param $self [Object] the instance of it self 
+# @return [Void]  
+#
+sub edit_image {
+    my $self = shift;
+    
+    my $id_image = $self->param('id_image');
+    my $image_name = $self->param('image_name');
+    my $image1 = $self->param('image');  
+    my $dbh = $self->app->{_dbh}; 
+    my $image = $dbh->resultset('Image')->find($id_image);
+    if ($image) {
+        my $result= $dbh->resultset('Image')->find($id_image)->update({  
+            id_image => $id_image,
+            image_name => $image_name,
+            image => $image1
+        });
+        my $image = $dbh->resultset('Image')->find($id_image);
+        $self->render(template => 'layouts/admin/manage_image/edit_image', image => $image, message => 'Cập nhật thành công', error=>'');   
+    }
+}
+
+#
+# This is delete image function
+# @param $self [Object] the instance of it self 
+# @return @image [Array] The response data list image after delete
+#
+sub delete_image {
+    my $self = shift;
+    my $dbh = $self->app->{_dbh};
+
+    my $id_image = $self->param('id_image');
+    my $result = $dbh->resultset('Image')->find($id_image)->delete({});
+    my @image = $self->app->{_dbh}->resultset('Image')->search({});
+    if ($result) {
+    @image = map { { 
+        id_image => $_->id_image,
+        image_name => $_->image_name,
+        image => $_->image
+    } } @image;
+        $self->redirect_to('/admin/image');
+    } else {
+        $self->render(template => 'layouts/admin/manage_image/list_image', image =>\@image, message => '', error=>'');
+    }
+}    
 
 1;

@@ -8,6 +8,11 @@ use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
+#
+# This is the show list teacher function
+# @param $self[Object] the instance of it self
+# @return @teacher [Array] The response data list teacher
+#
 sub list_teacher($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -28,7 +33,11 @@ sub list_teacher($self) {
     $self->render(template => 'layouts/admin/teacher/list_teacher', teacher=>\@teacher_rows, error => '', message => '');
 }
 
-#them sinh vien moi
+#
+# This is view add activity function
+# @param $self [Object] the instance of it self 
+# @return [Void]  
+#
 sub add_view {
     my $self = shift;
     $self->render(template => 'layouts/admin/teacher/add_teacher',
@@ -37,6 +46,10 @@ sub add_view {
     );
 }
 
+#
+# This is  form add handle function
+# @param $self [Object] the instance of it self  
+#
 sub add_teacher{
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -74,7 +87,11 @@ sub add_teacher{
     }     
 }
 
-#sua thong tin sinh vien
+#
+# This is view edit teacher function 
+# @param $self [Object] the instance of it self
+# @return [Hash] include properties of teacher
+#
 sub edit_view {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -88,6 +105,11 @@ sub edit_view {
     }
 }
 
+#
+# This is  form edit handle function
+# @param $self [Object] the instance of it self 
+# @return [Void]  
+#
 sub edit_teacher {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -121,7 +143,11 @@ sub edit_teacher {
     }
 }
 
-#xoa sinh vien 
+#
+# This is delete function
+# @param $self [Object] the instance of it self 
+# @return @teacher [Array] The response data list teacher after delete
+#
 sub delete_teacher {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -133,10 +159,15 @@ sub delete_teacher {
         $self->redirect_to('/admin/list_teacher');
         $self->flash(message => 'Đã xóa thành công');
     } else {
-        $self->render(template => 'layouts/admin/teacher/list_sv', teacher =>\@teacher);
+        $self->render(template => 'layouts/admin/teacher/list_teacher', teacher =>\@teacher);
     }
 }
 
+#
+# This is the teacher search function
+# @param $self [Object] The instance of it self
+# @return @activity [String] The response data list teacher
+#
 sub search_teacher {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
