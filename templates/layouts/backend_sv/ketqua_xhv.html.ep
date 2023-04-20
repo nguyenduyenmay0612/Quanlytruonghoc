@@ -1,0 +1,61 @@
+% layout 'backend_sv/index';
+
+<div class="row content">
+    <div class="col-sm-2 sidenav">  
+      <div>
+          <br> 
+          <b><a href="/diemhocphan">Điểm học phần</a></b> <br> <hr>
+          <b><a class="active" href="/ketqua_xhv">Kết quả xét học vụ</a></b> <br> <hr>
+          <b><a  href="/chungchi">Chứng chỉ</a></b> <br> <hr>
+                
+      </div> <br>
+    </div>
+    <div class="col-sm-10 text-left"> 
+      <h3>
+      KẾT QUẢ XÉT HỌC VỤ
+      </h3>
+      <table class="w3-table w3-striped w3-bordered" style ="align:center">
+          <tr style ="align:center">
+            <th>Học kỳ</th>
+            <th>Điểm thang 4</th>
+            <th>Điểm thang 10</th>
+            <th>Xếp loại</th>
+            <th>Tổng thang 4</th>
+            <th>Tổng thang 10</th>
+          </tr>
+          <tr>
+            <td>I năm học 2019-2020</td>
+            <td>3.10</td>
+            <td>7.9</td>
+            <td>Khá</td>
+            <td>3.1</td>
+            <td>7.9</td>
+          </tr>
+          <tr>
+            <td>II năm học 2019-2020</td>
+            <td>2.8</td>
+            <td>7.5</td>
+            <td>Khá</td>
+            <td>2.8</td>
+            <td>7.8</td>
+          </tr>
+          <tr>
+            <td>I năm học 2020-2021</td>
+            <td>3.1</td>
+            <td>8.0</td>
+            <td>Khá</td>
+            <td>3.0</td>
+            <td>7.9</td>
+          </tr>
+          <tr>
+            <td>II năm học 2020-2021</td>
+            <td>3.2</td>
+            <td>8.0</td>
+            <td>Gioi</td>
+            <td>3.1</td>
+            <td>7.9</td>
+          </tr>
+        </table>
+
+  </div>
+</div>

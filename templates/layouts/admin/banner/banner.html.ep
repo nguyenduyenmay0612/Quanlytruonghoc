@@ -1,0 +1,53 @@
+% layout 'admin/index';
+<div><br>
+  <h3> Banner </h3>
+  <button id="Mybtn" class="btn btn-primary me-2"> Thêm banner</button> <br> <br>
+  <form id="MyForm" action='/add_banner' method="post">
+    <label>Tên banner</label>
+    <input type="text" id="banner_name" name="banner_name" placeholder="Tên banner" required /><br>
+    <label>Ảnh </label>
+    <input type="file" id="image" name="image" placeholder="Chọn file ảnh" required /><br>
+    <button type="submit" class="btn btn-primary me-2">Thêm</button>
+  </form>
+  <table class="w3-table w3-striped w3-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tên banner</th>
+        <th>Ảnh</th>
+        <th>Cập nhật></th>
+      </tr>
+    </thead>
+    <tbody>
+      % foreach my $item (@{$banner}) {
+      <tr>
+        <td><%= $item->{id_banner} %></td>
+        <td><%= $item->{banner_name} %></td>
+        <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="200" height="100"></td>
+        <td><a href='edit_banner/<%= $item->{id_banner} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_banner/<%= $item->{id_banner} %>'>Xóa</a></td>
+      </tr>
+      %}
+    </tbody>
+  </table>
+  % if ($error) {
+    <div class="error" style="color: red">
+      <small> <%= $error %> </small>
+    </div>
+  %}
+
+  % if ($message) {
+    <div class="error" style="color: green">
+      <small> <%= $message %> </small>
+    </div>
+  %}
+</div>
+<script>
+  function myFunction() {
+    confirm("Bạn có chắc chắn muốn xóa không?");
+  }
+  $(document).ready(function() {
+    $('#Mybtn').click(function() {
+      $('#MyForm').toggle(500);
+    });
+  });
+</script>

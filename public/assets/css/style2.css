@@ -1,0 +1,54 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+}
+
+.container-fluid {
+    margin-top: 20px;
+}
+
+.w3-sidebar {
+    width: 20%;
+}
+
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+    position: sticky;
+    flex-shrink: 0;
+    top: 100%;
+}
+
+.form-add-student {
+    margin-left: 300px;
+    width: 500px;
+}
+
+.form-edit-student {
+    margin-left: 300px;
+    width: 500px;
+}
+
+.form-search {
+    width: 300px;
+}
+
+#MyForm {
+    display: none;
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 14px;
+    background: #ececec;
+}
+
+.page-title {
+    margin-left: 300px;
+}
+
+.error {
+    margin-left: 300px;
+}

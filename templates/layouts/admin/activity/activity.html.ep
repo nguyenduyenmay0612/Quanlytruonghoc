@@ -1,0 +1,68 @@
+% layout 'admin/index';
+<div>
+  <br>
+  <h3>  Quản lý hoạt động </h3>
+  <form action='/admin/search_activity' method = "post">
+    <input type="text" class="form-search" name="activity_name" placeholder="Tìm kiếm hoạt động...">
+    <button type="submit" class="btn btn-primary me-2">Search</button>
+  </form> 
+  <table class="w3-table w3-striped w3-bordered">
+      <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tên hoạt động</th>
+            <th>Ảnh</th>
+            <th>Mô tả</th>
+            <th>Cập nhật</th>
+          </tr>
+      </thead>
+      <tbody >
+        <script type="text/javascript">
+          function decodeHtml(str) {
+            let txt = document.createElement("textarea");
+            txt.innerHTML = str;
+            return txt.value;
+          }
+        </script>
+        % foreach my $item (@{$activity}) {
+      <tr>  
+        <td><%= $item->{id_activity} %></td>
+        <td><%= $item->{activity_name} %></td>
+        <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="100" height="100"></td>
+        <td>
+          <div id="<%= $item->{id_activity}%>" style =" overflow: auto ; max-height: 200px; width: 350px;"><div>
+        </td>
+        <script type="text/javascript">
+          $(document).ready(function(){
+              document.getElementById(<%= $item->{id_activity} %>).innerHTML= decodeHtml(`<%= $item->{activity_des} %>`);
+          });
+        </script>
+        <td><a href='edit_activity/<%= $item->{id_activity} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_activity/<%= $item->{id_activity} %>'>Xóa</a></td>
+      </tr>
+    %}
+    </tbody>      
+  </table> <hr>
+    <form action='/admin/add_activity' method = "get">
+        <button type="submit" class="btn btn-primary me-2">Thêm hoạt động </button>
+    </form>
+    % if ($error) {
+    <div class="error" style="color: red">
+        <small> <%= $error %> </small>
+    </div>
+    %}
+    % if ($message) {
+    <div class="error" style="color: green">
+        <small> <%= $message %> </small>
+    </div>
+    %}
+</div>
+<script>
+  function myFunction() {
+    confirm("Bạn có chắc chắn muốn xóa không?");
+  }
+  $(document).ready(function(){
+    $('#Mybtn').click(function(){
+        $('#MyForm').toggle(500);
+    });
+  });
+</script>

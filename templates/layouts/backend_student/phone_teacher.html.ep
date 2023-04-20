@@ -1,0 +1,37 @@
+% layout 'backend_student/index';
+<div class="row content">
+  <div class="col-sm-2 sidenav">
+    <div>
+      <br>
+      <b><a href="/student/phone_student">Danh bạ sinh viên lớp</a></b> <br>
+      <hr>
+      <b><a class="active" href="/student/phone_teacher">Danh bạ giáo viên</a></b> <br>
+      <hr>
+    </div> <br>
+  </div>
+  <div class="col-sm-10 text-left">
+    <h3>
+      Danh bạ giảng viên đang giảng
+    </h3>
+    <table class="w3-table w3-striped w3-bordered">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên giáo viên</th>
+          <th>Email</th>
+          <th>Số điện thoại</th>
+        </tr>
+      </thead>
+      <tbody>
+        % foreach my $item (@{$teacher}) {
+        <tr>
+          <td><%= $item->{id_teacher} %></td>
+          <td><%= $item->{full_name} %></td>
+          <td><%= $item->{email} %></td>
+          <td><%= $item->{phone} %></td>
+        </tr>
+        %}
+      </tbody>
+    </table>
+  </div>
+</div>

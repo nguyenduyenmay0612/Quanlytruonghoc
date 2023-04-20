@@ -1,0 +1,25 @@
+% layout 'frontend/index';
+% title 'Welcome';
+<h2>HOẠT ĐỘNG TRONG TRƯỜNG</h2>
+<div class="title-thongbao">
+  <b> <%= $activity1->activity_name %><b>
+</div>
+<hr>
+<div class="title-thongbao">
+  <img src="..\assets\image\<%= $activity1->image %>" class="image-sukien"> <br> <br>
+</div>
+<div class="content-thongbao">
+  <script type="text/javascript">
+    function decodeHtml(str) {
+      let txt = document.createElement("textarea");
+      txt.innerHTML = str;
+      return txt.value;
+    }
+  </script>
+  <span id="activity_des"> <%= $activity1->activity_des %> </span><br> <br>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      document.getElementById("activity_des").innerHTML = decodeHtml(`<%= $activity1->activity_des %>`);
+    });
+  </script>
+</div>

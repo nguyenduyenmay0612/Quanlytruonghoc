@@ -1,0 +1,197 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>School</title>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html" charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script type="text/javascript" src="/js/ckeditor.js"></script>
+</head>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v16.0"
+  nonce="bcXgS5CS"></script>
+
+<body>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <img src="..\assets\image\logo.png" alt="school" width="50px" height="50px">
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Trang chủ</a></li>
+          <li><a href="/gioithieu">Giới thiệu</a></li>
+          <li><a href="/tuyensinh">Tuyển sinh</a></li>
+          <li><a href="/sukien">Tin tức và sự kiện</a></li>
+          <li>
+            <a type="button" data-toggle="dropdown">Liên hệ<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/student/login">Sinh viên</a></li>
+              <li><a href="/teacher/login">Giảng viên</a></li>
+              <li><a href="/login">Khách</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <% if (!$self->session("is_auth")){%>
+            <a class="nav-link" href="/student/login">Sinh viên</a>
+            <% } %>
+          </li>
+          <li>
+            <% if (!$self->session("is_auth")){%>
+            <a class="nav-link" href="/teacher/login">Giảng viên</a>
+            <% }%>
+          </li>
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="jumbotron">
+    <div class="slideshow-container">
+      % foreach my $item (@{$banner}) {
+      <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="..\assets\image\<%= $item->{image} %>" style="width:100% ; height: 350px;">
+        <div class="text">Banner of VKU</div>
+      </div>
+      %}
+    </div>
+    <br>
+    <div style="text-align:center">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+  <div class="container-fluid text-center">
+    <div class="row content">
+      <div class="col-sm-3 sidenav">
+        <div style=" overflow: auto ; max-height: 500px">
+          <h2 class="noti">THÔNG BÁO</h2>
+          % foreach my $item (@{$noti}) {
+          <div>
+            <b><a href="/thongbao/<%= $item->{id_noti} %>"><%= $item->{noti_name} %></a></b>
+          </div>
+          <hr>
+          %}
+        </div>
+        <hr>
+        <div class="fb-page" data-href="https://www.facebook.com/vku.udn.vn/" data-tabs="timeline" padding-right="20px"
+          data-height="350" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
+          data-show-facepile="true">
+          <blockquote cite="https://www.facebook.com/vku.udn.vn/" class="fb-xfbml-parse-ignore"><a
+              href="https://www.facebook.com/vku.udn.vn/">Trường Đại học Công nghệ Thông tin &amp; Truyền thông Việt Hàn
+              - ĐHĐN</a></blockquote>
+        </div>
+      </div>
+      <div class="col-sm-6 text-left" style=" overflow: auto ; max-height: 900px; ">
+        <%= content %>
+      </div>
+      <div class="col-sm-3 sidenav" style=" overflow: auto ; max-height: 900px">
+        <h3><b>Trải nghiệm những hoạt động thú vị</b></h3>
+        % foreach my $item (@{$activity}) {
+        <div class="well">
+          <a href="/hoatdong/<%= $item->{id_activity} %>"><img class="image-activity"
+              src="..\assets\image\<%= $item->{image} %>"></a> <br>
+          <b><%= $item->{activity_name} %><b>
+        </div>
+        %}
+      </div>
+    </div>
+  </div>
+  <h2 style="text-align:center">Một số hình ảnh</h2>
+  <div class="container">
+    % foreach my $item (@{$image}) {
+    <div class="mySlides1">
+      <div class="numbertext"></div>
+      <img src="..\assets\image\<%= $item->{image} %>" style="width:100%">
+    </div>
+    %}
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
+    <div class="caption-container">
+      <p id="caption"></p>
+    </div>
+    <div class="row">
+      % foreach my $item (@{$image}) {
+      <div class="column">
+        <img class="demo cursor" src="..\assets\image\<%= $item->{image} %>" style="width:100%"
+          onclick="currentSlide(1)" alt="<%= $item->{image_name} %>">
+      </div>
+      %}
+    </div>
+  </div>
+
+  <footer class="container-fluid text-center">
+    <p>Bản quyền thuộc quyền sở hữu của Duyên Mây</p>
+  </footer>
+  <script>
+    let slideIndex = 0;
+    showSlides();
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {
+        slideIndex = 1
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+      setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+    //slide 2
+    function plusSlides(n) {
+      showSlides1(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides1(slideIndex = n);
+    }
+
+    function showSlides1(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides1");
+      let dots = document.getElementsByClassName("demo");
+      let captionText = document.getElementById("caption");
+      if (n > slides.length) {
+        slideIndex = 1
+      }
+      if (n < 0) {
+        slideIndex = slides.length
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace("active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+      captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+  </script>
+</body>
+
+</html>

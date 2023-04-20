@@ -1,0 +1,14 @@
+% layout 'frontend/index';
+% title 'Welcome';
+<h2><u>TIN TỨC | SỰ KIỆN</u></h2>
+% foreach my $item (@{$post}) {
+<div class= "row-content">
+  <p><b><a href="/sukien/<%= $item->{id_post} %>" style="color:black"><%= $item->{title_post}%></a></b></p>
+  <div col-sm>
+  <img src="assets\image\<%= $item->{image} %>" alt="school" style ="margin-left:120px; width:400px; height: 280px "> <br>
+  </div> <br>
+  <div col-sm>
+    <span> <%= $item->{summary}%> </span>
+  </div>
+</div> <hr>
+%}

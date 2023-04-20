@@ -1,0 +1,39 @@
+% layout 'backend_gv/index';
+    <div class="page-header">
+        <h3 class="page-title"> Sửa hình ảnh </h3>
+        <nav aria-label="breadcrumb"></nav>
+    </div>
+    <div class="row">           
+                <div class="card">
+                  <div class="card-body">                                  
+                    <form method="post" action='/edit_image/<%= $image->id_image %>' class="form-edit-student">
+                      <div class="form-group">
+                        <label>ID ảnh</label>
+                        <input type="id" class="form-control" id="id_image" name="id_image" placeholder="ID ảnh" value="<%= $image->id_image %>" disabled>
+                      </div>   
+                      <div class="form-group">
+                        <label>Tên ảnh</label>
+                        <input type="image_name" class="form-control" id="image_name" name="image_name" placeholder="Tên ảnh" value="<%= $image->image_name %>" required>
+                      </div>                                                                                                     
+                      <div class="form-group">
+                        <label>Ảnh</label>
+                        <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh" required>
+                      </div>
+                      
+                      <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                      <button class="btn btn-dark">Cancel</button>
+                    </form>
+                    % if ($error) {
+                         <div class="error" style="color: red">
+                            <small> <%= $error %> </small>
+                         </div>
+                    %}
+
+                    % if ($message) {
+                         <div class="error" style="color: green">
+                            <small> <%= $message %> </small>
+                         </div>
+                     %}
+                  </div>
+        </div>             
+    </div>

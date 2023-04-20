@@ -1,0 +1,5 @@
+% layout 'admin/index';
+<label for="name_class">Chọn lớp: </label>
+<select id="name_class">
+  <option name= "name_class" id="name_class" value="<%= $class->name_class %>"></option>
+</select>

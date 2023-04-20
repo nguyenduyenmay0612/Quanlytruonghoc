@@ -1,0 +1,47 @@
+% layout 'backend_gv/index';
+    <div class="page-header">
+        <h3 class="page-title"> Sửa bài viết </h3>
+        <nav aria-label="breadcrumb"></nav>
+    </div>
+    <div class="row">           
+                <div class="card">
+                  <div class="card-body">                                  
+                    <form method="post" action='/edit_post/<%= $post->id_post %>' class="form-edit-student">
+                      <div class="form-group">
+                        <label>ID post</label>
+                        <input type="id" class="form-control" id="id_post" name="id_post" placeholder="ID post" value="<%= $post->id_post %>" disabled>
+                      </div>   
+                      <div class="form-group">
+                        <label>Tên bài đăng</label>
+                        <input type="text" class="form-control" id="title_post" name="title_post" placeholder="Tên bài đăng" value="<%= $post->title_post %>" required>
+                      </div>                                                                                                     
+                      <div class="form-group">
+                        <label>Ảnh</label>
+                        <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh" value="<%= $post->image %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Tóm tắt</label>
+                        <input type="text" class="form-control" id="summary" name="summary" placeholder="Tóm tắt" value="<%= $post->summary %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Nội dung</label>
+                        <input type="text" class="form-control" id="content" name="content" placeholder="Nội dung" value="<%= $post->content %>" required>
+                      </div>
+                      
+                      <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                      <button class="btn btn-dark">Cancel</button>
+                    </form>
+                    % if ($error) {
+                         <div class="error" style="color: red">
+                            <small> <%= $error %> </small>
+                         </div>
+                    %}
+
+                    % if ($message) {
+                         <div class="error" style="color: green">
+                            <small> <%= $message %> </small>
+                         </div>
+                     %}
+                  </div>
+        </div>             
+    </div>

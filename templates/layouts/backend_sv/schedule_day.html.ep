@@ -1,0 +1,52 @@
+% layout 'backend_sv/index';
+
+<div class="row content">
+    <div class="col-sm-2 sidenav">  
+      <div>
+          <br> 
+          <b><a class="active" href="/tkb_ngay">Thời khóa biểu ngày</a></b> <br> <hr>
+          <b><a  href="/tkb_tuan">Thời khóa biểu tuần</a></b> <br> <hr>
+                
+      </div> <br>
+    </div>
+    <div class="col-sm-10 text-left"> 
+      <h3>
+      Thời khóa biểu hôm nay
+      </h3>
+      <table class="w3-table w3-striped w3-bordered">
+          <tr>
+            <th>STT</th>
+            <th>Tên học phần</th>
+            <th>Giáo viên</th>
+            <th>Phòng</th>
+            <th>Thứ</th>
+            <th>Tiết</th>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Java nâng cao</td>
+            <td>Nguyễn Thanh Tuấn</td>
+            <td>A405</td>
+            <td>Thứ 3</td>
+            <td>6-7</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Web nâng cao</td>
+            <td>Nguyễn Thanh Tuấn</td>
+            <td>A403</td>
+            <td>Thứ  3</td>
+            <td>1-4</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Web nâng cao</td>
+            <td>Nguyễn Thanh Tuấn</td>
+            <td>A403</td>
+            <td>Thứ  3</td>
+            <td>1-4</td>
+          </tr>
+        </table>
+
+  </div>
+</div>

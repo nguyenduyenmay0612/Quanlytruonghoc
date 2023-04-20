@@ -1,0 +1,38 @@
+% layout 'backend_gv/index';
+    <div class="page-header">
+        <h3 class="page-title"> Sửa thông báo</h3>
+        <nav aria-label="breadcrumb"></nav>
+    </div>
+    <div class="row">           
+                <div class="card">
+                  <div class="card-body">                                  
+                    <form method="post" action='/edit_noti/<%= $noti->id_noti %>' class="form-edit-student">
+                      <div class="form-group">
+                        <label>ID thông báo</label>
+                        <input type="id" class="form-control" id="id_noti" name="id_noti" placeholder="ID noti" value="<%= $noti->id_noti %>" disabled>
+                      </div>   
+                      <div class="form-group">
+                        <label>Tiêu đề thông báo</label>
+                        <input type="text" class="form-control" id="noti_name" name="noti_name" placeholder="Tiêu đề" value="<%= $noti->noti_name %>" required>
+                      </div>                                                                                                     
+                      <div class="form-group">
+                        <label>Nội dung</label>
+                        <input type="text" class="form-control" id="content" name="content" placeholder="Nội dung" value="<%= $noti->content %>" required>
+                      </div>                     
+                      <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                      <button class="btn btn-dark">Cancel</button>
+                    </form>
+                    % if ($error) {
+                         <div class="error" style="color: red">
+                            <small> <%= $error %> </small>
+                         </div>
+                    %}
+
+                    % if ($message) {
+                         <div class="error" style="color: green">
+                            <small> <%= $message %> </small>
+                         </div>
+                     %}
+                  </div>
+        </div>             
+    </div>

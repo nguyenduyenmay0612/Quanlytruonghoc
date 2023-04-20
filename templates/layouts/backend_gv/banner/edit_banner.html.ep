@@ -1,0 +1,39 @@
+% layout 'backend_gv/index';
+    <div class="page-header">
+        <h3 class="page-title"> Sửa banner </h3>
+        <nav aria-label="breadcrumb"></nav>
+    </div>
+    <div class="row">           
+                <div class="card">
+                  <div class="card-body">                                  
+                    <form method="post" action='/edit_banner/<%= $banner->id_banner %>' class="form-edit-student">
+                      <div class="form-group">
+                        <label>ID banner</label>
+                        <input type="id" class="form-control" id="id_banner" name="id_banner" placeholder="ID banner" value="<%= $banner->id_banner %>" disabled>
+                      </div>   
+                      <div class="form-group">
+                        <label>Tên banner</label>
+                        <input type="banner_name" class="form-control" id="banner_name" name="banner_name" placeholder="Tên banner" value="<%= $banner->banner_name %>" required>
+                      </div>                                                                                                     
+                      <div class="form-group">
+                        <label>Ảnh</label>
+                        <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh" required>
+                      </div>
+                      
+                      <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                      <button class="btn btn-dark">Cancel</button>
+                    </form>
+                    % if ($error) {
+                         <div class="error" style="color: red">
+                            <small> <%= $error %> </small>
+                         </div>
+                    %}
+
+                    % if ($message) {
+                         <div class="error" style="color: green">
+                            <small> <%= $message %> </small>
+                         </div>
+                     %}
+                  </div>
+        </div>             
+    </div>

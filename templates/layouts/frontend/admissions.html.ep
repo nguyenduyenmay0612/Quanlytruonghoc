@@ -1,0 +1,13 @@
+% layout 'frontend/index';
+% title 'Welcome';
+<h2>THÔNG BÁO ĐIỂM TRÚNG TUYỂN NĂM 2022<h2> <br>
+    <div>
+      <img src="..\assets\image\diem.jpg">
+      <h3 style="color:red;">CÁC HÌNH THỨC TUYỂN SINH</h3> <br>
+      <a href="#"><i class="fa fa-file" style="font-size:25px;"> Bằng phương thức xét tuyển học bạ</i></a>
+      <hr>
+      <a href="#"><i class="fa fa-file" style="font-size:25px;"> Bằng phương thức xét tuyển sinh riêng </i></a>
+      <hr>
+      <a href="#"><i class="fa fa-file" style="font-size:25px;"> Bằng phương thức xét tuyển điểm thi ĐGNL</i></a>
+      <hr>
+    </div>

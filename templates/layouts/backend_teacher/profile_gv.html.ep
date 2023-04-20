@@ -1,0 +1,18 @@
+% layout 'backend_teacher/index';
+<div class="col-sm-10 text-left">
+  <h3>
+    Thông tin về bạn
+  </h3>
+  <b> Ảnh đại diện: <img src="..\assets\image\<%= $teacher->{avatar} %>" alt="hhhh" width-max="150" height="100"> </b>
+  <br>
+  <hr>
+  <b> Tên giảng viên: </b> <label name="full_name" id="full_name"><%= $teacher->{full_name} %></label>
+  <hr>
+  <b> Ngày sinh: </b> <label name="birthday" id="birthday"><%= $teacher->{birthday} %></label>
+  <hr>
+  <!-- <b> Địa chỉ:  </b> <label name="address" id="address"><%= $teacher->{address} %></label><hr> -->
+  <b> Email: </b> <label name="email" id="email"><%= $teacher->{email} %></label>
+  <hr>
+  <b> Phone: </b> <label name="phone" id="phone"><%= $teacher->{phone} %></label>
+  <hr>
+</div> <br>

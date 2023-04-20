@@ -1,0 +1,24 @@
+% layout 'backend_teacher/index';
+<h3>
+  Thời khóa biểu tuần
+</h3>
+<table class="w3-table w3-striped w3-bordered">
+  <thead>
+    <tr>
+      <th>Tên học phần</th>
+      <th>Thứ</th>
+      <th>Tiết</th>
+      <th>Phòng</th>
+    </tr>
+  </thead>
+  <tbody>
+    % foreach my $item (@{$schedule}) {
+    <tr>
+      <td><%= $item->{name_subject} %></td>
+      <td><%= $item->{date} %></td>
+      <td><%= $item->{lession} %></td>
+      <td><%= $item->{room} %></td>
+    </tr>
+    %}
+  </tbody>
+</table>
