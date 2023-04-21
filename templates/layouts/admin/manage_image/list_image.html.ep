@@ -2,13 +2,24 @@
 <div> <br>
   <h3> Danh sách hình ảnh</h3>
   <button id="Mybtn" class="btn btn-primary me-2"> Thêm hình ảnh</button> <br> <br>
-  <form id="MyForm" action='/add_image' method="post">
+  <form id="MyForm" action='/admin/add_image' method="post">
     <label>Tên hình ảnh</label>
     <input type="text" id="image_name" name="image_name" placeholder="Tên hình ảnh" required /><br>
     <label>Ảnh </label>
     <input type="file" id="image" name="image" placeholder="Chọn file ảnh" required /><br>
     <button type="submit" class="btn btn-primary me-2">Thêm</button>
   </form>
+  % if ($error) {
+  <div class="error" style="color: red">
+    <small> <%= $error %> </small>
+  </div>
+  %}
+
+  % if ($message) {
+  <div class="error" style="color: green">
+    <small> <%= $message %> </small>
+  </div>
+  %}
   <div style=" overflow: auto ; max-height: 800px">
     <table class="w3-table w3-striped w3-bordered">
       <thead>
@@ -33,17 +44,6 @@
     </table>
     <hr>
   </div>
-  % if ($error) {
-  <div class="error" style="color: red">
-    <small> <%= $error %> </small>
-  </div>
-  %}
-
-  % if ($message) {
-  <div class="error" style="color: green">
-    <small> <%= $message %> </small>
-  </div>
-  %}
 </div>
 <script>
   function myFunction() {

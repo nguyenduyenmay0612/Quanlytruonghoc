@@ -3,9 +3,9 @@ use utf8;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 
 #
-# This is the show index function
+# This is function to displays home page
 # @param $self[Object] the instance of it self
-# @return @banner, @activity, @post, @noti, @image [Array] 
+# @return @banner, @activity, @post, @noti, @image [Array]
 #
 sub welcome ($self) {
     my @banner = $self->_get_banner();
@@ -17,7 +17,7 @@ sub welcome ($self) {
 }
 
 #
-# this is the show post details function
+# this is function to displays page post details
 # @param $self[Object] the instance of it self
 # @return $post[Hash], @banner, @activity, @noti, @image [Array]
 #
@@ -38,7 +38,7 @@ sub post_detail {
 }
 
 #
-# this is the show notification details function
+# this is function to displays page notification details
 # @param $self[Object] the instance of it self
 # @return $noti1[Hash], @banner, @activity, @image [Array]
 #
@@ -57,7 +57,7 @@ sub noti_detail($self) {
 }
 
 #
-# this is the show activity details function
+# this is function to displays page activity details
 # @param $self[Object] the instance of it self
 # @return $activity1[Hash], @banner, @noti, @image [Array]
 #
@@ -76,9 +76,9 @@ sub activity_detail($self) {
 }
 
 #
-# This is the introcuce page show  function
+# This is function to displays page introcuce
 # @param $self[Object] the instance of it self
-# @return @banner, @activity, @noti, @image [Array] 
+# @return @banner, @activity, @noti, @image [Array]
 #
 sub introduce($self) {
     my @banner = $self->_get_banner();
@@ -90,9 +90,9 @@ sub introduce($self) {
 }
 
 #
-# This is the admissions page show function
+# This is function to displays page admissions
 # @param $self[Object] the instance of it self
-# @return @banner, @activity, @noti, @image [Array] 
+# @return @banner, @activity, @noti, @image [Array]
 #
 sub admissions($self) {
     my @banner = $self->_get_banner();
@@ -123,7 +123,7 @@ sub _get_banner($self) {
 #
 # This is the get list activity function
 # @param $self[Object] the instance of it self
-# @return @activity[Array] 
+# @return @activity[Array]
 # @pravite
 #
 sub _get_activity($self) {
@@ -135,7 +135,7 @@ sub _get_activity($self) {
         image=> $_->image
     } } @activity;
 
-    return @activity;    
+    return @activity;
 }
 
 #
@@ -177,7 +177,7 @@ sub _get_noti($self) {
 #
 # This is the get list image function
 # @param $self[Object] the instance of it self
-# @return @image[Array] 
+# @return @image[Array]
 # @pravite
 #
 sub _get_image($self) {

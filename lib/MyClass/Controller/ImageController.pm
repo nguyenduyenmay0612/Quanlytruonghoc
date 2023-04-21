@@ -9,25 +9,27 @@ use Mojo::Upload;
 use Cwd qw();
 
 #
-# This is the show list image function
+# This is function to displays list image
 # @param $self[Object] the instance of it self
-# @return @image [Array] The response data list image 
+# @return @image [Array] The response data list image
 #
 sub image {
     my $self = shift;
 
-    my @image = $self->app->{_dbh}->resultset('Image')->search({});
-    @image = map { { 
+    my @image = $self->app->{_dbh}->resultset('Image')->search(+{});
+    @image = map { +{ 
         id_image => $_->id_image,
         image_name => $_->image_name,
         image=> $_->image
     } } @image;
     $self->render(template => 'layouts/admin/manage_image/list_image', image=>\@image, message=>'', error=>'');    
+
+    return;
 }
 
 #
-# This is  form add image handle function
-# @param $self [Object] the instance of it self  
+# This is function to handle form add image
+# @param $self [Object] the instance of it self
 # @return @image[Array]
 #
 sub add_image {
@@ -42,17 +44,19 @@ sub add_image {
             image => $image
         });
     };
-    my @image = $dbh->resultset('Image')->search({});
-    @image = map { { 
+    my @image = $dbh->resultset('Image')->search(+{});
+    @image = map { +{ 
         id_image => $_->id_image,
         image_name => $_->image_name,
         image => $_->image
     } } @image;
     $self->render(template => 'layouts/admin/manage_image/list_image', image =>\@image, message => 'Thêm thành công', error=>'');
+
+    return;
 } 
 
 #
-# This is view edit image function 
+# This is function to displays view edit image
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of activity
 #
@@ -67,12 +71,14 @@ sub edit_image_view {
     } else {
         $self->render(template => 'layouts/admin/manage_image/list_image');
     }
+
+    return;
 }
 
 #
-# This is  form edit image handle function
-# @param $self [Object] the instance of it self 
-# @return [Void]  
+# This is function to handle form edit image
+# @param $self [Object] the instance of it self
+# @return [Void]
 #
 sub edit_image {
     my $self = shift;
@@ -91,11 +97,13 @@ sub edit_image {
         my $image = $dbh->resultset('Image')->find($id_image);
         $self->render(template => 'layouts/admin/manage_image/edit_image', image => $image, message => 'Cập nhật thành công', error=>'');   
     }
+
+    return;
 }
 
 #
-# This is delete image function
-# @param $self [Object] the instance of it self 
+# This is function to delete image
+# @param $self [Object] the instance of it self
 # @return @image [Array] The response data list image after delete
 #
 sub delete_image {
@@ -115,6 +123,8 @@ sub delete_image {
     } else {
         $self->render(template => 'layouts/admin/manage_image/list_image', image =>\@image, message => '', error=>'');
     }
-}    
+
+    return;
+}
 
 1;

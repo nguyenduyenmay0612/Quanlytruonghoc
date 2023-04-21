@@ -9,7 +9,7 @@ use Mojo::Upload;
 use Cwd qw();
 
 #
-# This is the show list teacher function
+# This is function to displays list teacher
 # @param $self[Object] the instance of it self
 # @return @teacher [Array] The response data list teacher
 #
@@ -34,9 +34,9 @@ sub list_teacher($self) {
 }
 
 #
-# This is view add activity function
-# @param $self [Object] the instance of it self 
-# @return [Void]  
+# This is functionto dislays form add teacher
+# @param $self [Object] the instance of it self
+# @return [Void]
 #
 sub add_view {
     my $self = shift;
@@ -44,11 +44,14 @@ sub add_view {
         error => $self->flash('error'),
         message => $self->flash('message')
     );
+
+    return;
 }
 
 #
-# This is  form add handle function
-# @param $self [Object] the instance of it self  
+# This is function to handle form add teacher
+# @param $self [Object] the instance of it self
+# @return [Void]
 #
 sub add_teacher{
     my $self = shift;
@@ -66,7 +69,7 @@ sub add_teacher{
     if (! $full_name || ! $birthday || ! $email || ! $address || ! $password) {
         $self->flash(error => 'Tên, ngày sinh, email, password và địa chỉ là các trường không thể thiếu');
         $self->redirect_to('add_teacher');
-    }   
+    }
     my $teacher = $dbh->resultset('Teacher')->search({ email => $email});
     if (!$teacher ->first) {
         eval {
@@ -84,11 +87,13 @@ sub add_teacher{
        $self->render(template => 'layouts/admin/teacher/add_teacher', teacher => $teacher, message => 'Thêm thành công', error=>'');
     } else {
         $self->render(template => 'layouts/admin/teacher/add_teacher', teacher => $teacher, message => '', error=>'Email này đã tồn tại');
-    }     
+    }
+
+    return;
 }
 
 #
-# This is view edit teacher function 
+# This is function to displays view edit teacher
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of teacher
 #
@@ -96,19 +101,21 @@ sub edit_view {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
 
-    my $id_teacher = $self->param('id_teacher');   
-    my $teacher = $dbh->resultset('Teacher')->find($id_teacher);    
+    my $id_teacher = $self->param('id_teacher');
+    my $teacher = $dbh->resultset('Teacher')->find($id_teacher);
     if ($teacher) {
         $self->render(template => 'layouts/admin/teacher/edit_teacher', teacher => $teacher , message => '', error=>'');
     } else {
         $self->render(template => 'layouts/admin/teacher/list_teacher');
     }
+
+    return;
 }
 
 #
-# This is  form edit handle function
-# @param $self [Object] the instance of it self 
-# @return [Void]  
+# This is function to handle form edit teacher
+# @param $self [Object] the instance of it self
+# @return [Void]
 #
 sub edit_teacher {
     my $self = shift;
@@ -122,7 +129,6 @@ sub edit_teacher {
     my $phone= $self->param('phone');
     my $avatar= $self->param('avatar');
     my $class_id= $self->param('class_id');
-     
     my $teacher = $dbh->resultset('Teacher')->find($id_teacher);
     if ($teacher) {
         if ( ! $full_name || ! $birthday || ! $email || ! $address || ! $phone) {
@@ -141,18 +147,20 @@ sub edit_teacher {
             $self->render(template => 'layouts/admin/teacher/edit_teacher', teacher => $teacher1, message => 'Cập nhật thông tin thành công', error=>'');   
         }
     }
+
+    return;
 }
 
 #
-# This is delete function
-# @param $self [Object] the instance of it self 
+# This is function to delete teacher
+# @param $self [Object] the instance of it self
 # @return @teacher [Array] The response data list teacher after delete
 #
 sub delete_teacher {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
 
-    my $id_teacher = $self->param('id_student');    
+    my $id_teacher = $self->param('id_student');
     my $result = $dbh->resultset('Teacher')->find($id_teacher)->delete({});
     my @teacher = $self->app->{_dbh}->resultset('Teacher')->search({});
     if ($result) {
@@ -161,12 +169,14 @@ sub delete_teacher {
     } else {
         $self->render(template => 'layouts/admin/teacher/list_teacher', teacher =>\@teacher);
     }
+
+    return;
 }
 
 #
-# This is the teacher search function
+# This is function to search teacher
 # @param $self [Object] The instance of it self
-# @return @activity [String] The response data list teacher
+# @return @teacher [String] The response data list teacher
 #
 sub search_teacher {
     my $self = shift;
@@ -174,7 +184,7 @@ sub search_teacher {
 
     my $full_name = $self->param('full_name');
     my @teacher = $dbh->resultset('Teacher')->search_like(+{ full_name => '%'.$full_name.'%' });
-    @teacher = map { +{ 
+    @teacher = map { +{
         id_teacher => $_->id_teacher,
         full_name => $_->full_name,
         birthday => $_->birthday,
@@ -184,6 +194,8 @@ sub search_teacher {
         avatar => $_->avatar
     } } @teacher;
     $self->render(template => 'layouts/admin/teacher/list_teacher', teacher=>\@teacher, error => '', message =>'');
+
+    return;
 }
 
 1;

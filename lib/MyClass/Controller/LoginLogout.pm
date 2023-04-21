@@ -6,27 +6,52 @@ use Mojo::JSON qw(encode_json);
 use Email::Valid;
 use Data::Dumper;
 
+#
+# This is the form login student view function
+# @param $self[Object] the instance of it self
+# @return [Void]
+#
 sub login_student($self) {
     $self->render(template => 'layouts/frontend/login_student',
-    error=> $self->flash('error') );   
+    error=> $self->flash('error') );
 }
 
+#
+# This is the form login teacher view function
+# @param $self[Object] the instance of it self
+# @return [Void]
+#
 sub login_teacher($self) {
     $self->render(template => 'layouts/frontend/login_teacher',
     error=> $self->flash('error'));
 }
 
+#
+# This is the form login admin view function
+# @param $self[Object] the instance of it self
+# @return [Void]
+#
 sub login_admin($self) {
     $self->render(template => 'layouts/admin/login_admin',
     error=> $self->flash('error'));
 }
 
+#
+# This is the log out function
+# @param $self[Object] the instance of it self
+# @return [Void]
+#
 sub logout {
     my $self = shift;
     $self->session(expires => 1);
     $self->redirect_to('/');
 }
 
+#
+# This is the checks session cookies to see if the students has already logged in function
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub alreadyLoggedIn_student($self) {
     #print (Dumper($self->session) );
     if($self->session("is_auth")) {
@@ -37,6 +62,11 @@ sub alreadyLoggedIn_student($self) {
     }
 }
 
+#
+# This is the checks session cookies to see if the teachers has already logged in function
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub alreadyLoggedIn_teacher ($self) {
     if($self->session("is_auth")) {
         return 1;
@@ -46,6 +76,11 @@ sub alreadyLoggedIn_teacher ($self) {
     }
 }
 
+#
+# This is the checks session cookies to see if the admin has already logged in function
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub alreadyLoggedIn_admin ($self) {
     if($self->session("is_auth")) {
         return 1;
@@ -55,6 +90,11 @@ sub alreadyLoggedIn_admin ($self) {
     }
 }
 
+#
+# This function is displayed on the following page if you are already logged in, else display page login
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub displayLogin_student ($self) {
     if(&alreadyLoggedIn_student($self)) {
         my $dbh = $self->app->{_dbh};
@@ -81,9 +121,16 @@ sub displayLogin_student ($self) {
             $self->flash(error => 'Mời bạn đăng nhập!');
             $self->redirect_to('/student/login');  
         }
+
+        return;
     }
 }
 
+#
+# This function is displayed on the following page if you are already logged in, else display page login
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub displayLogin_teacher($self) {
     if(&alreadyLoggedIn_student($self)) {
         my $dbh = $self->app->{_dbh};
@@ -108,21 +155,32 @@ sub displayLogin_teacher($self) {
             $self->flash(error => 'Mời bạn đăng nhập!');
             $self->redirect_to('/teacher/login');  
         }
+
+        return;
     }
 }
 
+#
+# This function is displayed on the following page if you are already logged in, else display page login
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub displayLogin_admin($self) {
     if (&alreadyLoggedIn_admin($self)) {
         $self->render(template => 'layouts/admin/index');
-                   
     } else {
         $self->flash(error => 'Mời bạn đăng nhập!');
         $self->redirect_to('/admin/login'); 
     }
+
+    return;
 }
 
-
-#validUserCheck 
+#
+# This is the check the details entered by the student in the login page and authenticates the user to access the website function
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub validUserCheck_student ($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -134,7 +192,7 @@ sub validUserCheck_student ($self) {
     if ($data && !!%$data) {
         $self->session(is_auth => 1);
         $self->session(email => $email);
-        $self->session(expiration => 600);     
+        $self->session(expiration => 600);
         $self->redirect_to('/student');
     } else {
         $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');
@@ -142,6 +200,11 @@ sub validUserCheck_student ($self) {
     }
 }
 
+#
+# This is the  check the details entered by the teacher in the login page and authenticates the user to access the website function
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub validUserCheck_teacher($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -159,6 +222,11 @@ sub validUserCheck_teacher($self) {
     }
 }
 
+#
+# This is the  check the details entered by the admin in the login page and authenticates the user to access the website function
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub validUserCheck_admin($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -177,54 +245,3 @@ sub validUserCheck_admin($self) {
 }
 
 1;
-#action form login
-# sub loginto_sv($self){
-#     my $email = $self->param('email');
-#     my $password = $self->param('password');  
-#     my @valid_input = $self->_validate_form($email, $password);
-#     my $db_object = $self->app->{_dbh};
-    
-#     my $student = $db_object->resultset('Student')->search({email=>$email,password=>$password})->first;
-#     if ($student) {
-#             my @schedule_sv = $self->app->{_dbh}->resultset('ScheduleSt')->search({});
-#             @schedule_sv  = map { { 
-#             name_subject => $_->name_subject,
-#             teacher => $_->teacher,
-#             room=> $_->room,
-#             date => $_->date,
-#             lession => $_->lession,
-#             } } @schedule_sv ;
-
-#             $self->render(template => 'layouts/backend_student/schedule_week',schedule_sv =>\@schedule_sv);
-
-#     } else {
-#         $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');
-#         $self->redirect_to('login_sv');
-#     }     
-# }
-
-# sub loginto_gv($self){
-#     my $email = $self->param('email');
-#     my $password = $self->param('password');
-    
-#     my @valid_input = $self->_validate_form($email, $password);
-#     my $db_object = $self->app->{_dbh};
-    
-#     my $teacher = $db_object->resultset('Teacher')->search({email=>$email,password=>$password})->first;
-#     if ($teacher) {
-#         my @schedule_gv = $self->app->{_dbh}->resultset('ScheduleTch')->search({});
-#         @schedule_gv  = map { { 
-#             name_subject => $_->name_subject,
-#             lession => $_->lession,
-#             room=> $_->room,
-#             date => $_->date,
-#         } } @schedule_gv ;
-
-#         $self->render(template => 'layouts/backend_teacher/schedule_gv',schedule_gv =>\@schedule_gv);
-#     } else {
-#          $self->flash(error => 'Email hoặc mật khẩu của bạn không đúng');
-#         $self->redirect_to('login_gv');
-#     }
-    
-   
-# }

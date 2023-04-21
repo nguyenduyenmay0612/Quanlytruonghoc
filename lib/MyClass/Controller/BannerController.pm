@@ -9,25 +9,27 @@ use Mojo::Upload;
 use Cwd qw();
 
 #
-# This is the show list banner function
+# This is function to displays list banner
 # @param $self[Object] the instance of it self
-# @return @activity [Array] The response data list banner 
+# @return @activity [Array] The response data list banner
 #
 sub banner {
     my $self = shift;
 
-    my @banner = $self->app->{_dbh}->resultset('Banner')->search({});
-    @banner = map { { 
+    my @banner = $self->app->{_dbh}->resultset('Banner')->search(+{});
+    @banner = map { +{
        id_banner => $_->id_banner,
        banner_name => $_->banner_name,
        image=> $_->image
     } } @banner;
     $self->render(template => 'layouts/admin/banner/banner', banner=>\@banner, message=>'', error=>'');    
+
+    return;
 }
 
 #
-# This is add banner handle function
-# @param $self [Object] the instance of it self  
+# This is function to handle form add banner
+# @param $self [Object] the instance of it self
 # @activity [Array] The response data list banner
 sub add_banner {
     my $self = shift;
@@ -35,9 +37,9 @@ sub add_banner {
 
     my $banner_name = $self->param('banner_name');
     my $image = $self->param('image');  
-    my $result = $dbh->resultset('Banner')->search({});
+    my $result = $dbh->resultset('Banner')->search(+{});
     eval {
-        $dbh->resultset('Banner')->create({
+        $dbh->resultset('Banner')->create(+{
             banner_name => $banner_name,
             image => $image
         });
@@ -49,11 +51,12 @@ sub add_banner {
         image => $_->image
     } } @banner;
     $self->render(template => 'layouts/admin/banner/banner', banner =>\@banner, message => 'Thêm thành công', error=>'');
-}     
 
+    return;
+}
 
 #
-# This is view edit banner function 
+# This is function to displays view edit banner
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of banner
 #
@@ -68,12 +71,14 @@ sub edit_banner_view {
     } else {
         $self->render(template => 'layouts/admin/banner/banner');
     }
+
+    return;
 }
 
 #
-# This is  form edit banner handle function
-# @param $self [Object] the instance of it self 
-# @return [Void]  
+# This is function to handle form edit banner
+# @param $self [Object] the instance of it self
+# @return [Void]
 #
 sub edit_banner {
     my $self = shift;
@@ -94,22 +99,24 @@ sub edit_banner {
     } else {
         $self->redirect_to('admin/banner');
     }
+
+    return;
 }
 
 #
-# This is delete banner function
-# @param $self [Object] the instance of it self 
+# This is function to delete banner
+# @param $self [Object] the instance of it self
 # @return @activity [Array] The response data list banner after delete
 #
 sub delete_banner {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
 
-    my $id_banner = $self->param('id_banner');  
-    my $result = $dbh->resultset('Banner')->find($id_banner)->delete({});
-    my @banner = $self->app->{_dbh}->resultset('Banner')->search({});
+    my $id_banner = $self->param('id_banner');
+    my $result = $dbh->resultset('Banner')->find($id_banner)->delete(+{});
+    my @banner = $self->app->{_dbh}->resultset('Banner')->search(+{});
     if ($result) {
-        @banner = map { { 
+        @banner = map { +{ 
             id_banner => $_->id_banner,
             banner_name => $_->banner_name,
             image => $_->image
@@ -118,6 +125,8 @@ sub delete_banner {
     } else {
         $self->redirect_to('admin/banner');
     }
+
+    return;
 }
 
 1;

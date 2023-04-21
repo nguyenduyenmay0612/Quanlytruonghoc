@@ -106,8 +106,7 @@
         <h3><b>Trải nghiệm những hoạt động thú vị</b></h3>
         % foreach my $item (@{$activity}) {
         <div class="well">
-          <a href="/hoatdong/<%= $item->{id_activity} %>"><img class="image-activity"
-              src="..\assets\image\<%= $item->{image} %>"></a> <br>
+          <a href="/hoatdong/<%= $item->{id_activity} %>"><img class="image-activity" src="..\assets\image\<%= $item->{image} %>"></a> <br>
           <b><%= $item->{activity_name} %><b>
         </div>
         %}

@@ -85,7 +85,7 @@
       <div class="col-sm-9">
         <div class="w3-container w3-gray">
           <h2>Trang quản lý dành cho giảng viên</h2>
-        </div> <br> <br> <br>
+        </div> <br>
         <div class="w3-container-fluid">
           <%= content %>
         </div>

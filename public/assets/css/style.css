@@ -163,8 +163,8 @@ img {
 }
 
 .image-activity {
-    max-width: 310px;
-    max-height: 210px;
+    width: 280px;
+    height: 210px;
 }
 
 .col-sm-3 sidenav {

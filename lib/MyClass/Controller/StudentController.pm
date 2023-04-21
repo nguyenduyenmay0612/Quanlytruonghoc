@@ -7,14 +7,18 @@ use Data::Dumper;
 use Mojo::Log;
 my $log = Mojo::Log->new(path => '/log/app.log', level => 'warn');
 
-#lylichsinhvien
+#
+# This is function to displays profile of student
+# @param $self[Object] the instance of it self
+# @return [Hash] The response data profile of student
+#
 sub profile_student($self) {
     my $dbh = $self->app->{_dbh};
 
-    my $id_student = $self->param('id_student');   
+    my $id_student = $self->param('id_student');
     my $email_student = $self->session('email');
     my $student = $dbh->resultset('Student')->search({"email" => $email_student})->first;
-    if ($student) {    
+    if ($student) {
         my $class_id = $student->class_id;
         my $class = $dbh->resultset('Class')->search({"id_class" => $class_id});
         my $class_row =  $dbh->resultset('Class')->find($student->class_id);
@@ -28,10 +32,16 @@ sub profile_student($self) {
             phone => $student->phone,
         };
         $self->render(template => 'layouts/backend_student/profile_student', student=>$student_info );
-    }    
+    }
+
+    return;
 }
 
-#thoikhoabieu
+#
+# This is function to displays schedule of student
+# @param $self[Object] the instance of it self
+# @return @schedule[Array] The response data schedule of student
+#
 sub schedule($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -53,9 +63,15 @@ sub schedule($self) {
     if (@schedule_rows) {
         $self->render(template => 'layouts/backend_student/schedule', schedule => \@schedules, full_name=>$full_name);
     }
+
+    return;
 }
 
-#danhbadienthoai
+#
+# This is function to displays the phonebook of student in the same class
+# @param $self[Object] the instance of it self
+# @return @student[Array] The response data phonebook of students
+#
 sub phone_student($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -73,8 +89,15 @@ sub phone_student($self) {
         };
     }
     $self->render(template => 'layouts/backend_student/phone_student', student=>\@student_rows);
+
+    return;
 }
 
+#
+# This is function to displays the phonebook of teacher
+# @param $self[Object] the instance of it self
+# @return @teacher[Array] The response data phonebook of teacher
+#
 sub phone_teacher($self) {
     my @teacher = $self->app->{_dbh}->resultset('Teacher')->search(+{});
     @teacher = map { +{ 
@@ -84,9 +107,15 @@ sub phone_teacher($self) {
         phone => $_->phone
     } } @teacher;
     $self->render(template => 'layouts/backend_student/phone_teacher', teacher=>\@teacher);
+
+    return;
 }
 
-#ketquahoctap
+#
+# This is function to displays marks of student
+# @param $self[Object] the instance of it self
+# @return @marks[Array] The response data marks of student
+#
 sub get_marks($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -106,8 +135,15 @@ sub get_marks($self) {
         }
     }
     $self->render(template => 'layouts/backend_student/marks_student', marks => \@marks);
+
+    return;
 }
 
+#
+# This is function to displays result of student
+# @param $self[Object] the instance of it self
+# @return @result[Array] The response data result of student
+#
 sub get_result($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -128,6 +164,8 @@ sub get_result($self) {
         }
     }
     $self->render(template => 'layouts/backend_student/result', results =>\@results);
+
+    return;
 }
 
 1;

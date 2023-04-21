@@ -43,9 +43,7 @@
           </td>
           <script type="text/javascript">
             $(document).ready(function() {
-              document.getElementById( < %= $item - > {
-                id_post
-              } % > ).innerHTML = decodeHtml(`<%= $item->{content} %>`);
+              document.getElementById( <%= $item -> {id_post} %>).innerHTML = decodeHtml(`<%= $item->{content} %>`);
             });
           </script>
           <td><a href='/admin/edit_post/<%= $item->{id_post} %>'>Sửa</a>|<a onclick="myFunction()" href='/admin/delete_post/<%= $item->{id_post} %>'>Xóa</a>

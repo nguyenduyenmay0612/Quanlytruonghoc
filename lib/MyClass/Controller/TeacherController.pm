@@ -8,7 +8,11 @@ use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
-#ly lich giang vien
+#
+# This is function to displays profile of teacher
+# @param $self[Object] the instance of it self
+# @return [Hash] The response data profile of student
+#
 sub profile_teacher($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -23,10 +27,16 @@ sub profile_teacher($self) {
             phone => $teacher->phone,
         };
         $self->render(template => 'layouts/backend_teacher/profile_gv', teacher=>$teacher_info);
-    }    
+    }
+
+    return;
 }
 
-#lich giang day theo tuan của giang vien
+#
+# This is function to displays schedule of teacher
+# @param $self[Object] the instance of it self
+# @return @schedule[Array] The response data schedule of teacher
+#
 sub schedule($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -47,9 +57,15 @@ sub schedule($self) {
     if (@schedule_rows) {
         $self->render(template => 'layouts/backend_teacher/schedule',schedule =>\@schedules);
     }
+
+    return;
 }
 
-#hien thi danh ba dien thoai sinh vien lop
+#
+# This is function to display the phonebook of students in class
+# @param $self[Object] the instance of it self
+# @return @student[Array] The response data phonebook of student
+#
 sub phone_student($self) {
     my $dbh = $self->app->{_dbh};
 
@@ -67,9 +83,15 @@ sub phone_student($self) {
         };
     }
     $self->render(template => 'layouts/backend_teacher/phone_student', student=>\@student_rows);
+
+    return;
 }
 
-#hien thi danh ba dien thoai giang vien lop
+#
+# This is function to display the phonebook of teacher
+# @param $self[Object] the instance of it self
+# @return @teacher[Array] The response data phonebook of teacher
+#
 sub phone_teacher($self) {
     my @teacher = $self->app->{_dbh}->resultset('Teacher')->search({});
     @teacher = map { { 
@@ -79,14 +101,20 @@ sub phone_teacher($self) {
         phone => $_->phone,
     } } @teacher;
     $self->render(template => 'layouts/backend_teacher/phone_teacher', teacher=>\@teacher);
+
+    return;
 }
 
-#hien thi danh sach thong tin sinh vien
+#
+# This is function to show list students
+# @param $self[Object] the instance of it self
+# @return @student [Array] The response data list student
+#
 sub list_student($self) {
     my $dbh = $self->app->{_dbh};
 
-    my $email_Teacher = $self->session('email');
-    my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_Teacher})->first;
+    my $email_teacher = $self->session('email');
+    my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_teacher})->first;
     my $class_id = $teacher->class_id;
     my @students = $dbh->resultset('Student')->search(+{"class_id" => $class_id});
     my @student_rows = +();
@@ -101,18 +129,31 @@ sub list_student($self) {
         };
     }
     $self->render(template => 'layouts/backend_teacher/student/list_student', student=>\@student_rows, error => '', message => '');
+
+    return;
 }
 
-#them sinh vien moi
+#
+# This is function to displays view add student
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub add_view {
-    my $self = shift;  
+    my $self = shift;
 
-    $self -> render(template => 'layouts/backend_teacher/student/add_student',
-    error    => $self->flash('error'),
-    message  => $self->flash('message')
+    $self->render(template => 'layouts/backend_teacher/student/add_student',
+    error => $self->flash('error'),
+    message => $self->flash('message')
     );
+
+    return;
 }
 
+#
+# This is function to handle form add student
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub add_student {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -150,23 +191,36 @@ sub add_student {
        $self->render(template => 'layouts/backend_teacher/student/add_student', student => $student, message => 'Thêm thành công', error=>'');
     } else {
         $self->render(template => 'layouts/backend_teacher/student/add_student', student => $student, message => '', error=>'Email này đã tồn tại');
-    }     
+    }
+
+    return;
 }
 
-#sua thong tin sinh vien
+#
+# This is function to displays view edit student
+# @param $self [Object] the instance of it self
+# @return [Hash] include properties of student
+#
 sub edit_view {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
 
-    my $id_student = $self->param('id');   
+    my $id_student = $self->param('id');
     my $student = $dbh->resultset('Student')->find($id_student);
     if ($student) {
         $self->render(template => 'layouts/backend_teacher/student/edit_student', student => $student , message => '', error=>'');
     } else {
         $self->render(template => 'layouts/backend_teacher/student/list_student');
     }
+
+    return;
 }
 
+#
+# This is function to handle form edit student
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub edit_student {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -182,7 +236,7 @@ sub edit_student {
     if ($student) {
         if ( ! $full_name || ! $birthday || ! $email || ! $address || ! $phone) {
             $self->render(template => 'layouts/backend_teacher/student/edit_student', student => $student, error=>'Không được bỏ trống các trường trên', message =>'');
-        }    
+        }
         else {
             my $result= $dbh->resultset('Student')->find($id_student)->update(+{
                 full_name => $full_name,
@@ -196,9 +250,15 @@ sub edit_student {
             $self->render(template => 'layouts/backend_teacher/student/edit_student', student => $student1, message => 'Cập nhật thông tin thành công', error=>'');   
         }
     }
+
+    return;
 }
 
-#xoa sinh vien 
+#
+# This is function to delete student
+# @param $self [Object] the instance of it self
+# @return @student [Array] The response data list student after delete
+#
 sub delete_student {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -212,8 +272,15 @@ sub delete_student {
     } else {
         $self->render(template => 'layouts/backend_teacher/student/list_student', student =>\@student);
     }
+
+    return;
 }
 
+#
+# This is function to search student
+# @param $self [Object] The instance of it self
+# @return @student [String] The response data list student
+#
 sub search_student {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -230,8 +297,15 @@ sub search_student {
         avatar => $_->avatar
     } } @student;
     $self->render(template => 'layouts/backend_teacher/student/list_student', student=>\@student, error => '', message =>'');
+
+    return;
 }
 
+#
+# This is function to displays schedule of student
+# @param $self[Object] the instance of it self
+# @return @schedule [Array] The response data list schedule of student
+#
 sub schedule_student {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -253,8 +327,15 @@ sub schedule_student {
     if (@schedule_rows) {
         $self->render(template => 'layouts/backend_teacher/manage_schedule_student/schedule_student', schedule => \@schedules);
     }
+
+    return;
 }
 
+#
+# This is function to displays view add schedule of student
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub add_schedule_student_view {
     my $self = shift;
 
@@ -262,8 +343,15 @@ sub add_schedule_student_view {
         error    => $self->flash('error'),
         message  => $self->flash('message')
     );
+
+    return;
 }
 
+#
+# This is function to handle form add schedule of student
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub add_schedule_student {
     my $self = shift;
 
@@ -292,21 +380,35 @@ sub add_schedule_student {
         });
     };
     $self->render(template => 'layouts/backend_teacher/manage_schedule_student/add_schedule_student', message => 'Thêm thành công', error=>'');           
+
+    return;
 }
 
+#
+# This is function to displays view edit schedule of student
+# @param $self [Object] the instance of it self
+# @return [Hash] include properties of schedule of student
+#
 sub edit_schedule_student_view {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
 
-    my $id = $self->param('id');   
+    my $id = $self->param('id');
     my $schedule = $dbh->resultset('ScheduleSt')->find($id);
     if ($schedule) {
         $self->render(template => 'layouts/backend_teacher/manage_schedule_student/edit_schedule_student', schedule => $schedule , message => '', error=>'');
     } else {
         $self->render(template => 'layouts/backend_teacher/manage_schedule_student/schedule_student');
     }
+
+    return;
 }
 
+#
+# This is function to handle form edit schedule of student
+# @param $self [Object] the instance of it self
+# @return [Void]
+#
 sub edit_schedule_student {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
@@ -327,13 +429,20 @@ sub edit_schedule_student {
         my $schedule1 = $dbh->resultset('ScheduleSt')->find($id);
         $self->render(template => 'layouts/backend_teacher/manage_schedule_student/edit_schedule_student', schedule => $schedule1, message => 'Cập nhật thành công', error=>'');   
     }
+
+    return;
 }
 
+#
+# This is function to delete schedule of student
+# @param $self [Object] the instance of it self
+# @return @schedule [Array] The response data list schedule of student after delete
+#
 sub delete_schedule_student {
     my $self = shift;
     my $dbh = $self->app->{_dbh};
 
-    my $id = $self->param('id');  
+    my $id = $self->param('id');
     my $result = $dbh->resultset('ScheduleSt')->find($id)->delete(+{});
     my @schedule = $self->app->{_dbh}->resultset('ScheduleSt')->search(+{});
     if ($result) {
@@ -342,27 +451,8 @@ sub delete_schedule_student {
     } else {
         $self->render(template => 'layouts/backend_teacher/manage_schedule_student/schedule_student', schedule =>\@schedule);
     }
+
+    return;
 }
 
-# sub show_marks{
-#     my $self = shift;
-#     my $dbh = $self->app->{_dbh};
-#     my $email_Teacher = $self->session('email');
-#     my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_Teacher})->first;
-#     my $class_id = $teacher->class_id;
-#     my @students = $dbh->resultset('Student')->search({"class_id" => $class_id});
-#     my @mark_student=+();
-#     foreach my $show_marks (@students){
-#     my @marks = $dbh->resultset('Mark')->find($show_marks->student_id);
-#     push @mark_student, +{
-#         id_student => $show_marks->id_student,
-#         full_name => $show_marks->full_name,
-#         marks_total => $marks->marks_total
-
-
-
-#     };
-#     }
-
-# }
 1;
