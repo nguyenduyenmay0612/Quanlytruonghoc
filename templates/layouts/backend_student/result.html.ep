@@ -29,7 +29,7 @@
         <tr>
           <td><%= $item->{semester} %> . <%= $item->{school_year} %></td>
           <td><%= $item->{result_4} %></td>
-          <td><%= $item->{result_10} %></td>
+          <td><%=$item->{result_10} %></td>
           <td><%= $item->{level} %></td>
           <td><%= $item->{result_total_4} %></td>
           <td><%= $item->{result_total_10} %></td>

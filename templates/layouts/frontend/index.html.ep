@@ -41,7 +41,7 @@
             <ul class="dropdown-menu">
               <li><a href="/student/login">Sinh viên</a></li>
               <li><a href="/teacher/login">Giảng viên</a></li>
-              <li><a href="/login">Khách</a></li>
+              <li><a href="/">Khách</a></li>
             </ul>
           </li>
         </ul>

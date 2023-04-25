@@ -6,7 +6,7 @@ use MyClass::Model::DB ;
 sub startup ($self) {
 
     $self->_set_db_operation_handler();
-    # $self->_db_handler();  ## Add after this line
+
     $self->_set_pagination();
     # Database operations handler object
     sub _set_db_operation_handler {
@@ -98,9 +98,6 @@ sub startup ($self) {
     $admin->get('/delete_teacher/:id_teacher')->to('AdminController#delete_teacher');
     $admin->post('/search_teacher')->to('AdminController#search_teacher');
     
-    
-
-
     #quan ly diem 
     $teacher->post('/show_marks')->to('ScheduleController#show_marks');
 
@@ -110,8 +107,6 @@ sub startup ($self) {
     $admin->post('/edit_banner/:id_banner')->to('BannerController#edit_banner');
     $admin->get('/delete_banner/:id_banner')->to('BannerController#delete_banner');
     $admin->post('/add_banner')->to('BannerController#add_banner');
-
-    
 
     #quan ly bai viet tren trang chủ 
     $admin->get('/post')->to('PostController#post');
@@ -149,35 +144,12 @@ sub startup ($self) {
 
     #update schedule student 
     $teacher->get('/schedule_student')->to('TeacherController#schedule_student');
-
     $teacher->get('/add_schedule_student')->to('TeacherController#add_schedule_student_view');
     $teacher->post('/add_schedule_student')->to('TeacherController#add_schedule_student');
     $teacher->get('/edit_schedule_student/:id')->to('TeacherController#edit_schedule_student_view');
     $teacher->post('/edit_schedule_student/:id')->to('TeacherController#edit_schedule_student');
     $teacher->get('/delete_schedule_student/:id')->to('TeacherController#delete_schedule_student');
 
-
-    }
-
-    # Pagination 
-    sub _db_handler {
-    my $self = shift;
-
-    $self->{dbh} = mojoForum::Model::DB->new();
-
-    return $self;
-    }
-
-    sub _set_pagination {
-        my $self = shift;
-        $self->{paginate} = 10;
-        return $self;
-    }
-
-    sub _get_pagination {
-        my $self = shift;
-
-        return $self->{paginate};
     }
 
     
