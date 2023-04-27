@@ -38,9 +38,7 @@
         </td>
         <script type="text/javascript">
           $(document).ready(function() {
-            document.getElementById( < %= $item - > {
-              id_activity
-            } % > ).innerHTML = decodeHtml(`<%= $item->{activity_des} %>`);
+            document.getElementById( <%= $item -> {id_activity} %> ).innerHTML = decodeHtml(`<%= $item->{activity_des} %>`);
           });
         </script>
         <td><a href='edit_activity/<%= $item->{id_activity} %>'>Sửa</a>|<a onclick="myFunction()"

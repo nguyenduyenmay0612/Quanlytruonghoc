@@ -112,11 +112,15 @@ sub phone_teacher($self) {
 #
 sub list_student($self) {
     my $dbh = $self->app->{_dbh};
+    my $paginate = $self->app->_get_pagination;
+
+    my $page = ( !$self->param('page') ) ? 1 : $self->param('page');
 
     my $email_teacher = $self->session('email');
     my $teacher = $dbh->resultset('Teacher')->search({"email" => $email_teacher})->first;
     my $class_id = $teacher->class_id;
-    my @students = $dbh->resultset('Student')->search(+{"class_id" => $class_id});
+    my $total_students = $dbh->resultset('Student')->search(+{"class_id" => $class_id})->count;
+    my @students = $dbh->resultset('Student')->search(+{"class_id" => $class_id}, { rows => $paginate, page => $page });
     my @student_rows = +();
     foreach my $student (@students) {
         push @student_rows, +{
@@ -128,7 +132,12 @@ sub list_student($self) {
             phone => $student->phone
         };
     }
-    $self->render(template => 'layouts/backend_teacher/student/list_student', student=>\@student_rows, error => '', message => '');
+    $self->render(template => 'layouts/backend_teacher/student/list_student',
+    student=>\@student_rows, 
+    error => '', message => '',
+    total_pages => $total_students / $paginate,
+    current_page => $page
+    );
 
     return;
 }

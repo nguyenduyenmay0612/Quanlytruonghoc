@@ -43,13 +43,13 @@ __PACKAGE__->table("admin");
   is_auto_increment: 1
   is_nullable: 0
 
-=head2 email
+=head2 password
 
   data_type: 'varchar'
   is_nullable: 0
   size: 45
 
-=head2 password
+=head2 email
 
   data_type: 'varchar'
   is_nullable: 0
@@ -60,9 +60,9 @@ __PACKAGE__->table("admin");
 __PACKAGE__->add_columns(
   "id_admin",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "email",
-  { data_type => "varchar", is_nullable => 0, size => 45 },
   "password",
+  { data_type => "varchar", is_nullable => 0, size => 45 },
+  "email",
   { data_type => "varchar", is_nullable => 0, size => 45 },
 );
 
@@ -79,8 +79,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id_admin");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-07 11:05:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GeKTX4q0t6gxjRUyHJFk3A
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-27 21:56:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1dy8qV5mD0CQPcfVqLV8vA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
