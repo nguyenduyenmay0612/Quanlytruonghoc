@@ -16,7 +16,7 @@ sub startup ($self) {
     }
     sub _set_pagination {
         my $self = shift;
-        $self->{paginate} = 10;
+        $self->{paginate} = 8;
         return $self;
     }
     sub _get_pagination {

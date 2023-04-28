@@ -197,7 +197,7 @@ sub add_student {
                 avatar => $avatar
             });
         };
-       $self->render(template => 'layouts/backend_teacher/student/add_student', student => $student, message => 'Thêm thành công', error=>'');
+        $self->render(template => 'layouts/backend_teacher/student/add_student', student => $student, message => 'Thêm thành công', error=>'');
     } else {
         $self->render(template => 'layouts/backend_teacher/student/add_student', student => $student, message => '', error=>'Email này đã tồn tại');
     }

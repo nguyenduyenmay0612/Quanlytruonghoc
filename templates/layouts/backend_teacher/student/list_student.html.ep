@@ -46,8 +46,8 @@
           <td><%= $item->{address} %></td>
           <td><%= $item->{email} %></td>
           <td><%= $item->{phone} %></td>
-          <td><a href='edit_student/<%= $item->{id_student} %>'>Sửa</a>|<a onclick="myFunction()"
-              href='delete_student/<%= $item->{id_student} %>'>Xóa</a></td>
+          <td><a href='/teacher/edit_student/<%= $item->{id_student} %>'>Sửa</a>|<a onclick="myFunction()"
+              href='/teacher/delete_student/<%= $item->{id_student} %>'>Xóa</a></td>
         </tr>
         %}
       </tbody>
