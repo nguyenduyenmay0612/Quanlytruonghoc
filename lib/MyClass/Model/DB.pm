@@ -1,8 +1,6 @@
 package MyClass::Model::DB;
-
 use MyClass::Schema;
 use DBIx::Class ();
-
 use strict;
 
 my ($schema_class, $connect_info);

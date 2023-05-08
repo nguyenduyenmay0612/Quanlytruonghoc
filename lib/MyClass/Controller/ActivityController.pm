@@ -3,8 +3,6 @@ use utf8;
 use open ':encoding(utf8)';
 binmode(STDOUT, ":utf8");
 use Mojo::Base 'Mojolicious::Controller', -signatures;
-use Data::Dumper;
-use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
@@ -13,9 +11,7 @@ use Cwd qw();
 # @param $self[Object] the instance of it self
 # @return @activity [Array] The response data list activity
 #
-sub activity {
-    my $self = shift;
-
+sub activity($self) {
     my @activity = $self->app->{_dbh}->resultset('Activity')->search(+{});
     @activity = map {+{
         id_activity => $_->id_activity,
@@ -33,8 +29,7 @@ sub activity {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_activity_view {
-    my $self = shift;
+sub add_activity_view($self) {
     $self->render(template => 'layouts/admin/activity/add_activity', error =>'', message =>'');
 
     return;
@@ -45,8 +40,7 @@ sub add_activity_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_activity {
-    my $self = shift;
+sub add_activity($self) {
     my $dbh = $self->app->{_dbh};
 
     my $activity_name = $self->param('activity_name');
@@ -77,9 +71,7 @@ sub add_activity {
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of activity
 #
-sub edit_activity_view {
-    my $self = shift;
-
+sub edit_activity_view($self) {
     my $id_activity = $self->param('id_activity');
     my $activity = $self->app->{_dbh}->resultset('Activity')->find($id_activity);   
     if ($activity) {
@@ -96,8 +88,7 @@ sub edit_activity_view {
 # @param $self [Object] the instance of it self
 # @return [Void]  
 #
-sub edit_activity {
-    my $self = shift;
+sub edit_activity($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_activity = $self->param('id_activity');
@@ -124,8 +115,7 @@ sub edit_activity {
 # @param $self [Object] the instance of it self
 # @return @activity [Array] The response data list activity after delete
 #
-sub delete_activity {
-    my $self = shift;
+sub delete_activity($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_activity = $self->param('id_activity');
@@ -151,8 +141,7 @@ sub delete_activity {
 # @param $self [Object] The instance of it self
 # @return @activity [String] The response data list activity
 #
-sub search_activity {
-    my $self = shift;
+sub search_activity($self) {
     my $dbh = $self->app->{_dbh};
 
     my $activity_name = $self->param('activity_name');

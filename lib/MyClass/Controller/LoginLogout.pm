@@ -4,7 +4,6 @@ use warnings;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 use Mojo::JSON qw(encode_json);
 use Email::Valid;
-use Data::Dumper;
 
 #
 # This is the form login student view function
@@ -41,8 +40,7 @@ sub login_admin($self) {
 # @param $self[Object] the instance of it self
 # @return [Void]
 #
-sub logout {
-    my $self = shift;
+sub logout($self) {
     $self->session(expires => 1);
     $self->redirect_to('/');
 }
@@ -67,7 +65,7 @@ sub alreadyLoggedIn_student($self) {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub alreadyLoggedIn_teacher ($self) {
+sub alreadyLoggedIn_teacher($self) {
     if($self->session("is_auth")) {
         return 1;
     } else {
@@ -81,7 +79,7 @@ sub alreadyLoggedIn_teacher ($self) {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub alreadyLoggedIn_admin ($self) {
+sub alreadyLoggedIn_admin($self) {
     if($self->session("is_auth")) {
         return 1;
     } else {
@@ -95,7 +93,7 @@ sub alreadyLoggedIn_admin ($self) {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub displayLogin_student ($self) {
+sub displayLogin_student($self) {
     if(&alreadyLoggedIn_student($self)) {
         my $dbh = $self->app->{_dbh};
 

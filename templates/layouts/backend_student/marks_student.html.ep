@@ -25,13 +25,13 @@
       </thead>
       <tbody>
         % foreach my $item (@{$marks}) {
-        <tr>
-          <td><%= $item->{name_subject} %></td>
-          <td><%= $item->{marks_1} %></td>
-          <td><%= $item->{marks_2} %></td>
-          <td><%= $item->{marks_3} %></td>
-          <td><%= ( $item->{marks_1} * 0.2 + $item->{marks_2}*0.2 + $item->{marks_3} * 0.6) %></td>
-        </tr>
+          <tr>
+            <td><%= $item->{name_subject} %></td>
+            <td><%= $item->{marks_1} %></td>
+            <td><%= $item->{marks_2} %></td>
+            <td><%= $item->{marks_3} %></td>
+            <td><%= ($item->{marks_1} * 0.2 + $item->{marks_2}*0.2 + $item->{marks_3} * 0.6) %></td>
+          </tr>
         %}
       </tbody>
     </table>

@@ -3,8 +3,6 @@ use utf8;
 use open ':encoding(utf8)';
 binmode(STDOUT, ":utf8");
 use Mojo::Base 'Mojolicious::Controller', -signatures;
-use Data::Dumper;
-use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
@@ -13,11 +11,9 @@ use Cwd qw();
 # @param $self[Object] the instance of it self
 # @return @noti [Array] The response data list notification 
 #
-sub noti {
-    my $self = shift;
-
+sub noti($self) {
     my @noti = $self->app->{_dbh}->resultset('Noti')->search(+{});
-    @noti = map { +{ 
+    @noti = map {+{ 
         id_noti => $_->id_noti,
         noti_name => $_->noti_name,
         content=> $_->content
@@ -32,8 +28,7 @@ sub noti {
 # @param $self [Object] the instance of it self 
 # @return [Void]
 #
-sub add_noti_view {
-    my $self = shift;  
+sub add_noti_view($self) {
     $self->render(template => 'layouts/admin/noti/add_noti', error =>'', message =>'');
 
     return;
@@ -44,8 +39,7 @@ sub add_noti_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_noti {
-    my $self = shift;
+sub add_noti($self) {
     my $dbh = $self->app->{_dbh};
 
     my $noti_name = $self->param('noti_name');
@@ -73,9 +67,7 @@ sub add_noti {
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of notification
 #
-sub edit_noti_view {
-    my $self = shift;
-
+sub edit_noti_view($self) {
     my $id_noti = $self->param('id_noti');
     my $noti = $self->app->{_dbh}->resultset('Noti')->find($id_noti);
     if ($noti) {
@@ -92,8 +84,7 @@ sub edit_noti_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub edit_noti {
-    my $self = shift;
+sub edit_noti($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_noti = $self->param('id_noti');
@@ -118,8 +109,7 @@ sub edit_noti {
 # @param $self [Object] the instance of it self
 # @return @noti [Array] The response data list notification after delete
 #
-sub delete_noti {
-    my $self = shift;
+sub delete_noti($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_noti = $self->param('id_noti');  
@@ -144,8 +134,7 @@ sub delete_noti {
 # @param $self [Object] The instance of it self
 # @return @noti [String] The response data list notification
 #
-sub search_noti {
-    my $self = shift;
+sub search_noti($self) {
     my $dbh = $self->app->{_dbh};
 
     my $noti_name = $self->param('noti_name');

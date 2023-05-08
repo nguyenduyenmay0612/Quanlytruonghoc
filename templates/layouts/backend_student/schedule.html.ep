@@ -1,8 +1,7 @@
 % layout 'backend_student/index';
 <div class="row content">
   <div class="col-sm-2 sidenav">
-    <div>
-      <br>
+    <div> <br>
       Xin chào <%= $full_name %>
     </div> <br>
   </div>
@@ -21,12 +20,12 @@
       </thead>
       <tbody>
         % foreach my $items (@{$schedule}) {
-        <tr>
-          <td><%= $items->{name_subject} %></td>
-          <td><%= $items->{date} %></td>
-          <td><%= $items->{lession} %></td>
-          <td><%= $items->{room} %></td>
-        </tr>
+          <tr>
+            <td><%= $items->{name_subject} %></td>
+            <td><%= $items->{date} %></td>
+            <td><%= $items->{lession} %></td>
+            <td><%= $items->{room} %></td>
+          </tr>
         %}
       </tbody>
     </table>

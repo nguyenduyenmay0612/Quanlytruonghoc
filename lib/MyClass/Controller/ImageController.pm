@@ -3,8 +3,6 @@ use utf8;
 use open ':encoding(utf8)';
 binmode(STDOUT, ":utf8");
 use Mojo::Base 'Mojolicious::Controller', -signatures;
-use Data::Dumper;
-use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
@@ -13,9 +11,7 @@ use Cwd qw();
 # @param $self[Object] the instance of it self
 # @return @image [Array] The response data list image
 #
-sub image {
-    my $self = shift;
-
+sub image($self) {
     my @image = $self->app->{_dbh}->resultset('Image')->search(+{});
     @image = map { +{ 
         id_image => $_->id_image,
@@ -32,8 +28,7 @@ sub image {
 # @param $self [Object] the instance of it self
 # @return @image[Array]
 #
-sub add_image {
-    my $self = shift;
+sub add_image($self) {
     my $dbh = $self->app->{_dbh};
 
     my $image_name = $self->param('image_name');
@@ -60,9 +55,7 @@ sub add_image {
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of activity
 #
-sub edit_image_view {
-    my $self = shift;
-
+sub edit_image_view($self) {
     my $id_image = $self->param('id_image');
     my $dbh = $self->app->{_dbh};
     my $image = $dbh->resultset('Image')->find($id_image);    
@@ -80,9 +73,7 @@ sub edit_image_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub edit_image {
-    my $self = shift;
-    
+sub edit_image($self) {
     my $id_image = $self->param('id_image');
     my $image_name = $self->param('image_name');
     my $image1 = $self->param('image');  
@@ -106,8 +97,7 @@ sub edit_image {
 # @param $self [Object] the instance of it self
 # @return @image [Array] The response data list image after delete
 #
-sub delete_image {
-    my $self = shift;
+sub delete_image($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_image = $self->param('id_image');

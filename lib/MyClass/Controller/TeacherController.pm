@@ -3,8 +3,6 @@ use utf8;
 use open ':encoding(utf8)';
 binmode(STDOUT, ":utf8");
 use Mojo::Base 'Mojolicious::Controller', -signatures;
-use Data::Dumper;
-use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
@@ -22,7 +20,7 @@ sub profile_teacher($self) {
         my $teacher_info = +{
             avatar => $teacher->avatar,
             full_name => $teacher->full_name,
-            birthday => $teacher->birthday->strftime('%d/%m/%Y'),
+            birthday => $teacher->birthday->strftime('%d-%m-%Y'),
             email => $teacher->email,
             phone => $teacher->phone,
         };
@@ -126,7 +124,7 @@ sub list_student($self) {
         push @student_rows, +{
             id_student => $student->id_student,
             full_name => $student->full_name,
-            birthday => $student->birthday->strftime('%d/%m/%Y'),
+            birthday => $student->birthday->strftime('%d-%m-%Y'),
             address => $student->address,
             email => $student->email,
             phone => $student->phone
@@ -147,9 +145,7 @@ sub list_student($self) {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_view {
-    my $self = shift;
-
+sub add_view($self) {
     $self->render(template => 'layouts/backend_teacher/student/add_student',
     error => $self->flash('error'),
     message => $self->flash('message')
@@ -163,8 +159,7 @@ sub add_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_student {
-    my $self = shift;
+sub add_student($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_student = $self->param('id_student');
@@ -210,8 +205,7 @@ sub add_student {
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of student
 #
-sub edit_view {
-    my $self = shift;
+sub edit_view($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_student = $self->param('id');
@@ -230,8 +224,7 @@ sub edit_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub edit_student {
-    my $self = shift;
+sub edit_student($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_student = $self->param('id');
@@ -268,8 +261,7 @@ sub edit_student {
 # @param $self [Object] the instance of it self
 # @return @student [Array] The response data list student after delete
 #
-sub delete_student {
-    my $self = shift;
+sub delete_student($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_student = $self->param('id_student');
@@ -290,8 +282,7 @@ sub delete_student {
 # @param $self [Object] The instance of it self
 # @return @student [String] The response data list student
 #
-sub search_student {
-    my $self = shift;
+sub search_student($self) {
     my $dbh = $self->app->{_dbh};
 
     my $full_name = $self->param('full_name');
@@ -315,11 +306,11 @@ sub search_student {
 # @param $self[Object] the instance of it self
 # @return @schedule [Array] The response data list schedule of student
 #
-sub schedule_student {
-    my $self = shift;
+sub schedule_student($self) {
     my $dbh = $self->app->{_dbh};
-    my $emailTeacher = $self->session('email');
-    my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $emailTeacher})->first;
+
+    my $email_teacher = $self->session('email');
+    my $teacher = $self->app->{_dbh}->resultset('Teacher')->search({"email" => $email_teacher})->first;
     my $class_id = $teacher->class_id;
     my @schedule_rows = $dbh->resultset('ScheduleSt')->search({"class_id" => $class_id});
     my @schedules = +();
@@ -345,9 +336,7 @@ sub schedule_student {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_schedule_student_view {
-    my $self = shift;
-
+sub add_schedule_student_view($self) {
     $self -> render(template => 'layouts/backend_teacher/manage_schedule_student/add_schedule_student',
         error    => $self->flash('error'),
         message  => $self->flash('message')
@@ -361,9 +350,7 @@ sub add_schedule_student_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_schedule_student {
-    my $self = shift;
-
+sub add_schedule_student($self) {
     my $id = $self->param('id');
     my $date = $self->param('date');
     my $lession = $self->param('lession');
@@ -398,8 +385,7 @@ sub add_schedule_student {
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of schedule of student
 #
-sub edit_schedule_student_view {
-    my $self = shift;
+sub edit_schedule_student_view($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id = $self->param('id');
@@ -418,8 +404,7 @@ sub edit_schedule_student_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub edit_schedule_student {
-    my $self = shift;
+sub edit_schedule_student($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id = $self->param('id');
@@ -447,8 +432,7 @@ sub edit_schedule_student {
 # @param $self [Object] the instance of it self
 # @return @schedule [Array] The response data list schedule of student after delete
 #
-sub delete_schedule_student {
-    my $self = shift;
+sub delete_schedule_student($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id = $self->param('id');

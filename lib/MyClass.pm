@@ -5,15 +5,16 @@ use MyClass::Model::DB ;
 # This method will run once at server start
 sub startup ($self) {
 
-    $self->_set_db_operation_handler();
-
-    $self->_set_pagination();
-    # Database operations handler object
+    #Database operations handler object
+    $self->_set_db_operation_handler();  
     sub _set_db_operation_handler {
         my $self = shift;
         $self->{ _dbh } = MyClass::Model::DB->new();
         return $self;
     }
+
+    # Set pagination
+    $self->_set_pagination();
     sub _set_pagination {
         my $self = shift;
         $self->{paginate} = 8;
@@ -58,29 +59,25 @@ sub startup ($self) {
     my $teacher = $r->under('/teacher/')->to('LoginLogout#alreadyLoggedIn_teacher');
     my $admin = $r->under('/admin/')->to('LoginLogout#alreadyLoggedIn_admin');
     
-    #thoikhoabieu
+    #Thời khóa biểu và lịch dạy
     $student->get('/schedule')->to('StudentController#schedule');
+    $teacher->get('/schedule')->to('TeacherController#schedule');
 
-
-    #danh ba dien thoai
+    #Danh bạ điện thoại
     $student->get('/phone_student')->to('StudentController#phone_student');
     $student->get('/phone_teacher')->to('StudentController#phone_teacher');
     $teacher->get('/phone_student')->to('TeacherController#phone_student');
     $teacher->get('/phone_teacher')->to('TeacherController#phone_teacher');
     
-    #lylich
+    #Lí lịch sinh viên, giảng viên
     $student->get('/profile_student')->to('StudentController#profile_student'); 
     $teacher->get('/profile_teacher')->to('TeacherController#profile_teacher'); 
     
-    #ketquahoctap
+    #Kết quả học tập
     $student->get('/marks_student')->to('StudentController#get_marks');
-    $student->get('/result')->to('StudentController#get_result');
-    $student->get('/chungchi')->to('StudentController#chungchi');  
+    $student->get('/result')->to('StudentController#get_result');  
 
-    #lichday
-    $teacher->get('/schedule')->to('TeacherController#schedule');
-
-    #quan ly sinh viên
+    #Quản lý sinh viên
     $teacher->get('/list_student')->to('TeacherController#list_student');
     $teacher->get('/add_student')->to('TeacherController#add_view');
     $teacher->post('/add_student')->to('TeacherController#add_student');
@@ -89,7 +86,7 @@ sub startup ($self) {
     $teacher->get('/delete_student/:id_student')->to('TeacherController#delete_student');
     $teacher->post('/search_student')->to('TeacherController#search_student');
 
-     #quan ly giang vien
+     #Quản lý giảng viên
     $admin->get('/list_teacher')->to('AdminController#list_teacher');
     $admin->get('/add_teacher')->to('AdminController#add_view');
     $admin->post('/add_teacher')->to('AdminController#add_teacher');
@@ -97,18 +94,15 @@ sub startup ($self) {
     $admin->post('/edit_teacher/:id_teacher')->to('AdminController#edit_teacher');
     $admin->get('/delete_teacher/:id_teacher')->to('AdminController#delete_teacher');
     $admin->post('/search_teacher')->to('AdminController#search_teacher');
-    
-    #quan ly diem 
-    $teacher->post('/show_marks')->to('ScheduleController#show_marks');
 
-    #quan ly banner
+    #Quản lý banner
     $admin->get('/banner')->to('BannerController#banner');
     $admin->get('/edit_banner/:id_banner')->to('BannerController#edit_banner_view');
     $admin->post('/edit_banner/:id_banner')->to('BannerController#edit_banner');
     $admin->get('/delete_banner/:id_banner')->to('BannerController#delete_banner');
     $admin->post('/add_banner')->to('BannerController#add_banner');
 
-    #quan ly bai viet tren trang chủ 
+    #Quản lý bài viết tin tức, sự kiện
     $admin->get('/post')->to('PostController#post');
     $admin->get('/edit_post/:id_post')->to('PostController#edit_post_view');
     $admin->post('/edit_post/:id_post')->to('PostController#edit_post');
@@ -117,7 +111,7 @@ sub startup ($self) {
     $admin->post('/add_post')->to('PostController#add_post');
     $admin->post('/search_post')->to('PostController#search_post');
 
-    #quan ly hoat dong
+    #Quản lý bài viết hoạt động
     $admin->get('/activity')->to('ActivityController#activity');
     $admin->get('/edit_activity/:id_activity')->to('ActivityController#edit_activity_view');
     $admin->post('/edit_activity/:id_activity')->to('ActivityController#edit_activity');
@@ -126,7 +120,7 @@ sub startup ($self) {
     $admin->post('/add_activity')->to('ActivityController#add_activity');
     $admin->post('/search_activity')->to('ActivityController#search_activity');
 
-    #quan ly thong bao
+    #Quản lý bài viết thông báo
     $admin->get('/noti')->to('NotiController#noti');
     $admin->get('/edit_noti/:id_noti')->to('NotiController#edit_noti_view');
     $admin->post('/edit_noti/:id_noti')->to('NotiController#edit_noti');
@@ -135,14 +129,14 @@ sub startup ($self) {
     $admin->post('/add_noti')->to('NotiController#add_noti');
     $admin->post('/search_noti')->to('NotiController#search_noti');
 
-    #quan ly hinh anh 
+    #Quản lý hình ảnh
     $admin->get('/image')->to('ImageController#image');
     $admin->get('/edit_image/:id_image')->to('ImageController#edit_image_view');
     $admin->post('/edit_image/:id_image')->to('ImageController#edit_image');
     $admin->get('/delete_image/:id_image')->to('ImageController#delete_image');
     $admin->post('/add_image')->to('ImageController#add_image');
 
-    #update schedule student 
+    #Quản lý thời khóa biểu sinh viên
     $teacher->get('/schedule_student')->to('TeacherController#schedule_student');
     $teacher->get('/add_schedule_student')->to('TeacherController#add_schedule_student_view');
     $teacher->post('/add_schedule_student')->to('TeacherController#add_schedule_student');
@@ -152,5 +146,4 @@ sub startup ($self) {
 
     }
 
-    
 1;

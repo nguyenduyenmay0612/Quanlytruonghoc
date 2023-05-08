@@ -3,8 +3,6 @@ use utf8;
 use open ':encoding(utf8)';
 binmode(STDOUT, ":utf8");
 use Mojo::Base 'Mojolicious::Controller', -signatures;
-use Data::Dumper;
-use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 use HTML::Entities;
@@ -14,9 +12,7 @@ use HTML::Entities;
 # @param $self[Object] the instance of it self
 # @return @post [Array] The response data list activity
 #
-sub post {
-    my $self = shift;
-
+sub post($self) {
     my @post = $self->app->{_dbh}->resultset('Post')->search(+{});
     @post = map { +{ 
         id_post => $_->id_post,
@@ -35,8 +31,7 @@ sub post {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_post_view {
-    my $self = shift;
+sub add_post_view($self) {
     $self->render(template => 'layouts/admin/post/add_post', error =>'', message =>'');
 
     return;
@@ -47,8 +42,7 @@ sub add_post_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_post {
-    my $self = shift;
+sub add_post($self) {
     my $dbh = $self->app->{_dbh};
 
     my $title_post = $self->param('title_post');
@@ -82,9 +76,7 @@ sub add_post {
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of post
 #
-sub edit_post_view {
-    my $self = shift;
-
+sub edit_post_view($self) {
     my $id_post = $self->param('id_post');
     my $post = $self->app->{_dbh}->resultset('Post')->find($id_post);
     if ($post) {
@@ -101,8 +93,7 @@ sub edit_post_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub edit_post {
-    my $self = shift;
+sub edit_post($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_post = $self->param('id_post');
@@ -131,8 +122,7 @@ sub edit_post {
 # @param $self [Object] the instance of it self
 # @return @post [Array] The response data list post after delete
 #
-sub delete_post {
-    my $self = shift;
+sub delete_post($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_post = $self->param('id_post');  
@@ -159,8 +149,7 @@ sub delete_post {
 # @param $self [Object] The instance of it self
 # @return @post [String] The response data list post
 #
-sub search_post {
-    my $self = shift;
+sub search_post($self) {
     my $dbh = $self->app->{_dbh};
 
     my $title_post = $self->param('title_post');

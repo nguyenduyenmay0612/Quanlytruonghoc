@@ -91,6 +91,24 @@ __PACKAGE__->table("student");
   is_foreign_key: 1
   is_nullable: 0
 
+=head2 day
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 45
+
+=head2 first_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 45
+
+=head2 last_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 45
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -112,6 +130,12 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "class_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "day",
+  { data_type => "varchar", is_nullable => 1, size => 45 },
+  "first_name",
+  { data_type => "varchar", is_nullable => 1, size => 45 },
+  "last_name",
+  { data_type => "varchar", is_nullable => 1, size => 45 },
 );
 
 =head1 PRIMARY KEY
@@ -174,8 +198,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-31 11:07:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oJ303tLUG5/Q9Ee61CGlRA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-05-08 14:15:53
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iWmd3eGOov6ZrV38cFk5+w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

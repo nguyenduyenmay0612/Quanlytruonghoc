@@ -7,7 +7,7 @@ use Mojo::Base 'Mojolicious::Controller', -signatures;
 # @param $self[Object] the instance of it self
 # @return @banner, @activity, @post, @noti, @image [Array]
 #
-sub welcome ($self) {
+sub welcome($self) {
     my @banner = $self->_get_banner();
     my @activity = $self->_get_activity();
     my @post = $self->_get_post();
@@ -21,9 +21,7 @@ sub welcome ($self) {
 # @param $self[Object] the instance of it self
 # @return $post[Hash], @banner, @activity, @noti, @image [Array]
 #
-sub post_detail {
-    my $self = shift;
-
+sub post_detail($self) {
     my @banner= $self->_get_banner();
     my @activity = $self->_get_activity();
     my @noti = $self->_get_noti();

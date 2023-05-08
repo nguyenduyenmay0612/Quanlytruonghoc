@@ -3,8 +3,6 @@ use utf8;
 use open ':encoding(utf8)';
 binmode(STDOUT, ":utf8");
 use Mojo::Base 'Mojolicious::Controller', -signatures;
-use Data::Dumper;
-use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
@@ -23,7 +21,7 @@ sub list_teacher($self) {
         push @teacher_rows, +{
             id_teacher => $teacher->id_teacher,
             full_name => $teacher->full_name,
-            birthday => $teacher->birthday->strftime('%d/%m/%Y'),
+            birthday => $teacher->birthday->strftime('%d-%m-%Y'),
             address => $teacher->address,
             email => $teacher->email,
             phone => $teacher->phone,
@@ -38,8 +36,7 @@ sub list_teacher($self) {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_view {
-    my $self = shift;
+sub add_view($self) {
     $self->render(template => 'layouts/admin/teacher/add_teacher',
         error => $self->flash('error'),
         message => $self->flash('message')
@@ -53,8 +50,7 @@ sub add_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub add_teacher{
-    my $self = shift;
+sub add_teacher($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_student = $self->param('id_teacher');
@@ -97,8 +93,7 @@ sub add_teacher{
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of teacher
 #
-sub edit_view {
-    my $self = shift;
+sub edit_view($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_teacher = $self->param('id_teacher');
@@ -117,8 +112,7 @@ sub edit_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub edit_teacher {
-    my $self = shift;
+sub edit_teacher($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_teacher = $self->param('id_teacher');
@@ -131,7 +125,7 @@ sub edit_teacher {
     my $class_id= $self->param('class_id');
     my $teacher = $dbh->resultset('Teacher')->find($id_teacher);
     if ($teacher) {
-        if ( ! $full_name || ! $birthday || ! $email || ! $address || ! $phone) {
+        if (! $full_name || ! $birthday || ! $email || ! $address || ! $phone) {
             $self->render(template => 'layouts/admin/teacher/edit_teacher', teacher => $teacher, error=>'Không được bỏ trống các trường trên', message =>'');
         } else {
             my $result= $dbh->resultset('Teacher')->find($id_teacher)->update({  
@@ -156,8 +150,7 @@ sub edit_teacher {
 # @param $self [Object] the instance of it self
 # @return @teacher [Array] The response data list teacher after delete
 #
-sub delete_teacher {
-    my $self = shift;
+sub delete_teacher($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_teacher = $self->param('id_student');
@@ -178,8 +171,7 @@ sub delete_teacher {
 # @param $self [Object] The instance of it self
 # @return @teacher [String] The response data list teacher
 #
-sub search_teacher {
-    my $self = shift;
+sub search_teacher($self) {
     my $dbh = $self->app->{_dbh};
 
     my $full_name = $self->param('full_name');

@@ -3,7 +3,6 @@ use utf8;
 use open ':encoding(utf8)';
 binmode(STDOUT, ":utf8");
 use Mojo::Base 'Mojolicious::Controller', -signatures;
-use Data::Dumper;
 use Mojo::Log;
 my $log = Mojo::Log->new(path => '/log/app.log', level => 'warn');
 

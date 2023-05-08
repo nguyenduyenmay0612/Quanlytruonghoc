@@ -24,12 +24,12 @@
       </thead>
       <tbody>
         % foreach my $item (@{$student}) {
-        <tr>
-          <td><%= $item->{id_student} %></td>
-          <td><%= $item->{full_name} %></td>
-          <td><%= $item->{email} %></td>
-          <td><%= $item->{phone} %></td>
-        </tr>
+          <tr>
+            <td><%= $item->{id_student} %></td>
+            <td><%= $item->{full_name} %></td>
+            <td><%= $item->{email} %></td>
+            <td><%= $item->{phone} %></td>
+          </tr>
         %}
       </tbody>
     </table>

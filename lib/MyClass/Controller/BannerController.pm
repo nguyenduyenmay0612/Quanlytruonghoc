@@ -3,8 +3,6 @@ use utf8;
 use open ':encoding(utf8)';
 binmode(STDOUT, ":utf8");
 use Mojo::Base 'Mojolicious::Controller', -signatures;
-use Data::Dumper;
-use Convert::Base64;
 use Mojo::Upload;
 use Cwd qw();
 
@@ -13,9 +11,7 @@ use Cwd qw();
 # @param $self[Object] the instance of it self
 # @return @activity [Array] The response data list banner
 #
-sub banner {
-    my $self = shift;
-
+sub banner($self) {
     my @banner = $self->app->{_dbh}->resultset('Banner')->search(+{});
     @banner = map { +{
        id_banner => $_->id_banner,
@@ -31,8 +27,7 @@ sub banner {
 # This is function to handle form add banner
 # @param $self [Object] the instance of it self
 # @activity [Array] The response data list banner
-sub add_banner {
-    my $self = shift;
+sub add_banner($self) {
     my $dbh = $self->app->{_dbh};
 
     my $banner_name = $self->param('banner_name');
@@ -60,8 +55,7 @@ sub add_banner {
 # @param $self [Object] the instance of it self
 # @return [Hash] include properties of banner
 #
-sub edit_banner_view {
-    my $self = shift;
+sub edit_banner_view($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_banner = $self->param('id_banner');  
@@ -69,7 +63,7 @@ sub edit_banner_view {
     if ($banner) {
         $self->render(template => 'layouts/admin/banner/edit_banner', banner => $banner , message => '', error=>'');
     } else {
-        $self->render(template => 'layouts/admin/banner/banner');
+        $self->redirect_to('admin/banner');
     }
 
     return;
@@ -80,8 +74,7 @@ sub edit_banner_view {
 # @param $self [Object] the instance of it self
 # @return [Void]
 #
-sub edit_banner {
-    my $self = shift;
+sub edit_banner($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_banner = $self->param('id_banner');
@@ -108,15 +101,14 @@ sub edit_banner {
 # @param $self [Object] the instance of it self
 # @return @activity [Array] The response data list banner after delete
 #
-sub delete_banner {
-    my $self = shift;
+sub delete_banner($self) {
     my $dbh = $self->app->{_dbh};
 
     my $id_banner = $self->param('id_banner');
     my $result = $dbh->resultset('Banner')->find($id_banner)->delete(+{});
     my @banner = $self->app->{_dbh}->resultset('Banner')->search(+{});
     if ($result) {
-        @banner = map { +{ 
+        @banner = map {+{ 
             id_banner => $_->id_banner,
             banner_name => $_->banner_name,
             image => $_->image

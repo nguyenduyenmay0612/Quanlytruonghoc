@@ -106,7 +106,7 @@ __PACKAGE__->table("teacher");
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 45
+  size: 255
 
 =cut
 
@@ -134,7 +134,7 @@ __PACKAGE__->add_columns(
   "class_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
   "address",
-  { data_type => "varchar", is_nullable => 1, size => 45 },
+  { data_type => "varchar", is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -187,8 +187,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-27 23:55:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SzL53UJtAFcCsY9vdOOKnQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-05-08 13:33:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:i4KqiPnFjYKfZuTLS04gnQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
