@@ -22,7 +22,6 @@
               &lt;h1&gt;Tiêu đề &lt;/h1&gt;
               &lt;h1&gt;Mô tả hoạt động&lt;/h1&gt;
             </textarea>
-            <input type="submit" value="Submit" />
           </div>
         </div>
         <script type="text/javascript">

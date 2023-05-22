@@ -26,21 +26,20 @@
                 &lt;h1&gt;Article Title&lt;/h1&gt;
                 &lt;p&gt;Here's some sample text&lt;/p&gt;
               </textarea>
-              <input type="submit" value="Submit"/>
             </div>
           </div>
           <button type="submit" class="btn btn-primary me-2">Thêm</button>
           <button class="btn btn-dark">Cancel</button>
         </form>
         % if ($error) {
-        <div class="error" style="color: red">
-          <small> <%= $error %> </small>
-        </div>
+          <div class="error" style="color: red">
+            <small> <%= $error %> </small>
+          </div>
         %}
         % if ($message) {
-        <div class="error" style="color: green">
-          <small> <%= $message %> </small>
-        </div>
+          <div class="error" style="color: green">
+            <small> <%= $message %> </small>
+          </div>
         %}
       </div>
     </div>

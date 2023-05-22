@@ -17,8 +17,18 @@
       <td><%= $items->{date} %></td>
       <td><%= $items->{lession} %></td>
       <td><%= $items->{room} %></td>
-      <td><a href='edit_schedule_student/<%= $items->{id} %>'>Sửa</a>|<a onclick="myFunction()"
-          href='delete_schedule_student/<%= $items->{id} %>'>Xóa</a></td>
+      <td><a href='/teacher/edit_schedule_student/<%= $items->{id} %>'>Sửa</a>|<a onclick="myFunction()" href>Xóa</a></td>
+      <script>
+        function myFunction() {
+          var  href='/teacher/delete_schedule_student/<%= $items->{id}%>';    
+          var href1='/teacher/schedule_student';
+          if( confirm("Bạn chắc chắn có muốn xóa không?") == true) {    
+            window.location.href = href;
+          } else {
+            window.location.href = href1;
+          }
+        }           
+      </script>
     </tr>
     %}
   </tbody>

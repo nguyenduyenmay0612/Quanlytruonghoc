@@ -33,22 +33,32 @@
           <td><%= $item->{email} %></td>
           <td><%= $item->{phone} %></td>
           <td><%= $item->{name_class} %></td>
-          <td><a href='edit_teacher/<%= $item->{id_teacher} %>'>Sửa</a>|<a onclick="myFunction()"
-              href='delete_teacher/<%= $item->{id_teacher} %>'>Xóa</a></td>
+          <td><a href='edit_teacher/<%= $item->{id_teacher} %>'>Sửa</a>|<a onclick="myFunction()" href>Xóa</a></td>
+          <script>
+            function myFunction() {
+              var  href='/admin/delete_teacher/<%= $item->{id_teacher}%>';    
+              var href1='/teacher/list_teacher';
+              if( confirm("Bạn chắc chắn có muốn xóa không?") == true) {    
+                window.location.href = href;
+              } else {
+                window.location.href = href1;
+              }
+            }           
+          </script>
         </tr>
         %}
       </tbody>
     </table>
     % if ($error) {
-    <div class="error" style="color: red">
-      <small> <%= $error %> </small>
-    </div>
+      <div class="error" style="color: red">
+        <small> <%= $error %> </small>
+      </div>
     %}
 
     % if ($message) {
-    <div class="error" style="color: green">
-      <small> <%= $message %> </small>
-    </div>
+      <div class="error" style="color: green">
+        <small> <%= $message %> </small>
+      </div>
     %}
   </div>
 </div>

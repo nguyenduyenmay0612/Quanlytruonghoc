@@ -15,17 +15,28 @@
         <th>ID</th>
         <th>Tên banner</th>
         <th>Ảnh</th>
-        <th>Cập nhật></th>
+        <th>Cập nhật</th>
       </tr>
     </thead>
     <tbody>
       % foreach my $item (@{$banner}) {
-      <tr>
-        <td><%= $item->{id_banner} %></td>
-        <td><%= $item->{banner_name} %></td>
-        <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="200" height="100"></td>
-        <td><a href='edit_banner/<%= $item->{id_banner} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_banner/<%= $item->{id_banner} %>'>Xóa</a></td>
-      </tr>
+        <tr>
+          <td><%= $item->{id_banner} %></td>
+          <td><%= $item->{banner_name} %></td>
+          <td><img src="..\assets\image\<%= $item->{image} %>" alt="hhhh" width="200" height="100"></td>
+          <td><a href='/admin/edit_banner/<%= $item->{id_banner} %>'>Sửa</a>|<a onclick="myFunction()" href>Xóa</a></td>
+          <script>
+            function myFunction() {
+              var  href='/admin/delete_banner/<%= $item->{id_banner} %>';
+              var href1='/admin/banner';
+              if( confirm("Bạn chắc chắn có muốn xóa không?") == true) {
+                window.location.href = href;
+              } else {
+                window.location.href = href1;
+              }
+            }           
+          </script>
+        </tr>
       %}
     </tbody>
   </table>

@@ -22,14 +22,14 @@
         <button class="btn btn-dark">Cancel</button>
       </form>
       % if ($error) {
-      <div class="error" style="color: red">
-        <small> <%= $error %> </small>
-      </div>
+        <div class="error" style="color: red">
+          <small> <%= $error %> </small>
+        </div>
       %}
       % if ($message) {
-      <div class="error" style="color: green">
-        <small> <%= $message %> </small>
-      </div>
+        <div class="error" style="color: green">
+          <small> <%= $message %> </small>
+        </div>
       %}
     </div>
   </div>

@@ -46,7 +46,18 @@
           <td><%= $item->{address} %></td>
           <td><%= $item->{email} %></td>
           <td><%= $item->{phone} %></td>
-          <td><a href='/teacher/edit_student/<%= $item->{id_student} %>'>Sửa</a>|<a onclick="myFunction()" href='/teacher/delete_student/<%= $item->{id_student} %>'>Xóa</a></td>
+          <td><a href='/teacher/edit_student/<%= $item->{id_student} %>'>Sửa</a>|<a href onclick="myFunction()">Xóa</a></td>
+          <script>
+            function myFunction() {
+              var  href='/teacher/delete_student/<%= $item->{id_student}%>';
+              var href1='/teacher/list_student';
+              if( confirm("Bạn chắc chắn có muốn xóa không?") == true) {
+                window.location.href = href;
+              } else {
+                window.location.href = href1;
+              }
+            }           
+          </script>
         </tr>
         %}
       </tbody>
@@ -81,8 +92,4 @@
     </li>    
   </ul>
 </nav>
-<script>
-  function myFunction() {
-    confirm("Bạn có chắc chắn muốn xóa không?");
-  }
-</script>
+

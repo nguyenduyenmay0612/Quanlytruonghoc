@@ -40,7 +40,18 @@
             document.getElementById( <%= $item -> {id_activity} %> ).innerHTML = decodeHtml(`<%= $item->{activity_des} %>`);
           });
         </script>
-        <td><a href='edit_activity/<%= $item->{id_activity} %>'>Sửa</a>|<a onclick="myFunction()" href='delete_activity/<%= $item->{id_activity} %>'>Xóa</a></td>
+        <td><a href='/admin/edit_activity/<%= $item->{id_activity} %>'>Sửa</a>|<a onclick="myFunction()" href=>Xóa</a></td>
+        <script>
+            function myFunction() {
+              var  href='/admin/delete_activity/<%= $item->{id_activity} %>';
+              var href1='/admin/activity';
+              if( confirm("Bạn chắc chắn có muốn xóa không?") == true) {    
+                window.location.href = href;
+              } else {
+                window.location.href = href1;
+              }
+            }           
+          </script>
       </tr>
       %}
     </tbody>
