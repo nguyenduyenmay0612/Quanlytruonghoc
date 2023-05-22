@@ -36,9 +36,9 @@
           <td><a href='edit_teacher/<%= $item->{id_teacher} %>'>Sửa</a>|<a onclick="myFunction()" href>Xóa</a></td>
           <script>
             function myFunction() {
-              var  href='/admin/delete_teacher/<%= $item->{id_teacher}%>';    
+              var  href='/admin/delete_teacher/<%= $item->{id_teacher}%>';
               var href1='/teacher/list_teacher';
-              if( confirm("Bạn chắc chắn có muốn xóa không?") == true) {    
+              if( confirm("Bạn chắc chắn có muốn xóa không?") == true) {
                 window.location.href = href;
               } else {
                 window.location.href = href1;
@@ -62,8 +62,3 @@
     %}
   </div>
 </div>
-<script>
-  function myFunction() {
-    confirm("Bạn có chắc chắn muốn xóa không?");
-  }
-</script>

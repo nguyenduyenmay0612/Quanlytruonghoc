@@ -53,7 +53,7 @@
               var href1='/teacher/list_student';
               if( confirm("Bạn chắc chắn có muốn xóa không?") == true) {
                 window.location.href = href;
-              } else {
+              } else {5
                 window.location.href = href1;
               }
             }           

@@ -68,13 +68,3 @@
   </div>
   %}
 </div>
-<script>
-  function myFunction() {
-    confirm("Bạn có chắc chắn muốn xóa không?");
-  }
-  $(document).ready(function() {
-    $('#Mybtn').click(function() {
-      $('#MyForm').toggle(500);
-    });
-  });
-</script>
